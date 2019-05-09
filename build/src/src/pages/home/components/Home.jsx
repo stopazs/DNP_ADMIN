@@ -15,8 +15,8 @@ export default class Home extends React.Component {
     return (
       <>
         <div className="jumbotron">
-          <h1 className="display-4">Welcome to DAppNode</h1>
-          <p className="lead">
+          <h1 className="display-4">Welcome to AVADO</h1>
+          {/* <p className="lead">
             If you have just finished the installation, please help the team
             telling us how it went in the survey below
           </p>
@@ -29,7 +29,7 @@ export default class Home extends React.Component {
             >
               Fill survey
             </a>
-          </p>
+          </p> */}
         </div>
 
         <div className="home-links no-a-style">
