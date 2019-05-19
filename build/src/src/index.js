@@ -20,6 +20,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./layout.css";
 import "./dappnode_styles.css";
 import "./dappnode_colors.css";
+import "./avado_styles.css";
 
 // Initialize boostrap dependencies
 window.jQuery = window.$ = $;

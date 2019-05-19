@@ -4,9 +4,9 @@
   --transition-time: 0.25s;
   --topbar-height: 3.5rem;
   --container-padding: 1.5rem;
-  --color-white: white;
-  --color-border: #e5e5e5;
-  --color-background: #f7f9f9a8;
+  --color-white: #2e4e72;
+  --color-border: #3d6696;
+  --color-background: #2e4e72;
   --border-size: 0.08rem;
   --border-style: var(--border-size) solid var(--color-border);
   --default-spacing: 1.25rem;
@@ -24,6 +24,10 @@
 /* 
   TEXT STYLES 
 */
+@import url("https://fonts.googleapis.com/css?family=Exo+2:400,700");
+
+
+
 body {
   font-family: overpass, sans-serif !important;
 }
@@ -38,7 +42,11 @@ body,
   margin: 0;
   padding: 0;
   height: 100%;
+  font-family: 'Exo 2', sans-serif;
+  color:white;
 }
+
+
 
 /*****
   BODY

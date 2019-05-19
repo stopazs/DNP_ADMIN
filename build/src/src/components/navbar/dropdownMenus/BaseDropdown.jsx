@@ -102,7 +102,7 @@ function BaseDropdown({
         It's purpose is to control clipping on small screens, 
         by placing them as right as possible */}
       <div className={`menu ${collapsed ? "" : "show"}`}>
-        <div className="header">{name}</div>
+        <div className="section-subtitle">{name}</div>
         {messages.map(({ type, title, body, progress, showProgress }, i) => (
           <div key={i}>
             {title ? <div className={`title text-${type}`}>{title}</div> : null}

@@ -1,16 +1,36 @@
 :root {
-  --dappnode-white-color: #fff;
-  --dappnode-strong-main-color: #2fbcb2;
-  --dappnode-darker-main-color: #218a82;
-  --dappnode-shadow-main-color: #218a8280;
-  --dappnode-light-main-color: #a0bdbb;
-  --dappnode-gray-main-color: #93a5a5;
-  --border-color: #e5e5e5;
+  --dappnode-white-color: #2e4e72;
+  --dappnode-strong-main-color: #57a6a9;
+  --dappnode-darker-main-color: #507172;
+  --dappnode-shadow-main-color: #50717280;
+  --dappnode-strong-main-color: #a7dcde;
+  --dappnode-light-main-color: #f0fffe;
+  --dappnode-gray-main-color: #e7f7f7;
+  --border-color: #000;
   --danger-color: #d9534f;
   --warning-color: #f0ad4e;
   --success-color: #5cb85c;
   /* Shortcuts */
   --dappnode-color: var(--dappnode-strong-main-color);
+}
+
+a {
+    color: white;
+}
+a:hover {
+    color: rgb(218, 218, 218);
+}
+
+.btn-outline-secondary {
+    color: var(--dappnode-white-color);
+  background-color: var(--dappnode-strong-main-color);
+  border-color: var(--dappnode-strong-main-color);
+}
+
+.btn-outline-danger {
+    color: var(--dappnode-white-color);
+    background-color: var(--dappnode-strong-main-color);
+    border-color: var(--dappnode-strong-main-color);
 }
 
 /* btn styles - extend bootstrap v4. Use with:
@@ -25,7 +45,7 @@
 
 .btn-dappnode:hover {
   color: var(--dappnode-white-color);
-  background-color: var(--dappnode-darker-main-color);
+  background-color: var(--dappnode-light-main-color);
   border-color: var(--dappnode-darker-main-color);
 }
 

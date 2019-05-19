@@ -34,7 +34,8 @@
 
 .tn-dropdown > .menu {
   /* Does not need a z-index, it has the topbar z-index */
-  background-color: white;
+  background-color: var(--avado-bg-light-color);
+  color: white;
   border: var(--border-style);
   border-radius: 0.25rem;
   padding: 0.25rem 0;
@@ -76,10 +77,10 @@
   border-bottom: var(--border-style);
 }
 .tn-dropdown > .menu > .header {
-  color: #6c757d;
+  color: white;
 }
 .tn-dropdown > .menu > .placeholder {
-  color: #6c757d;
+  color: white;
   opacity: 0.8;
 }
 .tn-dropdown > .menu .progress {

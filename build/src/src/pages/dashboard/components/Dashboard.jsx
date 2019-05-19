@@ -16,6 +16,18 @@ import "./dashboard.css";
 // Components
 import SubTitle from "components/SubTitle";
 import Title from "components/Title";
+import * as s from "../../packages/selectors.js";
+
+import "../../installer/components/installer.css";
+import errorAvatar from "img/errorAvatar.png";
+import ipfsLogo from "img/IPFS-badge-small.png";
+import defaultAvatar from "img/defaultAvatar.png";
+// Utility components
+import Card from "components/Card";
+import Button from "components/Button";
+import { stringIncludes } from "utils/strings";
+
+
 
 /**
  * @param {array} chainData = [{
@@ -36,64 +48,131 @@ import Title from "components/Title";
  */
 
 function Dashboard({
-  chainData,
-  dappnodeStats,
-  dappnodeVolumes,
-  fetchDappnodeStats
+    chainData,
+    dappnodeStats,
+    dappnodeVolumes,
+    fetchDappnodeStats,
+    installedpackages,
+    history
 }) {
-  useEffect(() => {
-    const interval = setInterval(fetchDappnodeStats, 5 * 1000);
-    return () => {
-      clearInterval(interval);
+    useEffect(() => {
+        const interval = setInterval(fetchDappnodeStats, 5 * 1000);
+
+        return () => {
+            clearInterval(interval);
+        };
+    }, []);
+
+    const hashToUrl = (hash) => {
+        return `http://my.ipfs.dnp.dappnode.eth:8080/ipfs/${hash.replace("/ipfs/", "")}`
     };
-  }, []);
 
-  return (
-    <>
-      <Title title={title} />
+    const openDnp = (name) => {
+        history.push(`/Packages/${name}`);
+    }
 
-      <SubTitle>Chains</SubTitle>
-      <div className="dashboard-cards">
-        {chainData.map(chain => (
-          <ChainCard key={chain.name} {...chain} />
-        ))}
-      </div>
+    return (
+        <>
+            <Title title={"Home"} />
 
-      <SubTitle>Machine stats</SubTitle>
-      <div className="dashboard-cards">
-        {Object.entries(dappnodeStats).map(([id, percent]) => (
-          <StatsCard key={id} id={id} percent={percent} />
-        ))}
-      </div>
+            <SubTitle>Health</SubTitle>
+            <div className="dashboard-cards">
+                {Object.entries(dappnodeStats).map(([id, percent]) => (
+                    <StatsCard key={id} id={id} percent={percent} />
+                ))}
+            </div>
 
-      <SubTitle>Volumes</SubTitle>
+            {chainData && chainData.length > 0 && (
+                <>
+                    <SubTitle>Chains</SubTitle>
+                    <div className="dashboard-cards">
+                        {chainData.map(chain => (
+                            <>
+
+                                <ChainCard key={chain.name} {...chain} />
+                            </>
+                        ))}
+                    </div>
+                </>
+            )}
+
+            <SubTitle>Active Packages</SubTitle>
+
+            <div className="dnp-cards">
+                {installedpackages.filter((dnp) => { return dnp.isCore === false; }).map((dnp) => {
+                    const { manifest, error, avatar = defaultAvatar, origin, tag } =
+                        dnp || {};
+                    const { name, description, keywords = [] } = manifest || {};
+                    /* Show the button as disabled (gray) if it's updated */
+                    const disabled = stringIncludes(tag, "updated");
+                    /* Rename tag from "install" to "get" because there were too many "install" tags 
+                       Cannot change the actual tag because it is used for logic around the installer */
+                    // const tagDisplay = tag === "OPEN" ? "GET" : tag;
+                    return (
+                        <Card
+                            key={name + origin}
+                            className="dnp-card"
+                            shadow
+                         onClick={() => openDnp(dnp.name)}
+                        >
+                            <img src={hashToUrl(manifest.avatar)} alt="avatar" />
+                            <div className="info">
+                                <h5 className="title">{name}</h5>
+                                <div>{description}</div>
+                                <div className="keywords">
+                                    {origin && typeof origin === "string" ? (
+                                        <div className="ipfs">
+                                            <img src={ipfsLogo} alt="ipfs" />
+                                            <span>{origin.replace("/ipfs/", "")}</span>
+                                        </div>
+                                    ) : (
+                                            keywords.join(", ") || "DAppNode package"
+                                        )}
+                                </div>
+                                <Button variant="dappnode" pill disabled={disabled}>
+                                    OPEN
+                                </Button>
+                            </div>
+                        </Card>
+                    )
+                })
+                }
+            </div>
+
+            {/* {installedpackages.map((i) => (
+                <pre>{JSON.stringify(i, null, 2)}</pre>
+            ))} */}
+
+            {/* <SubTitle>Volumes</SubTitle>
       <div className="dashboard-cards">
         {dappnodeVolumes.map(vol => (
           <VolumeCard key={vol.name} {...vol} />
         ))}
-      </div>
-    </>
-  );
+      </div> */}
+        </>
+    );
 }
 
 Dashboard.propTypes = {
-  chainData: PropTypes.array.isRequired,
-  dappnodeStats: PropTypes.object.isRequired,
-  dappnodeVolumes: PropTypes.array.isRequired
+    installedpackages: PropTypes.array.isRequired,
+    chainData: PropTypes.array.isRequired,
+    dappnodeStats: PropTypes.object.isRequired,
+    dappnodeVolumes: PropTypes.array.isRequired
 };
 
 const mapStateToProps = createStructuredSelector({
-  chainData: getChainData,
-  dappnodeStats: getDappnodeStats,
-  dappnodeVolumes: getDappnodeVolumes
+    chainData: getChainData,
+    dappnodeStats: getDappnodeStats,
+    dappnodeVolumes: getDappnodeVolumes,
+    installedpackages: s.getFilteredPackages,
 });
 
 // Uses bindActionCreators to wrap action creators with dispatch
 const mapDispatchToProps = {
-  fetchDappnodeStats
+    fetchDappnodeStats
 };
 
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+    mapStateToProps,
+    mapDispatchToProps
 )(Dashboard);

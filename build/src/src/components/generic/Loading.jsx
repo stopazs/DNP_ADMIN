@@ -9,7 +9,8 @@ function Loading(props) {
         <h4 style={{ opacity: 0.6 }}>{props.msg}</h4>
       </div>
       <div className="row justify-content-center">
-        <img width={size} height={size} src={logoAnimated} alt="loading..." />
+      LOADING
+        {/* <img width={size} height={size} src={logoAnimated} alt="loading..." /> */}
       </div>
     </React.Fragment>
   );

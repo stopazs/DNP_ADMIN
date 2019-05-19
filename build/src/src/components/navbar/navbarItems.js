@@ -37,38 +37,48 @@ export const fundedBy = [
 
 export const sidenavItems = [
   {
-    name: "Dashboard",
+    name: "Home Screen",
     href: "/dashboard",
     icon: Dashboard
   },
   {
-    name: "Activity",
-    href: "/activity",
-    icon: Activity
-  },
-  {
-    name: "Devices",
-    href: "/devices",
-    icon: Devices
-  },
-  {
-    name: "Installer",
+    name: "DappStore",
     href: "/installer",
     icon: NewFolder
   },
   {
-    name: "Packages",
-    href: "/packages",
-    icon: Folder
+    name: "Connect (VPN)",
+    href: "/devices",
+    icon: Devices
   },
+  {
+    name: "Support",
+    href: "/troubleshoot",
+    icon: Activity
+  },
+ 
+//   {
+//     name: "Packages",
+//     href: "/packages",
+//     icon: Folder
+//   },
   {
     name: "System",
     href: "/system",
     icon: Settings
   },
-  {
-    name: "Sdk",
-    href: "/sdk",
-    icon: Build
-  }
+  
+
+//   {
+//     name: "Activity",
+//     href: "/activity",
+//     icon: Activity
+//   },
+
+
+//   {
+//     name: "Sdk",
+//     href: "/sdk",
+//     icon: Build
+//   }
 ];

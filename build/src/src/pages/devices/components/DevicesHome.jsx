@@ -23,10 +23,10 @@ const DevicesHome = ({
   const [id, setId] = useState("");
   return (
     <>
-      <Title title={title} />
+      <Title title="Users" />
 
       <Input
-        placeholder="Device's unique name"
+        placeholder="user login"
         value={id}
         // Ensure id contains only alphanumeric characters
         onValueChange={value => setId((value || "").replace(/\W/g, ""))}
@@ -35,7 +35,7 @@ const DevicesHome = ({
           setId("");
         }}
         append={
-          <ButtonLight onClick={() => addDevice(id)}>Add device</ButtonLight>
+          <ButtonLight onClick={() => addDevice(id)}>Add user</ButtonLight>
         }
       />
 

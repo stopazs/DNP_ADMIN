@@ -1,0 +1,12 @@
+:root {
+    --avado-bg-color: #2e4e72;
+    --avado-bg-light-color: #51759f;
+}
+
+body {
+    background-color: var(--avado-bg-color);
+}
+
+.card {
+    background-color: var(--avado-bg-light-color);
+}

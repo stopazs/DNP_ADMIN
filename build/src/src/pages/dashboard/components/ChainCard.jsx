@@ -7,7 +7,7 @@ function ChainCard({ name, message, progress, error, syncing }) {
   const progressPercent = Math.floor(100 * progress);
   return (
     <Card className="chain-card">
-      <div className="name">{name}</div>
+      <div className="name">{name == "Mainnet" ? "Ethereum" : name}</div>
 
       {syncing ? (
         <ProgressBar

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { NavLink } from "react-router-dom";
 import { sidenavItems, fundedBy } from "./navbarItems";
-import logo from "img/dappnode-logo-wide-min.png";
+import logo from "img/avado-logo-v1.1.svg";
 import "./sidebar.css";
 
 if (!Array.isArray(sidenavItems)) throw Error("sidenavItems must be an array");
@@ -88,7 +88,7 @@ export default function SideBar() {
       {/* spacer keeps the funded-by section at the bottom (if possible) */}
       <div className="spacer" />
 
-      <div className="funded-by">
+      {/* <div className="funded-by">
         <div className="funded-by-text">SUPPORTED BY</div>
         <div className="funded-by-logos">
           {fundedBy.map((item, i) => (
@@ -105,7 +105,7 @@ export default function SideBar() {
             </a>
           ))}
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

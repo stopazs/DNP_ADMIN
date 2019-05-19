@@ -50,7 +50,7 @@ function TroubleshootHome({
       </Card>
 
       {/* Report section */}
-      <SubTitle>Report</SubTitle>
+      {/* <SubTitle>Report</SubTitle>
 
       <Card>
         <p>
@@ -81,7 +81,7 @@ function TroubleshootHome({
         <a className="btn btn-outline-dappnode mt-3" href={issueUrlRaw}>
           Report issue without providing information
         </a>
-      </Card>
+      </Card> */}
     </>
   );
 }

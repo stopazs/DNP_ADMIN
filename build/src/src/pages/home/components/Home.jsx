@@ -1,8 +1,9 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, Redirect } from "react-router-dom";
 import newTabProps from "utils/newTabProps";
 // Items
 import { sidenavItems } from "components/navbar/navbarItems";
+
 // styles
 import "./home.css";
 
@@ -11,10 +12,13 @@ const SURVEY_LINK = "https://goo.gl/forms/DSy1J1OlQGpdyhD22";
 if (!Array.isArray(sidenavItems)) throw Error("sidenavItems must be an array");
 
 export default class Home extends React.Component {
+
   render() {
     return (
       <>
-        <div className="jumbotron">
+
+      <Redirect to='/dashboard' />
+        {/* <div className="jumbotron"> */}
           <h1 className="display-4">Welcome to AVADO</h1>
           {/* <p className="lead">
             If you have just finished the installation, please help the team
@@ -30,9 +34,9 @@ export default class Home extends React.Component {
               Fill survey
             </a>
           </p> */}
-        </div>
+        {/* </div> */}
 
-        <div className="home-links no-a-style">
+        {/* <div className="home-links no-a-style">
           {sidenavItems.map(item => (
             <NavLink to={item.href} key={item.href}>
               <button
@@ -46,7 +50,7 @@ export default class Home extends React.Component {
               </button>
             </NavLink>
           ))}
-        </div>
+        </div> */}
       </>
     );
   }

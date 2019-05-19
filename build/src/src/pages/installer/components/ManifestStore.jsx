@@ -12,26 +12,29 @@ import { stringIncludes } from "utils/strings";
 function DnpStore({ directory, openDnp }) {
 
 
+    const hashToUrl = (hash) => {
+        return `http://my.ipfs.dnp.dappnode.eth:8080/ipfs/${hash.replace("/ipfs/", "")}`
+    };
 
   return (
     <div className="dnp-cards">
-      {directory.map(dnp => {
-        const { manifest, error, avatar = defaultAvatar, origin, tag } =
-          dnp || {};
-        const { name, description, keywords = [] } = manifest || {};
+      {directory.map(p => {
+        // const { manifest, error, avatar = defaultAvatar, origin, tag } =
+        //   dnp || {};
+        const { name, description, avatar, avadocategory } = p.manifest || {};
         /* Show the button as disabled (gray) if it's updated */
-        const disabled = stringIncludes(tag, "updated");
+        // const disabled = stringIncludes(tag, "updated");
         /* Rename tag from "install" to "get" because there were too many "install" tags 
            Cannot change the actual tag because it is used for logic around the installer */
-        const tagDisplay = tag === "INSTALL" ? "GET" : tag;
+        // const tagDisplay = tag === "INSTALL" ? "GET" : tag;
         return (
           <Card
             key={name + origin}
             className="dnp-card"
             shadow
-            onClick={() => openDnp(dnp.name)}
+            onClick={() => openDnp(name)}
           >
-            <img src={error ? errorAvatar : avatar} alt="avatar" />
+            <img src={hashToUrl(avatar)} alt="avatar" />
             <div className="info">
               <h5 className="title">{name}</h5>
               <div>{description}</div>
@@ -42,11 +45,13 @@ function DnpStore({ directory, openDnp }) {
                     <span>{origin.replace("/ipfs/", "")}</span>
                   </div>
                 ) : (
-                  keywords.join(", ") || "DAppNode package"
+                    <></>
+                //   keywords.join(", ") || "DAppNode package"
                 )}
               </div>
-              <Button variant="dappnode" pill disabled={disabled}>
-                {tagDisplay}
+              <Button variant="dappnode" pill>
+              INSTALL
+                {/* {tagDisplay} */}
               </Button>
             </div>
           </Card>
