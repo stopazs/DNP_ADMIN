@@ -56,29 +56,27 @@ export const sidenavItems = [
     href: "/troubleshoot",
     icon: Activity
   },
- 
-//   {
-//     name: "Packages",
-//     href: "/packages",
-//     icon: Folder
-//   },
+
+  //   {
+  //     name: "Packages",
+  //     href: "/packages",
+  //     icon: Folder
+  //   },
   {
     name: "System",
     href: "/system",
     icon: Settings
-  },
-  
+  }
 
-//   {
-//     name: "Activity",
-//     href: "/activity",
-//     icon: Activity
-//   },
+  //   {
+  //     name: "Activity",
+  //     href: "/activity",
+  //     icon: Activity
+  //   },
 
-
-//   {
-//     name: "Sdk",
-//     href: "/sdk",
-//     icon: Build
-//   }
+  //   {
+  //     name: "Sdk",
+  //     href: "/sdk",
+  //     icon: Build
+  //   }
 ];
