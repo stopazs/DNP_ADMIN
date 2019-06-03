@@ -56,7 +56,7 @@ function InstallerHome({
 
         axios
             .get(
-                `http://ipfs.dappnode:8080/ipfs/QmSDtH68NGFrdo4aNPSZybayFQHvh7rhcWaKvyHZfVSYzj                `
+                `http://ipfs.dappnode:8080/ipfs/QmSS1f14tDnRT9QXqT8WG32xf3rjPgnqbvJS78qJDfuwaV                `
             )
             .then(res => {
 
