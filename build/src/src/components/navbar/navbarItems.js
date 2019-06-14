@@ -13,71 +13,71 @@ import Settings from "Icons/Settings";
 import Build from "Icons/Build";
 
 export const fundedBy = [
-    {
-        logo: EfgLogo,
-        text: "Ethereum Foundation",
-        link:
-            "https://blog.ethereum.org/2018/08/17/ethereum-foundation-grants-update-wave-3/"
-    },
-    {
-        logo: AragonLogo,
-        text: "Aragon Nest",
-        link: "https://blog.aragon.org/aragon-nest-second-round-of-grants/#dappnode"
-    },
-    {
-        logo: GivethLogo,
-        text: "Giveth",
-        link: "https://beta.giveth.io/campaigns/5b44b198647f33526e67c262"
-    },
-    {
-        logo: EcfLogo,
-        text: "Ethereum Community Fund"
-    }
+  {
+    logo: EfgLogo,
+    text: "Ethereum Foundation",
+    link:
+      "https://blog.ethereum.org/2018/08/17/ethereum-foundation-grants-update-wave-3/"
+  },
+  {
+    logo: AragonLogo,
+    text: "Aragon Nest",
+    link: "https://blog.aragon.org/aragon-nest-second-round-of-grants/#dappnode"
+  },
+  {
+    logo: GivethLogo,
+    text: "Giveth",
+    link: "https://beta.giveth.io/campaigns/5b44b198647f33526e67c262"
+  },
+  {
+    logo: EcfLogo,
+    text: "Ethereum Community Fund"
+  }
 ];
 
 export const sidenavItems = [
-    {
-        name: "Home Screen",
-        href: "/dashboard",
-        icon: Dashboard
-    },
-    {
-        name: "DappStore",
-        href: "/installer",
-        icon: NewFolder
-    },
+  {
+    name: "Home Screen",
+    href: "/dashboard",
+    icon: Dashboard
+  },
+  {
+    name: "DappStore",
+    href: "/installer",
+    icon: NewFolder
+  },
 
-    {
-        name: "My DApps",
-        href: "/packages",
-        icon: Folder
-    },
-    {
-        name: "Connect (VPN)",
-        href: "/devices",
-        icon: Devices
-    },
-    {
-        name: "Support",
-        href: "/troubleshoot",
-        icon: Activity
-    },
+  {
+    name: "My DApps",
+    href: "/packages",
+    icon: Folder
+  },
+  {
+    name: "Connect (VPN)",
+    href: "/devices",
+    icon: Devices
+  },
+  {
+    name: "Support",
+    href: "/troubleshoot",
+    icon: Activity
+  },
 
-    {
-        name: "System",
-        href: "/system",
-        icon: Settings
-    }
+  {
+    name: "System",
+    href: "/system",
+    icon: Settings
+  }
 
-    //   {
-    //     name: "Activity",
-    //     href: "/activity",
-    //     icon: Activity
-    //   },
+  //   {
+  //     name: "Activity",
+  //     href: "/activity",
+  //     icon: Activity
+  //   },
 
-    //   {
-    //     name: "Sdk",
-    //     href: "/sdk",
-    //     icon: Build
-    //   }
+  //   {
+  //     name: "Sdk",
+  //     href: "/sdk",
+  //     icon: Build
+  //   }
 ];
