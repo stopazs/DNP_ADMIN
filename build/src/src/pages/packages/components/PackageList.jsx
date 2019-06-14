@@ -36,6 +36,7 @@ const PackagesList = ({
   if (loading) return <Loading msg="Loading installed DNPs..." />;
   if (error) return <Error msg={`Error loading installed DNPs: ${error}`} />;
 
+//   const filteredDnps = dnps; //.filter(dnp => xnor(coreDnps, dnp.isCore));
   const filteredDnps = dnps.filter(dnp => xnor(coreDnps, dnp.isCore));
   if (!filteredDnps.length) return <NoPackagesYet />;
 

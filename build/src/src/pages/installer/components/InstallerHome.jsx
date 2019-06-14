@@ -56,18 +56,30 @@ function InstallerHome({
 
         axios
             .get(
-                `http://ipfs.dappnode:8080/ipfs/QmSS1f14tDnRT9QXqT8WG32xf3rjPgnqbvJS78qJDfuwaV                `
+                `https://bo.ava.do/value/store`
             )
             .then(res => {
+                debugger;
+                const storeHash = JSON.parse(res.data).hash;
+                axios
+                    .get(
+                        `http://ipfs.dappnode:8080/ipfs/${storeHash}`
+                    )
+                    .then(res => {
 
-                const storeManifest = res.data;
+                        const storeManifest = res.data;
 
 
-                setStoreManifest(res.data);
-            })
-            .catch(error => {
+                        setStoreManifest(res.data);
+                    })
+                    .catch(error => {
+                        //debugger;
+                    });
+            }).catch(error => {
                 //debugger;
             });
+        ;
+
     }, []);
 
     useEffect(() => {
@@ -80,7 +92,7 @@ function InstallerHome({
         const dnp = directory.find(({ name }) => name === id);
         debugger;
         if ((dnp || {}).tag === "UPDATED") {
-            
+
             history.push(packagesRootPath + "/" + dnp.name);
         } else {
             fetchPackageData(id);
@@ -129,21 +141,21 @@ function InstallerHome({
 
         if (!storeManifest || !storeManifest.packages || !storeManifest.packages.length) return <Loading msg="Loading DNPs..." />;
         // if (storeManifest && storeManifest.length) {
-            const categories = storeManifest.categories.sort((a,b)=>{return a.weight-b.weight});
+        const categories = storeManifest.categories.sort((a, b) => { return a.weight - b.weight });
 
-            const store = categories.map((cat) => {
-                let subdir = storeManifest.packages.filter((p) => {
-                    return p.manifest.avadocategory === cat.tag
-                });
-                return (<>
-                    <SubTitle>{cat.description}</SubTitle>
-                    <ManifestStore directory={subdir} openDnp={openDnp} />
-                </>);
-            })
+        const store = categories.map((cat) => {
+            let subdir = storeManifest.packages.filter((p) => {
+                return p.manifest.avadocategory === cat.tag
+            });
+            return (<>
+                <SubTitle>{cat.description}</SubTitle>
+                <ManifestStore directory={subdir} openDnp={openDnp} />
+            </>);
+        })
 
-            return store;
+        return store;
 
-            // return <ManifestStore directory={storeManifest} openDnp={openDnp} />;
+        // return <ManifestStore directory={storeManifest} openDnp={openDnp} />;
 
 
         // }
