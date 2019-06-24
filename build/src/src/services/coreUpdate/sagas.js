@@ -88,46 +88,43 @@ function* fetchManifest(id) {
  * of the core DNP and all the necessary dependencies
  */
 export function* checkCoreUpdate() {
-//   try {
-//     // If chain is not synced yet, cancel request.
-//     if (yield call(isSyncing)) {
-//       return yield call(putMainnetIsStillSyncing);
-//     }
-//     yield put(updateIsLoading(loadingId));
-
-//     /**
-//      * @param success = {
-//      *   core.dnp.dappnode.eth: "latest",
-//      *   dappmanager.dnp.dappnode.eth: "0.1.18",
-//      *   vpn.dnp.dappnode.eth: "/ipfs/QmPPmuD55aSHQfvgjGMDZLsfY2ykcr54Sab9BoSXKFQZEv",
-//      *   ... }
-//      */
-//     const { state } = yield call(api.resolveRequest, {
-//       req: { name: coreName, ver: coreVersion },
-//       options: { BYPASS_RESOLVER: true }
-//     });
-//     const { [coreName]: _, ...deps } = state;
-//     yield put(a.updateCoreDeps(mapValues(deps, version => ({ version }))));
-
-//     /* Try to get all core dependencies manifests. If it fails, don't stop the update 
-//       Map the deps object to an incomplete manifest: { version }
-//     */
-//     const coreManifest = yield call(fetchManifest, coreId);
-//     yield put(a.updateCoreManifest(coreManifest));
-
-//     /* yield all accepts an object mapping of functions, returns { "vpn...": <manifestObj>, ... } */
-//     const depManifests = yield all(
-//       mapValues(deps, (version, name) =>
-//         call(fetchManifest, [name, version].join("@"))
-//       )
-//     );
-//     yield put(a.updateCoreDeps(depManifests));
-//     yield put(updateIsLoaded(loadingId));
-//     /* Log out current state */
-//     console.log(`DAppNode ${coreId} deps`, deps);
-//   } catch (e) {
-//     console.error(`Error on checkCoreUpdate: ${e.stack}`);
-//   }
+  //   try {
+  //     // If chain is not synced yet, cancel request.
+  //     if (yield call(isSyncing)) {
+  //       return yield call(putMainnetIsStillSyncing);
+  //     }
+  //     yield put(updateIsLoading(loadingId));
+  //     /**
+  //      * @param success = {
+  //      *   core.dnp.dappnode.eth: "latest",
+  //      *   dappmanager.dnp.dappnode.eth: "0.1.18",
+  //      *   vpn.dnp.dappnode.eth: "/ipfs/QmPPmuD55aSHQfvgjGMDZLsfY2ykcr54Sab9BoSXKFQZEv",
+  //      *   ... }
+  //      */
+  //     const { state } = yield call(api.resolveRequest, {
+  //       req: { name: coreName, ver: coreVersion },
+  //       options: { BYPASS_RESOLVER: true }
+  //     });
+  //     const { [coreName]: _, ...deps } = state;
+  //     yield put(a.updateCoreDeps(mapValues(deps, version => ({ version }))));
+  //     /* Try to get all core dependencies manifests. If it fails, don't stop the update
+  //       Map the deps object to an incomplete manifest: { version }
+  //     */
+  //     const coreManifest = yield call(fetchManifest, coreId);
+  //     yield put(a.updateCoreManifest(coreManifest));
+  //     /* yield all accepts an object mapping of functions, returns { "vpn...": <manifestObj>, ... } */
+  //     const depManifests = yield all(
+  //       mapValues(deps, (version, name) =>
+  //         call(fetchManifest, [name, version].join("@"))
+  //       )
+  //     );
+  //     yield put(a.updateCoreDeps(depManifests));
+  //     yield put(updateIsLoaded(loadingId));
+  //     /* Log out current state */
+  //     console.log(`DAppNode ${coreId} deps`, deps);
+  //   } catch (e) {
+  //     console.error(`Error on checkCoreUpdate: ${e.stack}`);
+  //   }
 }
 
 /**
@@ -165,6 +162,6 @@ function* updateCore() {
 // Each saga is mapped with its actionType using takeEvery
 // takeEvery(actionType, watchers[actionType])
 export default rootWatcher([
-//   [CONNECTION_OPEN, checkCoreUpdate],
-//   [t.UPDATE_CORE, updateCore]
+  //   [CONNECTION_OPEN, checkCoreUpdate],
+  //   [t.UPDATE_CORE, updateCore]
 ]);
