@@ -29,7 +29,7 @@ function DnpStore({ directory, openDnp }) {
             key={name + origin}
             className="dnp-card"
             shadow
-            onClick={() => openDnp(dnp.name)}
+            onClick={() => openDnp(origin)}
           >
             <img src={error ? errorAvatar : avatar} alt="avatar" />
             <div className="info">
@@ -42,7 +42,7 @@ function DnpStore({ directory, openDnp }) {
                     <span>{origin.replace("/ipfs/", "")}</span>
                   </div>
                 ) : (
-                  keywords.join(", ") || "DAppNode package"
+                  keywords.join(", ") || "AVADO package"
                 )}
               </div>
               <Button variant="dappnode" pill disabled={disabled}>

@@ -21,7 +21,7 @@ function DnpStore({ directory, openDnp }) {
       {directory.map(p => {
         // const { manifest, error, avatar = defaultAvatar, origin, tag } =
         //   dnp || {};
-        const { name, description, avatar, avadocategory } = p.manifest || {};
+        const { title, name, description, avatar, avadocategory } = p.manifest || {};
         /* Show the button as disabled (gray) if it's updated */
         // const disabled = stringIncludes(tag, "updated");
         /* Rename tag from "install" to "get" because there were too many "install" tags 
@@ -32,23 +32,23 @@ function DnpStore({ directory, openDnp }) {
             key={name + origin}
             className="dnp-card"
             shadow
-            onClick={() => openDnp(name)}
+            onClick={() => openDnp(p.manifesthash)}
           >
             <img src={hashToUrl(avatar)} alt="avatar" />
             <div className="info">
-              <h5 className="title">{name}</h5>
-              <div>{description}</div>
+              <h5 className="title">{title || name}</h5>
+              {/* <div>{description}</div>
               <div className="keywords">
                 {origin && typeof origin === "string" ? (
                   <div className="ipfs">
                     <img src={ipfsLogo} alt="ipfs" />
-                    <span>{origin.replace("/ipfs/", "")}</span>
+                    <span>{p.manifesthash}</span>
                   </div>
                 ) : (
                     <></>
                 //   keywords.join(", ") || "DAppNode package"
                 )}
-              </div>
+              </div> */}
               <Button variant="dappnode" pill>
               INSTALL
                 {/* {tagDisplay} */}

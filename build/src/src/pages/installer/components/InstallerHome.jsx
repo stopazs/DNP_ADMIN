@@ -59,17 +59,13 @@ function InstallerHome({
                 `https://bo.ava.do/value/store`
             )
             .then(res => {
-                debugger;
                 const storeHash = JSON.parse(res.data).hash;
                 axios
                     .get(
-                        `http://ipfs.dappnode:8080/ipfs/${storeHash}`
+                        `http://my.ipfs.dnp.dappnode.eth:8080/ipfs/${storeHash}`
                     )
                     .then(res => {
-
                         const storeManifest = res.data;
-
-
                         setStoreManifest(res.data);
                     })
                     .catch(error => {
@@ -89,6 +85,7 @@ function InstallerHome({
     }, [query]);
 
     function openDnp(id) {
+        debugger;
         const dnp = directory.find(({ name }) => name === id);
         debugger;
         if ((dnp || {}).tag === "UPDATED") {

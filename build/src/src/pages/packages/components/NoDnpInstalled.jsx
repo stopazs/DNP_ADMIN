@@ -11,15 +11,15 @@ import { shortNameCapitalized } from "utils/format";
 const NoPackagesYet = ({ id, moduleName }) => (
   <div className="centered-container">
     <h4>{id} is not installed</h4>
-    <p>Go back to {moduleName} or click below to install it</p>
+    {/* <p>Go back to {moduleName} or click below to install it</p> */}
     <Link style={{ margin: "0 10px" }} to={"/" + moduleName}>
       <ButtonLight style={{ textTransform: "capitalize" }}>
-        {moduleName}
+        to {moduleName}
       </ButtonLight>
     </Link>
-    <Link style={{ margin: "0 10px" }} to={installerRootPath + "/" + id}>
+    {/* <Link style={{ margin: "0 10px" }} to={installerRootPath + "/" + id}>
       <ButtonLight>Install {shortNameCapitalized(id)}</ButtonLight>
-    </Link>
+    </Link> */}
   </div>
 );
 
