@@ -59,13 +59,18 @@ function InstallerHome({
                 `https://bo.ava.do/value/store`
             )
             .then(res => {
+                // debugger;
                 const storeHash = JSON.parse(res.data).hash;
+                //  const storeHash = "QmekF1EwLrfSwm4mjRHaBGrHmRafYBLTTz2Ymx5nszdaan";
                 axios
                     .get(
                         `http://my.ipfs.dnp.dappnode.eth:8080/ipfs/${storeHash}`
                     )
                     .then(res => {
+
                         const storeManifest = res.data;
+
+
                         setStoreManifest(res.data);
                     })
                     .catch(error => {
