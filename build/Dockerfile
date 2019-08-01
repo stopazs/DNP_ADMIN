@@ -4,7 +4,6 @@ WORKDIR /usr/src/app
 COPY build/src/package.json ./
 COPY build/src/yarn.lock ./
 # install dependencies
-RUN yarn
 RUN yarn install --production
 # copy the contents of the app
 COPY build/src .
@@ -13,6 +12,7 @@ RUN apt-get update && apt-get --yes install git jq
 ADD .git .git
 ADD dappnode_package.json .
 RUN ./getVersionData.sh
+RUN yarn add react-scripts
 RUN yarn run build
 
 FROM node:10.15.3 as build-deps-openvpn
