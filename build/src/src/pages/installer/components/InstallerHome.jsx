@@ -37,6 +37,7 @@ import SubTitle from "components/SubTitle";
 
 function InstallerHome({
     // variables
+    id,
     directory,
     mainnet,
     loading,
@@ -45,32 +46,69 @@ function InstallerHome({
     // Actions
     fetchPackageData,
     fetchPackageDataFromQuery,
+    packages,
     match
 }) {
     const [query, setQuery] = useState("");
     const [selectedTypes, setSelectedTypes] = useState({});
-    const [storeManifest, setStoreManifest] = useState([]);
+    const [storeManifest, setStoreManifest] = useState();
+    const [displayManifest, setDisplayManifest] = useState();
+
+    const peerConnect = (peer) => {
+        console.log(`connecting to ${peer}`);
+        const apiLink = `http://my.ipfs.dnp.dappnode.eth:5001/api/v0/swarm/connect?arg=${peer}`;
+        axios
+            .get(
+                apiLink
+            )
+            .then(res => {
+                // debugger;
+                console.log(res);
+            })
+            .catch(error => {
+                // debugger;
+                console.log(`Failed to connect to ${apiLink}`, error.message);
+            });
+    };
+
+    useEffect(() => {
+        if (packages && storeManifest && packages.length > 0) {
+            storeManifest.packages = storeManifest.packages.map((p) => {
+                // console.log(p);
+                const installedPackage = packages.find((installedpackage) => {
+                    // console.log(`check package ${installedpackage.name}`);
+                    return installedpackage.name === p.manifest.name
+                });
+                if (installedPackage) {
+                    p.installed = true;
+                    p.installedVersion = installedPackage.version;
+                    // debugger;
+                }
+                return p;
+            });
+            setDisplayManifest(storeManifest);
+        }
+    }, [packages, storeManifest]);
 
 
     useEffect(() => {
-
         axios
             .get(
                 `https://bo.ava.do/value/store`
             )
             .then(res => {
                 // debugger;
-                const storeHash = JSON.parse(res.data).hash;
+                const storeHash = (id && id !== "undefined") ? id : JSON.parse(res.data).hash;
                 //  const storeHash = "QmekF1EwLrfSwm4mjRHaBGrHmRafYBLTTz2Ymx5nszdaan";
                 axios
                     .get(
                         `http://my.ipfs.dnp.dappnode.eth:8080/ipfs/${storeHash}`
                     )
                     .then(res => {
-
                         const storeManifest = res.data;
-
-
+                        if (storeManifest && storeManifest.ipfsHostNodes) {
+                            storeManifest.ipfsHostNodes.map(peerConnect);
+                        }
                         setStoreManifest(res.data);
                     })
                     .catch(error => {
@@ -90,9 +128,9 @@ function InstallerHome({
     }, [query]);
 
     function openDnp(id) {
-        debugger;
+        // debugger;
         const dnp = directory.find(({ name }) => name === id);
-        debugger;
+        // debugger;
         if ((dnp || {}).tag === "UPDATED") {
 
             history.push(packagesRootPath + "/" + dnp.name);
@@ -141,23 +179,23 @@ function InstallerHome({
      */
     function Body() {
 
-        if (!storeManifest || !storeManifest.packages || !storeManifest.packages.length) return <Loading msg="Loading DNPs..." />;
-        // if (storeManifest && storeManifest.length) {
-        const categories = storeManifest.categories.sort((a, b) => { return a.weight - b.weight });
+        if (!displayManifest || !displayManifest.packages || !displayManifest.packages.length) return <Loading msg="Loading DNPs..." />;
+        // if (displayManifest && displayManifest.length) {
+        const categories = displayManifest.categories.sort((a, b) => { return a.weight - b.weight });
 
-        const store = categories.map((cat) => {
-            let subdir = storeManifest.packages.filter((p) => {
+        const store = categories.map((cat, i) => {
+            let subdir = displayManifest.packages.filter((p) => {
                 return p.manifest.avadocategory === cat.tag
             });
-            return (<>
+            return (<div key={i}>
                 <SubTitle>{cat.description}</SubTitle>
                 <ManifestStore directory={subdir} openDnp={openDnp} />
-            </>);
+            </div>);
         })
 
         return store;
 
-        // return <ManifestStore directory={storeManifest} openDnp={openDnp} />;
+        // return <ManifestStore directory={displayManifest} openDnp={openDnp} />;
 
 
         // }
@@ -191,6 +229,7 @@ function InstallerHome({
 
 InstallerHome.propTypes = {
     // State -> props
+    id: PropTypes.string,
     directory: PropTypes.array.isRequired,
     selectedTypes: PropTypes.object.isRequired,
     inputValue: PropTypes.string.isRequired,
@@ -200,17 +239,20 @@ InstallerHome.propTypes = {
     error: PropTypes.string.isRequired,
     // Dispatch -> props
     fetchPackageData: PropTypes.func.isRequired,
-    fetchPackageDataFromQuery: PropTypes.func.isRequired
+    fetchPackageDataFromQuery: PropTypes.func.isRequired,
+    packages: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
+    id: s.getQueryId,
     directory: s.getDnpDirectoryWithTagsNonCores,
     directoryLoaded: s.directoryLoaded,
     selectedTypes: s.getSelectedTypes,
     inputValue: s.getInputValue,
     mainnet: getMainnet,
     loading: getIsLoading.dnpDirectory,
-    error: getLoadingError.dnpDirectory
+    error: getLoadingError.dnpDirectory,
+    packages: s.getInstalled
 });
 
 const mapDispatchToProps = {

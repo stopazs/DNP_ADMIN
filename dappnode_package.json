@@ -1,35 +1,32 @@
 {
   "name": "admin.dnp.dappnode.eth",
-  "version": "0.2.0",
-  "description": "Dappnode package responsible for providing the administrative user interface",
-  "avatar": "/ipfs/QmP7rbBLMfKTHpVQwfmgrenYuuUkVw5CXDfzJSoPBiJuNj",
+  "version": "10.0.4",
+  "description": "AVADO user interface",
+  "avatar": "/ipfs/Qmas1K2TUrGhusqzWkmkjPkXnUVbNj5j2t7LXKSTu5t5sq",
   "type": "dncore",
   "image": {
-    "path": "",
-    "hash": "",
-    "size": "",
-    "volumes": ["vpndnpdappnodeeth_shared:/usr/www/openvpn/cred"],
-    "ports": ["8090:8090"],
+    "path": "admin.dnp.dappnode.eth_10.0.4.tar.xz",
+    "hash": "/ipfs/QmfHD5Eyc5UwJA2RSPijixYZFgDC8ZqoGBNMjrX6jQD8MG",
+    "size": 7918580,
+    "volumes": [
+      "vpndnpdappnodeeth_shared:/usr/www/openvpn/cred"
+    ],
+    "ports": [
+      "8090:8090"
+    ],
     "restart": "always",
     "subnet": "172.33.0.0/16",
     "ipv4_address": "172.33.1.9"
   },
-  "author": "DAppNode Association <admin@dappnode.io> (https://github.com/dappnode)",
-  "contributors": [
-    "DAppLion <dapplion@giveth.io> (https://github.com/dapplion)",
-    "Eduardo Antuña <eduadiez@gmail.com> (https://github.com/eduadiez)"
+  "author": "AVADO",
+  "contributors": [],
+  "keywords": [
+    "DAppNodeCore",
+    "UI",
+    "Admin"
   ],
-  "keywords": ["DAppNodeCore", "UI", "Admin"],
   "links": {
-    "ui": "http://my.dappnode/",
-    "homepage": "https://github.com/dappnode/DNP_ETHCHAIN#readme"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/dappnode/DNP_ADMIN"
-  },
-  "bugs": {
-    "url": "https://github.com/dappnode/DNP_ADMIN/issues"
+    "ui": "http://my.dappnode/"
   },
   "license": "GPL-3.0"
 }

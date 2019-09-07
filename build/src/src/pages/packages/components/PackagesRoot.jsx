@@ -4,12 +4,14 @@ import { rootPath } from "../data";
 // Components
 import PackagesHome from "./PackagesHome";
 import PackageInterface from "./PackageInterface";
+import PackageWizard from "./PackageWizard";
 // Logic
 
 const PackagesRoot = () => (
   <>
     <Route exact path={rootPath} component={PackagesHome} />
-    <Route path={rootPath + "/:id"} component={PackageInterface} />
+    <Route exact path={rootPath + "/:id"} component={PackageWizard} />
+    <Route exact path={rootPath + "/:id/detail"} component={PackageInterface} />
   </>
 );
 

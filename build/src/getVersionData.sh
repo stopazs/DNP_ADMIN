@@ -8,8 +8,11 @@ export REACT_APP_VERSION=$(cat dappnode_package.json | jq '.version')
 export REACT_APP_BRANCH=$(git rev-parse --abbrev-ref HEAD)
 export REACT_APP_COMMIT=$(git rev-parse --verify HEAD)
 
+echo "NODE_PATH=src" > .env.production
 echo "REACT_APP_VERSION=${REACT_APP_VERSION}" >> .env.production
 echo "REACT_APP_BRANCH=${REACT_APP_BRANCH}" >> .env.production
 echo "REACT_APP_COMMIT=${REACT_APP_COMMIT}" >> .env.production
+
+cp .env.production .env
 
 cat .env.production

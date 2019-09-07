@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
+import { withRouter, Redirect } from "react-router-dom";
 import withTitle from "components/hoc/withTitle";
 import { compose } from "redux";
 import { createStructuredSelector } from "reselect";
@@ -28,116 +28,162 @@ import Card from "components/Card";
 import Switch from "components/Switch";
 
 function InstallerInterface({
-  id,
-  dnp,
-  progressLogs,
-  // Actions
-  install,
-  clearUserSet,
-  fetchPackageRequest,
-  // Extra
-  history
+    id,
+    dnp,
+    progressLogs,
+    // Actions
+    install,
+    clearUserSet,
+    fetchPackageRequest,
+    // Extra
+    packages,
+    history
 }) {
-  const [showSettings, setShowSettings] = useState(false);
-  const [options, setOptions] = useState({});
+    const [showSettings, setShowSettings] = useState(false);
+    const [options, setOptions] = useState({});
+    const [installedPackage, setInstalledPackage] = useState();
 
-  useEffect(() => {
-    clearUserSet();
-    fetchPackageRequest(id);
-  }, [id]);
+    useEffect(() => {
+        clearUserSet();
+        fetchPackageRequest(id);
+    }, [id]);
 
-  const { loading, resolving, error, manifest, requestResult, tag } = dnp || {};
-  const { name, type } = manifest || {};
+    const { loading, resolving, error, manifest, requestResult, tag } = dnp || {};
+    const { name, type } = manifest || {};
 
-  // When the DNP is updated (finish installation), redirect to /packages
-  useEffect(() => {
-    if (stringIncludes(tag, "updated") && name)
-      history.push(packagesRootPath + "/" + name);
-  }, [tag]);
+    useEffect(() => {
+        if (packages && manifest) {
+            const installedPackage = packages.find((installedpackage) => {
+                // console.log(`check package ${installedpackage.name}`);
+                return installedpackage.name === manifest.name
+            });
+            // console.log("installed version", installedPackage);
+            setInstalledPackage(installedPackage);
+        }
+    }, [packages, manifest]);
 
-  if (error && !manifest) return <Error msg={`Error: ${error}`} />;
-  if (loading) return <Loading msg={"Loading DNP data..."} />;
-  if (!dnp && !error) return <Error msg={"Package not found"} />;
 
-  /**
-   * Filter options according to the current package
-   * 1. If package is core and from ipfs, show "BYPASS_CORE_RESTRICTION" option
-   */
-  const availableOptions = [];
-  if ((id || "").startsWith("/ipfs/") && type === "dncore")
-    availableOptions.push("BYPASS_CORE_RESTRICTION");
+    //   // When the DNP is updated (finish installation), redirect to /packages
+    //   useEffect(() => {
+    //     if (stringIncludes(tag, "updated") && name)
+    //       history.push(packagesRootPath + "/" + name);
+    //   }, [tag]);
 
-  // Otherwise, show info an allow an install
-  return (
-    <>
-      <ProgressLogs progressLogs={progressLogs} />
-      <Card className="installer-header">
-        <Details dnp={dnp} />
-        {availableOptions.map(option => (
-          <Switch
-            checked={options[option]}
-            onToggle={value => setOptions({ [option]: value })}
-            label={toSentence(option)}
-            id={"switch-" + option}
-          />
-        ))}
-        {isEmpty(progressLogs) && (
-          <Button variant="dappnode" onClick={() => install(id, options)}>
-            {tag}
-          </Button>
-        )}
-      </Card>
-      <Dependencies
-        request={requestResult || {}}
-        resolving={resolving || false}
-      />
-      <SpecialPermissions />
-      {showSettings ? (
+    const manage = (name) => {
+        history.push(`${packagesRootPath}/${name}/detail`);
+    }
+
+    // then it's a custom hash on the root
+    if (id.startsWith("custom")) {
+        return null;
+    }
+
+    if (error && !manifest) return <Error msg={`Error: ${error}`} />;
+    if (loading) return <Loading msg={"Loading DNP data..."} />;
+    if (!dnp && !error) return <Error msg={"Package not found"} />;
+
+    let actionButtonTxt;
+    if (!installedPackage) {
+        actionButtonTxt = "INSTALL"
+    }
+
+    if (installedPackage && manifest && installedPackage.version !== manifest.version) {
+        actionButtonTxt = `UPGRADE TO ${manifest.version}`
+    }
+
+
+
+    /**
+     * Filter options according to the current package
+     * 1. If package is core and from ipfs, show "BYPASS_CORE_RESTRICTION" option
+     */
+    const availableOptions = [];
+    if ((id || "").startsWith("/ipfs/") && type === "dncore")
+        availableOptions.push("BYPASS_CORE_RESTRICTION");
+    // debugger;
+    // Otherwise, show info an allow an install
+    return (
         <>
-          <Envs />
-          <Ports />
-          <Vols />
-        </>
-      ) : (
-        <ButtonLight onClick={() => setShowSettings(true)}>
-          Show advanced settings
+            <ProgressLogs progressLogs={progressLogs} />
+            <Card className="installer-header">
+                <Details dnp={dnp} />
+                {availableOptions.map(option => (
+                    <Switch
+                        checked={options[option]}
+                        onToggle={value => setOptions({ [option]: value })}
+                        label={toSentence(option)}
+                        id={"switch-" + option}
+                    />
+                ))}
+
+                {installedPackage && (
+                    <div>You have installed version {installedPackage.version}</div>
+                )}
+
+                {actionButtonTxt && isEmpty(progressLogs) && (
+                    <Button variant="dappnode" onClick={() => install(id, options)}>
+                        {actionButtonTxt}
+                    </Button>
+                )}
+
+                {installedPackage && (
+                    <Button variant="dappnode" onClick={() => manage(name)}>MANAGE PACKAGE</Button>
+                )}
+
+            </Card>
+            <Dependencies
+                request={requestResult || {}}
+                resolving={resolving || false}
+            />
+            <SpecialPermissions />
+            {showSettings ? (
+                <>
+                    <Envs />
+                    <Ports />
+                    <Vols />
+                </>
+            ) : (
+                    <ButtonLight onClick={() => setShowSettings(true)}>
+                        Show advanced settings
         </ButtonLight>
-      )}
-    </>
-  );
+                )}
+        </>
+    );
 }
 
 InstallerInterface.propTypes = {
-  id: PropTypes.string.isRequired,
-  dnp: PropTypes.object,
-  history: PropTypes.object.isRequired
+    id: PropTypes.string.isRequired,
+    dnp: PropTypes.object,
+    history: PropTypes.object.isRequired,
+    packages: PropTypes.array.isRequired,
 };
 
 // Container
 
 const mapStateToProps = createStructuredSelector({
-  id: s.getQueryId,
-  dnp: s.getQueryDnp,
-  progressLogs: (state, ownProps) =>
-    getProgressLogsByDnp(state, s.getQueryIdOrName(state, ownProps)),
-  // For the withTitle HOC
-  subtitle: s.getQueryIdOrName
+    id: s.getQueryId,
+    dnp: s.getQueryDnp,
+    progressLogs: (state, ownProps) =>
+        getProgressLogsByDnp(state, s.getQueryIdOrName(state, ownProps)),
+    // For the withTitle HOC
+    subtitle: s.getQueryIdOrName,
+    packages: s.getInstalled
 });
 
 // Uses bindActionCreators to wrap action creators with dispatch
 const mapDispatchToProps = {
-  install: a.install,
-  clearUserSet: a.clearUserSet,
-  fetchPackageRequest: a.fetchPackageRequest
+    install: a.install,
+    clearUserSet: a.clearUserSet,
+    fetchPackageRequest: a.fetchPackageRequest
 };
 
 export default compose(
-  withRouter,
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  ),
-  withTitle("Installer")
+    withRouter,
+    connect(
+        mapStateToProps,
+        mapDispatchToProps
+    ),
+    withTitle("Installer")
 )(InstallerInterface);
 
 // ##### TODO: - Implement the loading HOC for the specific DNP fetch

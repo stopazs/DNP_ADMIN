@@ -24,7 +24,7 @@ function Details({ dnp }) {
   const data = {
     "Developed by": author,
     "Download size": humanFileSize(size),
-    Version: `${version} ${origin || ""}`
+    Version: `${version}`
   };
 
   return (

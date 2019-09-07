@@ -1,10 +1,12 @@
 FROM node:10.15.3 as build-deps-adminui
+RUN echo "====================Building Admin website===================="
 WORKDIR /usr/src/app
 # ensuring both package.json AND package-lock.json are copied
 COPY build/src/package.json ./
 COPY build/src/yarn.lock ./
 # install dependencies
-RUN yarn install --production
+RUN yarn 
+# install --production
 # copy the contents of the app
 COPY build/src .
 # Get this DNP version and git hash. Results in /usr/src/app/.version.json
@@ -13,20 +15,26 @@ ADD .git .git
 ADD dappnode_package.json .
 RUN ./getVersionData.sh
 RUN yarn add react-scripts
-RUN yarn run build
+RUN NODE_OPTIONS="--max-old-space-size=4096" yarn run build
+RUN echo "====================Finished building Admin website===================="
 
 FROM node:10.15.3 as build-deps-openvpn
+RUN echo "====================Building OpenVPN landing page===================="
 WORKDIR /usr/src/app
 # ensuring both package.json AND package-lock.json are copied
 COPY build/src_openvpn/package*.json ./
 COPY build/src_openvpn/*lock* ./
-# install dependencies
-RUN yarn install --production
-# copy the contents of the app
+RUN yarn add react-scripts
 COPY build/src_openvpn .
+# install dependencies
+RUN yarn build
+#install --production
+# copy the contents of the app
 # build for production
-RUN yarn run build
+#RUN NODE_OPTIONS="--max-old-space-size=4096" yarn run build
+# RUN yarn run build
 RUN node injectToHtml
+RUN echo "====================Finished building OpenVPN landing page===================="
 
 FROM nginx:1.12-alpine
 RUN mkdir -p /usr/www/adminui && mkdir -p /usr/www/openvpn && mkdir -p /usr/www/openvpn/cred

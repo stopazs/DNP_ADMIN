@@ -4,6 +4,8 @@ import * as s from "../selectors";
 import { createStructuredSelector } from "reselect";
 import PropTypes from "prop-types";
 // Components
+import Wizard from "./PackageViews/Details/Wizard";
+import "./PackageViews/Details/Wizard.css";
 import Details from "./PackageViews/Details";
 import Logs from "./PackageViews/Logs";
 import Envs from "./PackageViews/Envs";
@@ -28,16 +30,30 @@ const PackageInterface = ({
     loading,
     error
 }) => {
-    return (
+
+    return(
         <>
+
+
             {dnp ? (
                 <>
-                    <Title title={moduleName} subtitle={id} />
-                    <Controls dnp={dnp} />
-                    <Details dnp={dnp} />
-                    <Envs dnp={dnp} />
-                    <FileManager dnp={dnp} />
-                    <Logs id={dnp.name} />
+                    {dnp.manifest && dnp.manifest.links && dnp.manifest.links.OnboardingWizard ? (
+                        <>
+                            <div className="fullheight">
+                                <Wizard dnp={dnp} />
+                            </div>
+                        </>
+                    ) : (
+                            <>
+                                <Title title={moduleName} subtitle={id} />
+                                <Details dnp={dnp} />
+                                <Controls dnp={dnp} />
+                                <Envs dnp={dnp} />
+                                <FileManager dnp={dnp} />
+                                <Logs id={dnp.name} />
+                            </>
+                        )
+                    }
                 </>
             ) : loading ? (
                 <Loading msg="Loading installed Package..." />
@@ -47,8 +63,7 @@ const PackageInterface = ({
                 <NoDnpInstalled id={id} moduleName={moduleName} />
             ) : null}
         </>
-    )
-};
+    )};
 
 PackageInterface.propTypes = {
     dnp: PropTypes.object,

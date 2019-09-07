@@ -2,18 +2,18 @@ import { mountPoint } from "./data";
 import { createSelector } from "reselect";
 import merge from "deepmerge";
 import {
-  getDnpDirectory,
-  getDnpDirectoryWhitelisted
+    getDnpDirectory,
+    getDnpDirectoryWhitelisted
 } from "services/dnpDirectory/selectors";
 import { getDnpInstalled } from "services/dnpInstalled/selectors";
 import { getDappnodeParams } from "services/dappnodeStatus/selectors";
 // Parsers
 import {
-  parseDefaultEnvs,
-  parseDefaultPorts,
-  parseDefaultVols,
-  parseDnpFromDirectory,
-  parseDepsFromDnp
+    parseDefaultEnvs,
+    parseDefaultPorts,
+    parseDefaultVols,
+    parseDnpFromDirectory,
+    parseDepsFromDnp
 } from "./parsers";
 import parseInstallTag from "./parsers/parseInstallTag";
 import stringifyUserSetPorts from "./parsers/stringifyUserSetPorts";
@@ -24,20 +24,20 @@ import _ from "lodash";
 // #### EXTERNAL SELECTORS
 export const isSyncing = state => state.isSyncing;
 export const getShouldOpenPorts = createSelector(
-  getDappnodeParams,
-  dappnodeParams => dappnodeParams.openPorts && dappnodeParams.upnpAvailable
+    getDappnodeParams,
+    dappnodeParams => dappnodeParams.openPorts && dappnodeParams.upnpAvailable
 );
 
 // #### INTERNAL SELECTOR
 const getLocal = createSelector(
-  state => state[mountPoint],
-  local => local
+    state => state[mountPoint],
+    local => local
 );
 const getFromLocalFactory = key =>
-  createSelector(
-    getLocal,
-    local => local[key]
-  );
+    createSelector(
+        getLocal,
+        local => local[key]
+    );
 
 export const getSelectedTypes = getFromLocalFactory("selectedTypes");
 export const getInputValue = getFromLocalFactory("input");
@@ -50,12 +50,23 @@ export const getUserSetVols = getFromLocalFactory("userSetVols");
  * - Used by Ports.jsx and Vols.jsx to lock the variables if DNP is installed
  */
 export const getIsInstalled = createSelector(
-  getDnpInstalled,
-  dnpInstalled =>
-    dnpInstalled.reduce((obj, dnp) => {
-      return { ...obj, [dnp.name]: true };
-    }, {})
+    getDnpInstalled,
+    dnpInstalled =>
+        dnpInstalled.map((obj) => {
+            return obj;
+        })
 );
+
+export const getInstalled = getDnpInstalled;
+
+// createSelector(
+//     getDnpInstalled,
+//     dnpInstalled => dnpInstalled
+//         // dnpInstalled.reduce((obj, dnp) => {
+//         //     return { ...obj, [dnp.name]: true };
+//         // }, {})
+
+// );
 
 /**
  * Gets the query id from the react-router injected props
@@ -64,31 +75,32 @@ export const getIsInstalled = createSelector(
  * @returns {string}
  */
 export const getQueryId = createSelector(
-  (_, ownProps) => (ownProps.match || {}).params.id,
-  queryId => decodeURIComponent(queryId)
+    (_, ownProps) => (ownProps.match || {}).params.id,
+    queryId => decodeURIComponent(queryId)
 );
 
+
 export const getQueryDnp = createSelector(
-  getQueryId,
-  getDnpDirectory,
-  getDnpInstalled,
-  (queryId, dnpDirectory, dnpInstalled) => {
-    const dnp = dnpDirectory[queryId];
-    const tag =
-      dnp && dnp.name && parseInstallTag(dnpDirectory, dnpInstalled, dnp.name);
-    return { ...dnp, tag };
-  }
+    getQueryId,
+    getDnpDirectory,
+    getDnpInstalled,
+    (queryId, dnpDirectory, dnpInstalled) => {
+        const dnp = dnpDirectory[queryId];
+        const tag =
+            dnp && dnp.name && parseInstallTag(dnpDirectory, dnpInstalled, dnp.name);
+        return { ...dnp, tag };
+    }
 );
 
 export const getQueryName = createSelector(
-  getQueryDnp,
-  dnp => ((dnp || {}).manifest || {}).name || (dnp || {}).name
+    getQueryDnp,
+    dnp => ((dnp || {}).manifest || {}).name || (dnp || {}).name
 );
 
 export const getQueryIdOrName = createSelector(
-  getQueryName,
-  getQueryId,
-  (name, id) => name || id
+    getQueryName,
+    getQueryId,
+    (name, id) => name || id
 );
 
 /**
@@ -108,50 +120,50 @@ export const getQueryIdOrName = createSelector(
  * [Tested]
  */
 const getVarFactory = varId => {
-  // Condensed switch statement to assign selectors based on an ID
-  const [getUserSetVar, parseDefaultVar] =
-    varId === "envs"
-      ? [getUserSetEnvs, parseDefaultEnvs]
-      : varId === "ports"
-      ? [getUserSetPorts, parseDefaultPorts]
-      : varId === "vols"
-      ? [getUserSetVols, parseDefaultVols]
-      : [null, null];
+    // Condensed switch statement to assign selectors based on an ID
+    const [getUserSetVar, parseDefaultVar] =
+        varId === "envs"
+            ? [getUserSetEnvs, parseDefaultEnvs]
+            : varId === "ports"
+                ? [getUserSetPorts, parseDefaultPorts]
+                : varId === "vols"
+                    ? [getUserSetVols, parseDefaultVols]
+                    : [null, null];
 
-  return createSelector(
-    getQueryId,
-    getDnpDirectory,
-    getDnpInstalled,
-    getUserSetVar,
-    (queryId, dnpDirectory, dnpInstalled, userSetVar) => {
-      if (!queryId) return {};
+    return createSelector(
+        getQueryId,
+        getDnpDirectory,
+        getDnpInstalled,
+        getUserSetVar,
+        (queryId, dnpDirectory, dnpInstalled, userSetVar) => {
+            if (!queryId) return {};
 
-      // Pre-bind this parser to avoid repeated code
-      const parseDefaultBinded = parseDefaultVar.bind(
-        this,
-        dnpDirectory,
-        dnpInstalled
-      );
-      const defaultVars = {};
+            // Pre-bind this parser to avoid repeated code
+            const parseDefaultBinded = parseDefaultVar.bind(
+                this,
+                dnpDirectory,
+                dnpInstalled
+            );
+            const defaultVars = {};
 
-      // Append envs from the query
-      const dnp = parseDnpFromDirectory(dnpDirectory, queryId);
-      defaultVars[dnp.name] = parseDefaultBinded(queryId);
+            // Append envs from the query
+            const dnp = parseDnpFromDirectory(dnpDirectory, queryId);
+            defaultVars[dnp.name] = parseDefaultBinded(queryId);
 
-      // Append envs from the dependencies of the query
-      const deps = parseDepsFromDnp(dnp);
-      Object.keys(deps)
-        .filter(depName => depName !== dnp.name)
-        .forEach(depName => {
-          const depVersion = deps[depName];
-          defaultVars[depName] = parseDefaultBinded(depName, depVersion);
-        });
+            // Append envs from the dependencies of the query
+            const deps = parseDepsFromDnp(dnp);
+            Object.keys(deps)
+                .filter(depName => depName !== dnp.name)
+                .forEach(depName => {
+                    const depVersion = deps[depName];
+                    defaultVars[depName] = parseDefaultBinded(depName, depVersion);
+                });
 
-      // Merge default envs and the ones set by the user
-      // Also, clean empty objects
-      return cleanObj(merge(defaultVars, userSetVar));
-    }
-  );
+            // Merge default envs and the ones set by the user
+            // Also, clean empty objects
+            return cleanObj(merge(defaultVars, userSetVar));
+        }
+    );
 };
 
 /**
@@ -186,14 +198,14 @@ export const getVols = getVarFactory("vols");
  * [Tested]
  */
 export const getUserSetFormatted = createSelector(
-  getUserSetEnvs,
-  getUserSetPorts,
-  getUserSetVols,
-  (envs, ports, vols) => ({
-    userSetEnvs: envs,
-    userSetPorts: stringifyUserSetPorts(ports),
-    userSetVols: stringifyUserSetVols(vols)
-  })
+    getUserSetEnvs,
+    getUserSetPorts,
+    getUserSetVols,
+    (envs, ports, vols) => ({
+        userSetEnvs: envs,
+        userSetPorts: stringifyUserSetPorts(ports),
+        userSetVols: stringifyUserSetVols(vols)
+    })
 );
 
 /**
@@ -204,19 +216,19 @@ export const getUserSetFormatted = createSelector(
  * [Tested]
  */
 export const getHideCardHeaders = createSelector(
-  getEnvs,
-  getPorts,
-  getVols,
-  getQueryName,
-  (envs, ports, vols, queryName) =>
-    Boolean(
-      Object.keys(envs).length === 1 &&
-        envs[queryName] &&
-        Object.keys(ports).length === 1 &&
-        ports[queryName] &&
-        Object.keys(vols).length === 1 &&
-        vols[queryName]
-    )
+    getEnvs,
+    getPorts,
+    getVols,
+    getQueryName,
+    (envs, ports, vols, queryName) =>
+        Boolean(
+            Object.keys(envs).length === 1 &&
+            envs[queryName] &&
+            Object.keys(ports).length === 1 &&
+            ports[queryName] &&
+            Object.keys(vols).length === 1 &&
+            vols[queryName]
+        )
 );
 
 /**
@@ -226,16 +238,16 @@ export const getHideCardHeaders = createSelector(
  * [Tested]
  */
 const getDnpDirectoryWithTags = createSelector(
-  getDnpDirectoryWhitelisted,
-  getDnpInstalled,
-  (dnpDirectory, dnpInstalled) => {
-    return Object.entries(dnpDirectory)
-      .map(([dnpName, dnp]) => {
-        const tag = parseInstallTag(dnpDirectory, dnpInstalled, dnpName);
-        return { ...dnp, tag };
-      })
-      .sort((dnpA, dnpB) => dnpB.directoryId - dnpA.directoryId);
-  }
+    getDnpDirectoryWhitelisted,
+    getDnpInstalled,
+    (dnpDirectory, dnpInstalled) => {
+        return Object.entries(dnpDirectory)
+            .map(([dnpName, dnp]) => {
+                const tag = parseInstallTag(dnpDirectory, dnpInstalled, dnpName);
+                return { ...dnp, tag };
+            })
+            .sort((dnpA, dnpB) => dnpB.directoryId - dnpA.directoryId);
+    }
 );
 
 /**
@@ -245,19 +257,19 @@ const getDnpDirectoryWithTags = createSelector(
  * [Tested]
  */
 export const getDnpDirectoryWithTagsNonCores = createSelector(
-  getDnpDirectoryWithTags,
-  dnps =>
-    // If packages are broken, display them anyway
-    dnps.filter(dnp => !dnp.manifest || (dnp.manifest || {}).type !== "dncore")
+    getDnpDirectoryWithTags,
+    dnps =>
+        // If packages are broken, display them anyway
+        dnps.filter(dnp => !dnp.manifest || (dnp.manifest || {}).type !== "dncore")
 );
 
 export const directoryLoaded = createSelector(
-  getDnpDirectoryWhitelisted,
-  dnpDirectory => Boolean(Object.keys(dnpDirectory).length)
+    getDnpDirectoryWhitelisted,
+    dnpDirectory => Boolean(Object.keys(dnpDirectory).length)
 );
 
 // Utilitites
 
 function cleanObj(obj) {
-  return _.pickBy(obj, value => !_.isEmpty(value));
+    return _.pickBy(obj, value => !_.isEmpty(value));
 }

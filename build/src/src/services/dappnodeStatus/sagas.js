@@ -13,7 +13,7 @@ import { assertConnectionOpen } from "utils/redux";
 // Service > dappnodeStatus
 
 // It's okay, because all non-handled sagas are wrapped on a try/catch
-/* eslint-disable redux-saga/no-unhandled-errors */
+// /* eslint-disable redux-saga/no-unhandled-errors */
 
 /**
  * Fetches the DAppNode params and statusUpnp from the VPN

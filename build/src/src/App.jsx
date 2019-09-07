@@ -35,9 +35,9 @@ class App extends React.Component {
           <SideBar />
           <TopBar />
           <div id="main">
-            <ErrorBoundary>
+            {/* <ErrorBoundary>
               <NotificationsMain />
-            </ErrorBoundary>
+            </ErrorBoundary> */}
 
             {Object.values(pages).map(({ RootComponent, rootPath }) => (
               <Route

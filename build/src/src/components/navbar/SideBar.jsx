@@ -68,9 +68,9 @@ export default function SideBar() {
       </NavLink>
 
       <div className="nav">
-        <div className="sidenav-item">
+        {/* <div className="sidenav-item">
           <div className="subheader">ADMIN UI</div>
-        </div>
+        </div> */}
 
         {sidenavItems.map(item => (
           <NavLink
@@ -87,7 +87,7 @@ export default function SideBar() {
 
       {/* spacer keeps the funded-by section at the bottom (if possible) */}
       <div className="spacer" />
-
+    <div className="sidenav-item">Version {process.env.REACT_APP_VERSION}</div>
       {/* <div className="funded-by">
         <div className="funded-by-text">SUPPORTED BY</div>
         <div className="funded-by-logos">

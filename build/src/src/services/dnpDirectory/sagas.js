@@ -10,7 +10,7 @@ import { CONNECTION_OPEN } from "services/connectionStatus/actionTypes";
 // Service > dnpDirectory
 
 // It's okay, because all non-handled sagas are wrapped on a try/catch
-/* eslint-disable redux-saga/no-unhandled-errors */
+// /* eslint-disable redux-saga/no-unhandled-errors */
 
 const fetchDnpDirectory = wrapErrorsAndLoading(
   loadingIds.dnpDirectory,
