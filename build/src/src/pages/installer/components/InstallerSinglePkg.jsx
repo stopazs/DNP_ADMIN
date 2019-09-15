@@ -69,7 +69,14 @@ function InstallerInterface({
     //       history.push(packagesRootPath + "/" + name);
     //   }, [tag]);
 
+
+    const toWizard = () =>{
+        history.push(`${packagesRootPath}/${name}`);
+        // history.push(`/Packages/${manifest.name}`);
+    }
+
     const manage = (name) => {
+        debugger;
         history.push(`${packagesRootPath}/${name}/detail`);
     }
 
@@ -90,7 +97,7 @@ function InstallerInterface({
     if (installedPackage && manifest && installedPackage.version !== manifest.version) {
         actionButtonTxt = `UPGRADE TO ${manifest.version}`
     }
-
+    const hasWizard = manifest && manifest.links && manifest.links.OnboardingWizard;
 
 
     /**
@@ -127,7 +134,12 @@ function InstallerInterface({
                 )}
 
                 {installedPackage && (
-                    <Button variant="dappnode" onClick={() => manage(name)}>MANAGE PACKAGE</Button>
+                    <>
+                        {hasWizard && (
+                            <Button variant="dappnode" onClick={() => toWizard(name)}>CONFIGURE PACKAGE</Button>
+                        )}
+                        <Button variant="dappnode" onClick={() => manage(name)}>MANAGE PACKAGE</Button>
+                    </>
                 )}
 
             </Card>
