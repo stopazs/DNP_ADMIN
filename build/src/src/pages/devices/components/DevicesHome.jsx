@@ -7,6 +7,7 @@ import * as a from "../actions";
 import { title } from "../data";
 // Services
 import { getDevices } from "services/devices/selectors";
+import { getDappnodeParams } from "services/dappnodeStatus/selectors";
 // Components
 import Input from "components/Input";
 import { ButtonLight } from "components/Button";
@@ -14,13 +15,16 @@ import Title from "components/Title";
 
 const DevicesHome = ({
   deviceList,
+  params,
   addDevice,
   removeDevice,
   resetDevice,
   toggleAdmin,
   getDeviceCredentials
 }) => {
-  const [id, setId] = useState("");
+
+
+    const [id, setId] = useState("");
   return (
     <>
       <Title title="Users" />
@@ -40,6 +44,7 @@ const DevicesHome = ({
       />
 
       <DeviceGrid
+        params={params}
         devices={deviceList}
         removeDevice={removeDevice}
         resetDevice={resetDevice}
@@ -51,7 +56,8 @@ const DevicesHome = ({
 };
 
 const mapStateToProps = createStructuredSelector({
-  deviceList: getDevices
+  deviceList: getDevices,
+  params: getDappnodeParams
 });
 
 const mapDispatchToProps = {

@@ -7,6 +7,7 @@ import registerServiceWorker from "./registerServiceWorker";
 // Load css in order
 import "bootstrap/dist/css/bootstrap.min.css"; // Include bootstrap's css
 import "./index.css"; // Additional modifying rules
+import "./avado_styles.css"; // Additional modifying rules
 
 function Layout(props) {
   return (

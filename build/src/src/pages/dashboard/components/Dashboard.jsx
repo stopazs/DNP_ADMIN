@@ -64,6 +64,9 @@ function Dashboard({
     }, []);
 
     const hashToUrl = (hash) => {
+        if (!hash) {
+            return null;
+        }
         return `http://my.ipfs.dnp.dappnode.eth:8080/ipfs/${hash.replace("/ipfs/", "")}`
     };
 
@@ -113,7 +116,7 @@ function Dashboard({
                             key={name + origin}
                             className="dnp-card"
                             shadow
-                         onClick={() => openDnp(dnp.name)}
+                            onClick={() => openDnp(dnp.name)}
                         >
                             <img src={hashToUrl(manifest.avatar)} alt="avatar" />
                             <div className="info">

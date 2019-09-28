@@ -8,31 +8,30 @@
 const urlTemplate = "http://origin/?id=<id>#<key>";
 
 export default function getParamsFromUrl() {
-  const urlParams = parseUrlParams(clean(window.location.search));
+    const urlParams = parseUrlParams(clean(window.location.search));
+    // Dev param to be able to work on the UI
+    if (urlParams.dev) return { dev: urlParams.dev };
 
-  // Dev param to be able to work on the UI
-  if (urlParams.dev) return { dev: urlParams.dev };
-
-  const { id, name } = urlParams;
-  const key = decodeURIComponent(clean(window.location.hash));
-  if (!id) throw Error("No valid id provided. Url must be " + urlTemplate);
-  if (!key) throw Error("No valid key provided. Url must be " + urlTemplate);
-  return { key, id, name };
+    const { id, name, domain, ip } = urlParams;
+    const key = decodeURIComponent(clean(window.location.hash));
+    if (!id) throw Error("No valid id provided. Url must be " + urlTemplate);
+    if (!key) throw Error("No valid key provided. Url must be " + urlTemplate);
+    return { key, id, name, domain, ip };
 }
 
 function parseUrlParams(str) {
-  var obj = {};
-  str.replace(/([^=&]+)=([^&]*)/g, function(m, key, value) {
-    obj[decodeURIComponent(key)] = decodeURIComponent(value);
-  });
-  return obj;
+    var obj = {};
+    str.replace(/([^=&]+)=([^&]*)/g, function (m, key, value) {
+        obj[decodeURIComponent(key)] = decodeURIComponent(value);
+    });
+    return obj;
 }
 
 function clean(s) {
-  if (!s) return s;
-  return s
-    .trim()
-    .replace("/", "")
-    .replace("#", "")
-    .replace("?", "");
+    if (!s) return s;
+    return s
+        .trim()
+        .replace("/", "")
+        .replace("#", "")
+        .replace("?", "");
 }

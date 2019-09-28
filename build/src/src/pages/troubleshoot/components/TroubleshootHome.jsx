@@ -18,39 +18,43 @@ import Ok from "components/Ok";
 import "./troubleshoot.css";
 
 function TroubleshootHome({
-  diagnoses,
-  issueBody,
-  issueUrl,
-  issueUrlRaw,
-  fetchAllDappnodeStatus
+    diagnoses,
+    issueBody,
+    issueUrl,
+    issueUrlRaw,
+    fetchAllDappnodeStatus
 }) {
-  useEffect(() => {
-    fetchAllDappnodeStatus(); // = componentDidMount
-  }, []);
+    useEffect(() => {
+        fetchAllDappnodeStatus(); // = componentDidMount
+    }, []);
 
-  return (
-    <>
-      <Title>{title}</Title>
+    console.log(diagnoses);
 
-      {/* Auto diagnose section */}
-      <SubTitle>Auto diagnose</SubTitle>
-      <Card>
-        {diagnoses.map(({ loading, ok, msg, solutions }, i) => (
-          <div key={i}>
-            <Ok {...{ msg, ok, loading }} />
-            {!ok && !loading && solutions ? (
-              <ul>
-                {solutions.map((item, j) => (
-                  <li key={j}>{item}</li>
+    const filteredDiagnoses = diagnoses.filter((d) => { return   ! d.msg.includes("Core DNPs"); });
+
+    return (
+        <>
+            <Title>{title}</Title>
+
+            {/* Auto diagnose section */}
+            <SubTitle>Auto diagnose</SubTitle>
+            <Card>
+                {filteredDiagnoses.map(({ loading, ok, msg, solutions }, i) => (
+                    <div key={i}>
+                        <Ok {...{ msg, ok, loading }} />
+                        {!ok && !loading && solutions ? (
+                            <ul>
+                                {solutions.map((item, j) => (
+                                    <li key={j}>{item}</li>
+                                ))}
+                            </ul>
+                        ) : null}
+                    </div>
                 ))}
-              </ul>
-            ) : null}
-          </div>
-        ))}
-      </Card>
+            </Card>
 
-      {/* Report section */}
-      {/* <SubTitle>Report</SubTitle>
+            {/* Report section */}
+            {/* <SubTitle>Report</SubTitle>
 
       <Card>
         <p>
@@ -82,30 +86,30 @@ function TroubleshootHome({
           Report issue without providing information
         </a>
       </Card> */}
-    </>
-  );
+        </>
+    );
 }
 
 TroubleshootHome.propTypes = {
-  diagnoses: PropTypes.array.isRequired,
-  issueBody: PropTypes.string.isRequired,
-  issueUrl: PropTypes.string.isRequired,
-  issueUrlRaw: PropTypes.string.isRequired
+    diagnoses: PropTypes.array.isRequired,
+    issueBody: PropTypes.string.isRequired,
+    issueUrl: PropTypes.string.isRequired,
+    issueUrlRaw: PropTypes.string.isRequired
 };
 
 // Container
 
 const mapStateToProps = createStructuredSelector({
-  issueBody: s.getIssueBody,
-  issueUrl: s.getIssueUrl,
-  issueUrlRaw: s.getIssueUrlRaw,
-  diagnoses: s.getDiagnoses
+    issueBody: s.getIssueBody,
+    issueUrl: s.getIssueUrl,
+    issueUrlRaw: s.getIssueUrlRaw,
+    diagnoses: s.getDiagnoses
 });
 
 // Uses bindActionCreators to wrap action creators with dispatch
 const mapDispatchToProps = { fetchAllDappnodeStatus };
 
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+    mapStateToProps,
+    mapDispatchToProps
 )(TroubleshootHome);

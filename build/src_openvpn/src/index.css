@@ -24,7 +24,7 @@ body {
 
 .main-text {
   font-weight: 400;
-  color: gray;
+  color: rgb(255, 255, 255);
 }
 
 .instructions-row {
@@ -77,10 +77,10 @@ ol li {
 }
 
 .dappnode-color {
-  color: #2fbcb2;
+  color: #ffffff;
 }
 .dappnode-background-color {
-  border: #2fbcb2;
+  border: #ffffff;
   background-color: #2fbcb2;
 }
 .dappnode-background-color:hover {

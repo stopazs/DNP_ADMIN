@@ -19,7 +19,7 @@ import {
 // Utils
 import confirmRestartPackage from "./confirmRestartPackage";
 // Icons
-import { MdRefresh, MdOpenInNew } from "react-icons/md";
+import { MdRefresh, MdOpenInNew, MdTune } from "react-icons/md";
 // Styles
 import "./packages.css";
 
@@ -45,6 +45,7 @@ const PackagesList = ({
       <header className="center">Status</header>
       <header>Name</header>
       <header>Open</header>
+      <header>Manage</header>
       <header>Restart</header>
       {filteredDnps.map(({ name, state }) => (
         <React.Fragment key={name}>
@@ -54,6 +55,9 @@ const PackagesList = ({
           </NavLink>
           <NavLink className="open" to={`/${moduleName}/${name}`}>
             <MdOpenInNew />
+          </NavLink>
+          <NavLink className="open" to={`/${moduleName}/${name}/detail`}>
+            <MdTune />
           </NavLink>
           <MdRefresh
             onClick={() => confirmRestartPackage(name, restartPackage)}

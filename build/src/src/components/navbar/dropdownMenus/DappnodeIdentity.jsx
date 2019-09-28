@@ -4,7 +4,7 @@ import { createStructuredSelector } from "reselect";
 import { connect } from "react-redux";
 import BaseDropdown from "./BaseDropdown";
 import makeBlockie from "ethereum-blockies-base64";
-import { getDappnodeIdentityClean } from "services/dappnodeStatus/selectors";
+import { getDappnodeIdentityClean, getDappnodeParams } from "services/dappnodeStatus/selectors";
 
 /**
  * Patch to fix the visual issue of the domain being too long.
@@ -15,65 +15,81 @@ import { getDappnodeIdentityClean } from "services/dappnodeStatus/selectors";
  * @param {string} value
  */
 function parseIdentityKeyValue(key, value) {
-  if (key.includes("domain")) {
-    const [hex, rootDomain] = value.split(/\.(.+)/);
-    return (
-      <>
-        {hex}
-        <wbr />.{rootDomain}
-      </>
-    );
-  } else {
-    return value;
-  }
+    if (key.includes("domain")) {
+        const [hex, rootDomain] = value.split(/\.(.+)/);
+        return (
+            <>
+                {hex}
+                <wbr />.{rootDomain}
+            </>
+        );
+    } else {
+        return value;
+    }
 }
 
-const DappnodeIdentity = ({ dappnodeIdentity = {} }) => {
-  if (typeof dappnodeIdentity !== "object") {
-    console.error("dappnodeIdentity must be an object");
-    return null;
-  }
+const DappnodeIdentity = ({ dappnodeParams = {} }) => {
+    // if (typeof dappnodeIdentity !== "object") {
+    //     console.error("dappnodeIdentity must be an object");
+    //     return null;
+    //   }
+    if (typeof dappnodeParams !== "object") {
+        console.error("dappnodeParams must be an object");
+        return null;
+    }
 
-  // Show a 24x24px blockie icon from the DAppNode's domain or ip+name
-  const { name = "", ip = "", domain = "" } = dappnodeIdentity;
-  const seed =
-    domain && domain.includes(".") ? domain.split(".")[0] : `${name}${ip}`;
+    const fullIdentity = {
+        // ...dappnodeParams,
+        "External IP": dappnodeParams.ip,
+        "Internal IP": dappnodeParams.internalIp,
+        "name" : dappnodeParams.name,
+        "External host name" : dappnodeParams.domain,
+        "NAT Loopback available" : dappnodeParams.noNatLoopback ? "No" : "Yes",
+        "Upnp available" : dappnodeParams.upnpAvailable ? "Yes" : "No",
+    }
+    
+    // Show a 24x24px blockie icon from the DAppNode's domain or ip+name
+    const { name = "", ip = "", domain = "" } = fullIdentity;
+    const seed =
+        domain && domain.includes(".") ? domain.split(".")[0] : `${name}${ip}`;
 
-  const Icon = () => (
-    <React.Fragment>
-      <span className="dappnode-name svg-text mr-2">{name}</span>
-      {seed ? (
-        <img src={makeBlockie(seed)} className="blockies-icon" alt="icon" />
-      ) : (
-        "?"
-      )}
-    </React.Fragment>
-  );
+    const Icon = () => (
+        <React.Fragment>
+            <span className="dappnode-name svg-text mr-2">{name}</span>
+            {seed ? (
+                <img src={makeBlockie(seed)} className="blockies-icon" alt="icon" />
+            ) : (
+                    "?"
+                )}
+        </React.Fragment>
+    );
 
-  return (
-    <BaseDropdown
-      name="DAppNode Identity"
-      messages={Object.entries(dappnodeIdentity)
-        .filter(([_, value]) => value)
-        .map(([key, value]) => {
-          return { title: parseIdentityKeyValue(key, value) };
-        })}
-      Icon={Icon}
-      className={"dappnodeidentity"}
-      placeholder="No identity available, click the report icon"
-    />
-  );
+    return (
+        <BaseDropdown
+            name="My AVADO box"
+            messages={Object.entries(fullIdentity)
+                .filter(([_, value]) => value)
+                .map(([key, value]) => {
+                    return { title: key, body: value }; //parseIdentityKeyValue(key, value) };
+                })}
+            Icon={Icon}
+            className={"dappnodeidentity"}
+            placeholder="No identity available, click the report icon"
+        />
+    );
 };
 
 DappnodeIdentity.propTypes = {
-  dappnodeIdentity: PropTypes.object.isRequired
+    // dappnodeIdentity: PropTypes.object.isRequired,
+    dappnodeParams: PropTypes.object.isRequired
 };
 
 const mapStateToProps = createStructuredSelector({
-  dappnodeIdentity: getDappnodeIdentityClean
+    //   dappnodeIdentity: getDappnodeIdentityClean,
+    dappnodeParams: getDappnodeParams
 });
 
 export default connect(
-  mapStateToProps,
-  null
+    mapStateToProps,
+    null
 )(DappnodeIdentity);
