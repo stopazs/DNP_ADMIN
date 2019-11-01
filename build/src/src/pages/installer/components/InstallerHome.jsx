@@ -62,8 +62,11 @@ function InstallerHome({
                 apiLink
             )
             .then(res => {
+                if (res && res.status === 200){
+                    console.log("Connected.");
+                }
                 // debugger;
-                console.log(res);
+                // console.log("");
             })
             .catch(error => {
                 // debugger;
@@ -97,8 +100,11 @@ function InstallerHome({
                 `https://bo.ava.do/value/store`
             )
             .then(res => {
-                // debugger;
-                const storeHash = (id && id !== "undefined") ? id : JSON.parse(res.data).hash;
+                const storeRes = JSON.parse(res.data);
+                const storeHash = (id && id !== "undefined") ? id : storeRes.hash;
+                if (storeRes && storeRes.ipfsHostNodes) {
+                    storeRes.ipfsHostNodes.map(peerConnect);
+                }
                 //  const storeHash = "QmekF1EwLrfSwm4mjRHaBGrHmRafYBLTTz2Ymx5nszdaan";
                 axios
                     .get(
