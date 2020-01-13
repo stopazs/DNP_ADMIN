@@ -15,7 +15,8 @@ ADD .git .git
 ADD dappnode_package.json .
 RUN ./getVersionData.sh
 RUN yarn add react-scripts
-RUN NODE_OPTIONS="--max-old-space-size=4096" yarn run build
+RUN NODE_OPTIONS="--max-old-space-size=2048" yarn run build
+# RUN yarn build
 RUN echo "====================Finished building Admin website===================="
 
 FROM node:10.15.3 as build-deps-openvpn
