@@ -74,14 +74,15 @@ function Dashboard({
         history.push(`/Packages/${name}`);
     }
 
+
     return (
         <>
             <Title title={"Home"} />
 
             <SubTitle>Health</SubTitle>
             <div className="dashboard-cards">
-                {Object.entries(dappnodeStats).map(([id, percent]) => (
-                    <StatsCard key={id} id={id} percent={percent} />
+                {Object.entries(dappnodeStats).map(([id, percent], i) => (
+                    <StatsCard key={i} id={id} percent={percent} />
                 ))}
             </div>
 
@@ -89,11 +90,10 @@ function Dashboard({
                 <>
                     <SubTitle>Chains</SubTitle>
                     <div className="dashboard-cards">
-                        {chainData.map(chain => (
-                            <>
-
-                                <ChainCard key={chain.name} {...chain} />
-                            </>
+                        {chainData.map((chain, i) => (
+                            <div key={i}>
+                                <ChainCard {...chain} />
+                            </div>
                         ))}
                     </div>
                 </>
@@ -102,8 +102,8 @@ function Dashboard({
             <SubTitle>Active Packages</SubTitle>
 
             <div className="dnp-cards">
-                {installedpackages.filter((dnp) => { return dnp.isCore === false; }).map((dnp) => {
-                    const { manifest, error, avatar = defaultAvatar, origin, tag } =
+                {installedpackages.filter((dnp) => { return dnp.isCore === false; }).map((dnp, i) => {
+                    const { manifest, origin, tag } =
                         dnp || {};
                     const { name, description, keywords = [] } = manifest || {};
                     /* Show the button as disabled (gray) if it's updated */
@@ -113,7 +113,7 @@ function Dashboard({
                     // const tagDisplay = tag === "OPEN" ? "GET" : tag;
                     return (
                         <Card
-                            key={name + origin}
+                            key={`${name}_${origin}_${i}`}
                             className="dnp-card"
                             shadow
                             onClick={() => openDnp(dnp.name)}

@@ -6,8 +6,8 @@
   "type": "dncore",
   "image": {
     "path": "admin.dnp.dappnode.eth_10.0.8.tar.xz",
-    "hash": "/ipfs/Qmafwd2PMX6CWBtmBGkYNX3LB2zhwcPDQUfdi5ssBnXaEM",
-    "size": 7910484,
+    "hash": "/ipfs/QmXPo2ZdiA67591sMZfs5r1FPnFEeKbhEnZHjTjpFBHcfy",
+    "size": 7697637,
     "volumes": [
       "vpndnpdappnodeeth_shared:/usr/www/openvpn/cred"
     ],

@@ -76,7 +76,7 @@ function InstallerInterface({
     }
 
     const manage = (name) => {
-        debugger;
+        // debugger;
         history.push(`${packagesRootPath}/${name}/detail`);
     }
 

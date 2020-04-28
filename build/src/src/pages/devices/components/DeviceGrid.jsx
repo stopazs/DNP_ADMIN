@@ -78,9 +78,6 @@ function DeviceGrid({
             {devices.map(({ id, admin, url }) => {
                 let url2;
                 if (url && params) {
-                    console.log(params);
-                    console.log(url);
-                    debugger;
                     url2 = `${url.replace(params.domain,params.internalIp).replace("?",`?domain=${params.domain}&ip=${params.internalIp}&`)}`;
                 }
 

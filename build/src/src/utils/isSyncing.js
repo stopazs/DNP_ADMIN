@@ -1,10 +1,10 @@
-const Web3 = require("web3");
+// const Web3 = require("web3");
 
-let web3;
-function getWeb3() {
-  if (!web3) web3 = new Web3("http://my.ethchain.dnp.dappnode.eth:8545");
-  return web3;
-}
+// let web3;
+// function getWeb3() {
+//   if (!web3) web3 = new Web3("http://my.ethchain.dnp.dappnode.eth:8545");
+//   return web3;
+// }
 
 const blockDiff = 50;
 const cacheTime = 120 * 1000; // ms
@@ -19,18 +19,20 @@ const cacheTime = 120 * 1000; // ms
  * @returns {bool} Returns true if it's syncing and the blockDiff
  * is big enough. Returns false otherwise
  */
-const isSyncingRpcCall = () =>
-  getWeb3()
-    .eth.isSyncing()
-    .then(res => {
-      if (!res) return false;
-      const currentBlock = parseInt(res.currentBlock, 10);
-      const highestBlock = parseInt(res.highestBlock, 10);
-      return Math.abs(currentBlock - highestBlock) > blockDiff;
-    })
-    .catch(err => {
-      console.error("Error calling isSyncing", err);
-    });
+const isSyncingRpcCall = () => {
+    return false;
+//   getWeb3()
+//     .eth.isSyncing()
+//     .then(res => {
+//       if (!res) return false;
+//       const currentBlock = parseInt(res.currentBlock, 10);
+//       const highestBlock = parseInt(res.highestBlock, 10);
+//       return Math.abs(currentBlock - highestBlock) > blockDiff;
+//     })
+//     .catch(err => {
+//       console.error("Error calling isSyncing", err);
+//     });
+};
 
 /**
  * CACHE RESPONSE WRAP

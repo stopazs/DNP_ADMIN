@@ -4,7 +4,7 @@ import devices from "./devices";
 import home from "./home";
 import installer from "./installer";
 import packages from "./packages";
-import sdk from "./sdk";
+// import sdk from "./sdk";
 import system from "./system";
 import troubleshoot from "./troubleshoot";
 
@@ -15,7 +15,7 @@ export default {
   home,
   installer,
   packages,
-  sdk,
+//   sdk,
   system,
   troubleshoot
 };

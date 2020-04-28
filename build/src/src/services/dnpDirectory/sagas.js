@@ -12,22 +12,24 @@ import { CONNECTION_OPEN } from "services/connectionStatus/actionTypes";
 // It's okay, because all non-handled sagas are wrapped on a try/catch
 // /* eslint-disable redux-saga/no-unhandled-errors */
 
-const fetchDnpDirectory = wrapErrorsAndLoading(
-  loadingIds.dnpDirectory,
-  function*() {
-    const dnps = yield call(APIcall.fetchDirectory, {
-      toastOnError: true,
-      throw: true
-    });
-    yield put(a.updateDnpDirectory(dnps));
-  }
-);
+const fetchDnpDirectory = () => { return };
+
+// const fetchDnpDirectory = wrapErrorsAndLoading(
+//   loadingIds.dnpDirectory,
+//   function*() {
+//     const dnps = yield call(APIcall.fetchDirectory, {
+//       toastOnError: true,
+//       throw: true
+//     });
+//     yield put(a.updateDnpDirectory(dnps));
+//   }
+// );
 
 /******************************* Watchers *************************************/
 
 // Each saga is mapped with its actionType using takeEvery
 // takeEvery(actionType, watchers[actionType])
 export default rootWatcher([
-  [CONNECTION_OPEN, fetchDnpDirectory],
-  [t.FETCH_DNP_DIRECTORY, fetchDnpDirectory]
+    [CONNECTION_OPEN, fetchDnpDirectory],
+    [t.FETCH_DNP_DIRECTORY, fetchDnpDirectory]
 ]);
