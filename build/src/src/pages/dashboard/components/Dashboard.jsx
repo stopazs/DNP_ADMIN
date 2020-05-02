@@ -103,6 +103,7 @@ function Dashboard({
 
             <div className="dnp-cards">
                 {installedpackages.filter((dnp) => { return dnp.isCore === false; }).map((dnp, i) => {
+                    if (!dnp || !dnp.manifest) return;
                     const { manifest, origin, tag } =
                         dnp || {};
                     const { name, description, keywords = [] } = manifest || {};
