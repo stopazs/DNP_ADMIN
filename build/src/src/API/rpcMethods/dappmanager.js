@@ -437,5 +437,12 @@ export default {
    */
   updatePackageEnv: {
     manadatoryKwargs: ["id", "envs", "restart"]
+  },
+
+  // @param {string} id DNP .eth name
+  // @param {bool} autoupdate flag to set the autoupdate property of this package
+  setAutoUpdate: {
+    manadatoryKwargs: ["id","autoUpdate"]
   }
+
 };

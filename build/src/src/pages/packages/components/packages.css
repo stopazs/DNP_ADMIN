@@ -12,7 +12,8 @@
     minmax(5rem, auto)
     minmax(calc(var(--icon-size) / 2), min-content)
     minmax(calc(var(--icon-size) / 2), min-content)
-    minmax(calc(var(--icon-size) / 2), min-content);
+    minmax(calc(var(--icon-size) / 2), min-content)
+    minmax(calc(var(--icon-size) / 2), min-content)
 }
 /* Customize name inside NavLink */
 .list-grid.dnps a:hover {
