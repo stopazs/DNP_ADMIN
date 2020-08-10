@@ -49,7 +49,8 @@ const PackagesList = ({
     // if a local cached state exists - use that.
     // when a package reload is done - this will be overwritten
     const getAutoUpdateState = (dnp) => {
-        return buttonState[dnp.name] === undefined ? dnp.autoupdate : buttonState[dnp.name]
+        // if (!dnp) return false;
+        return  buttonState[dnp.name] === undefined ? dnp.autoupdate : buttonState[dnp.name]
     }
 
     if (loading) return <Loading msg="Loading installed DNPs..." />;
@@ -85,7 +86,7 @@ const PackagesList = ({
                     />
                     <Switch
                         checked={getAutoUpdateState(manifest)}
-                        onToggle={() => {setAutoUpdateWrapper(name,!manifest.autoupdate)}}
+                        onToggle={() => {setAutoUpdateWrapper(name,!getAutoUpdateState(manifest))}}
                     />
                     <hr />
                 </React.Fragment>
