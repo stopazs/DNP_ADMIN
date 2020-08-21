@@ -19,9 +19,9 @@
   display: grid;
 }
 .dnp-card > .info > * {
-  white-space: nowrap;
+  /* white-space: nowrap;
   text-overflow: ellipsis;
-  overflow: hidden;
+  overflow: hidden; */
   text-transform: capitalize;
 }
 .dnp-card > .info > button {

@@ -8,6 +8,13 @@
   grid-template-columns: repeat(auto-fill, minmax(7.5em, 1fr));
 }
 
+.dashboard-cards .dnp-card > .info > * {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    text-transform: capitalize;
+  }
+
 /* Chain cards */
 
 .chain-card .name,

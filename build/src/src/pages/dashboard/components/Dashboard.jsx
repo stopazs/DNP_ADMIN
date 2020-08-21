@@ -101,12 +101,12 @@ function Dashboard({
 
             <SubTitle>Active Packages</SubTitle>
 
-            <div className="dnp-cards">
+            <div className="dashboard-cards">
                 {installedpackages.filter((dnp) => { return dnp.isCore === false; }).map((dnp, i) => {
                     if (!dnp || !dnp.manifest) return;
                     const { manifest, origin, tag } =
                         dnp || {};
-                    const { name, description, keywords = [] } = manifest || {};
+                    const { name, title, description, keywords = [] } = manifest || {};
                     /* Show the button as disabled (gray) if it's updated */
                     const disabled = stringIncludes(tag, "updated");
                     /* Rename tag from "install" to "get" because there were too many "install" tags 
@@ -120,10 +120,10 @@ function Dashboard({
                             onClick={() => openDnp(dnp.name)}
                         >
                             <img src={hashToUrl(manifest.avatar)} alt="avatar" />
-                            <div className="info">
-                                <h5 className="title">{name}</h5>
-                                <div>{description}</div>
-                                <div className="keywords">
+                            <div className={`${title ? "" : "info"}`}>
+                                <h5 className="title">{title || name}</h5>
+                                {/* <div>{description}</div> */}
+                                {/* <div className="keywords">
                                     {origin && typeof origin === "string" ? (
                                         <div className="ipfs">
                                             <img src={ipfsLogo} alt="ipfs" />
@@ -132,7 +132,7 @@ function Dashboard({
                                     ) : (
                                             keywords.join(", ") || "DAppNode package"
                                         )}
-                                </div>
+                                </div> */}
                                 <Button variant="dappnode" pill disabled={disabled}>
                                     OPEN
                                 </Button>

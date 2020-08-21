@@ -13,7 +13,6 @@ function Wizard({ dnp }) {
         return null;
     }
 
-
     return (
         <iframe
             className="onboardinwizard"

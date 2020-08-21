@@ -1,19 +1,25 @@
 import React from "react";
 import PropTypes from "prop-types";
 // Imgs
-import errorAvatar from "img/errorAvatar.png";
-import ipfsLogo from "img/IPFS-badge-small.png";
-import defaultAvatar from "img/defaultAvatar.png";
+// import errorAvatar from "img/errorAvatar.png";
+// import ipfsLogo from "img/IPFS-badge-small.png";
+// import defaultAvatar from "img/defaultAvatar.png";
 // Utility components
 import Card from "components/Card";
 import Button from "components/Button";
-import { stringIncludes } from "utils/strings";
+// import { stringIncludes } from "utils/strings";
 
 function DnpStore({ directory, openDnp }) {
 
     const hashToUrl = (hash) => {
         return `http://my.ipfs.dnp.dappnode.eth:8080/ipfs/${hash.replace("/ipfs/", "")}`
     };
+// debugger;
+    directory = directory.filter((item)=>{
+        if (!item || !item.manifest || !item.manifest.hidden === true) return true;
+        return false;
+    })
+
 
     return (
         <div className="dnp-cards">
