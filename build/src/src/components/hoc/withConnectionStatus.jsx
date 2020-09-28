@@ -15,9 +15,9 @@ export default function withConnectionStatus(WrappedComponent) {
       } else if (isNotAdmin) {
         return <h1>You are not an admin</h1>;
       } else if (error) {
-        return <Error msg={`Èrror connecting to DAppNode: ${error}`} />;
+        return <Error msg={`Error connecting to DAppNode: ${error}`} />;
       } else {
-        return <Loading msg={`Openning connection...`} />;
+        return <Loading msg={`Opening connection...`} />;
       }
     }
   }
