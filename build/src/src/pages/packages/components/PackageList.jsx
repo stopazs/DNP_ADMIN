@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { createStructuredSelector } from "reselect";
 import * as s from "../selectors";
@@ -12,6 +12,7 @@ import Card from "components/Card";
 import Loading from "components/generic/Loading";
 import Error from "components/generic/Error";
 import Switch from "components/Switch";
+import axios from "axios";
 // Selectors
 import {
     getIsLoading,
@@ -36,28 +37,64 @@ const PackagesList = ({
     setAutoUpdate,
 }) => {
 
+    const [storeManifest, setStoreManifest] = useState();
     const [buttonState, setButtonState] = useState({});
 
+    useEffect(() => {
+        axios
+            .get(
+                `https://bo.ava.do/value/store`
+            )
+            .then(res => {
+                const storeRes = JSON.parse(res.data);
+                const storeHash = storeRes.hash;
+                axios
+                    .get(
+                        `http://my.ipfs.dnp.dappnode.eth:8080/ipfs/${storeHash}`
+                    )
+                    .then(res => {
+                        const storeManifest = res.data;
+                        setStoreManifest(res.data);
+                    })
+                    .catch(error => {
+                        //debugger;
+                    });
+            }).catch(error => {
+                //debugger;
+            });
+        ;
+
+    }, []);
+
+
     // we wrap these changes in a local state - so the button presses are instantanious
-    const setAutoUpdateWrapper = (name,autoupdate)=>{
-        const state = Object.assign({},buttonState);
+    const setAutoUpdateWrapper = (name, autoupdate) => {
+        const state = Object.assign({}, buttonState);
         state[name] = autoupdate;
         setButtonState(state);
-        setAutoUpdate(name,autoupdate);
+        setAutoUpdate(name, autoupdate);
     }
 
     // if a local cached state exists - use that.
     // when a package reload is done - this will be overwritten
     const getAutoUpdateState = (dnp) => {
         // if (!dnp) return false;
-        return  buttonState[dnp.name] === undefined ? dnp.autoupdate : buttonState[dnp.name]
+        return buttonState[dnp.name] === undefined ? dnp.autoupdate : buttonState[dnp.name]
     }
 
     if (loading) return <Loading msg="Loading installed DNPs..." />;
     if (error) return <Error msg={`Error loading installed DNPs: ${error}`} />;
 
     //   const filteredDnps = dnps; //.filter(dnp => xnor(coreDnps, dnp.isCore));
-    const filteredDnps = dnps.filter(dnp => xnor(coreDnps, dnp.isCore));
+    const filteredDnps = dnps.filter(dnp => xnor(coreDnps, dnp.isCore)).map((p) => {
+        p.title = p.name;
+        if (!storeManifest) return p;
+        const manifestPackage = storeManifest.packages.find((mp) => {
+            return mp.manifest.name === p.name
+        })
+        if (manifestPackage) p.title = manifestPackage.manifest.title || p.name;
+        return p;
+    }).sort((a, b) => a.title.localeCompare(b.title));
 
     if (!filteredDnps.length) return <NoPackagesYet />;
 
@@ -69,11 +106,11 @@ const PackagesList = ({
             <header>Manage</header>
             <header>Restart</header>
             <header>Auto-update</header>
-            {filteredDnps.map(({ id, name, state,manifest }) => (
+            {filteredDnps.map(({ id, name, title, state, manifest }) => (
                 <React.Fragment key={name}>
                     <StateBadge state={state} />
                     <NavLink className="name" to={`/${moduleName}/${name}`}>
-                        {name}
+                        {title || name}
                     </NavLink>
                     <NavLink className="open" to={`/${moduleName}/${name}`}>
                         <MdOpenInNew />
@@ -86,7 +123,7 @@ const PackagesList = ({
                     />
                     <Switch
                         checked={getAutoUpdateState(manifest)}
-                        onToggle={() => {setAutoUpdateWrapper(name,!getAutoUpdateState(manifest))}}
+                        onToggle={() => { setAutoUpdateWrapper(name, !getAutoUpdateState(manifest)) }}
                     />
                     <hr />
                 </React.Fragment>

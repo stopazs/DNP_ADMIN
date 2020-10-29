@@ -27,7 +27,7 @@ const DevicesHome = ({
     const [id, setId] = useState("");
   return (
     <>
-      <Title title="Users" />
+      <Title title="Connect (VPN)" />
 
       <Input
         placeholder="user login"

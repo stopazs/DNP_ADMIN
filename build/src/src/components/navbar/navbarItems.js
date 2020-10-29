@@ -37,7 +37,7 @@ export const fundedBy = [
 
 export const sidenavItems = [
   {
-    name: "Home Screen",
+    name: "Home",
     href: "/dashboard",
     icon: Dashboard
   },

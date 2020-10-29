@@ -26,6 +26,9 @@ import Error from "components/generic/Error";
 import Button, { ButtonLight } from "components/Button";
 import Card from "components/Card";
 import Switch from "components/Switch";
+import axios from "axios";
+import humanFileSize from "utils/humanFileSize";
+import ReactMarkdown from 'react-markdown'
 
 function InstallerInterface({
     id,
@@ -42,6 +45,7 @@ function InstallerInterface({
     const [showSettings, setShowSettings] = useState(false);
     const [options, setOptions] = useState({});
     const [installedPackage, setInstalledPackage] = useState();
+    const [showedPackage, setShowedPackage] = useState();
 
     useEffect(() => {
         clearUserSet();
@@ -57,10 +61,29 @@ function InstallerInterface({
                 // console.log(`check package ${installedpackage.name}`);
                 return installedpackage.name === manifest.name
             });
-            // console.log("installed version", installedPackage);
             setInstalledPackage(installedPackage);
         }
     }, [packages, manifest]);
+
+    useEffect(() => {
+        if (dnp && dnp.manifest) {
+            // console.log(dnp);
+            axios
+                .get(
+                    `https://bo.ava.do/value/package-override-${dnp.manifest.name}`
+                )
+                .then(res => {
+                    const storeRes = JSON.parse(res.data);
+                    const patchedPackage = {
+                        ...installedPackage,
+                        ...storeRes
+                    };
+                    setShowedPackage(patchedPackage);
+                }).catch((e) => {
+                    setShowedPackage(dnp.manifest);
+                });
+        }
+    }, [dnp]);
 
 
     //   // When the DNP is updated (finish installation), redirect to /packages
@@ -70,7 +93,7 @@ function InstallerInterface({
     //   }, [tag]);
 
 
-    const toWizard = () =>{
+    const toWizard = () => {
         history.push(`${packagesRootPath}/${name}`);
         // history.push(`/Packages/${manifest.name}`);
     }
@@ -109,11 +132,49 @@ function InstallerInterface({
         availableOptions.push("BYPASS_CORE_RESTRICTION");
     // debugger;
     // Otherwise, show info an allow an install
+    if (!showedPackage) {
+        return (<>niks</>);
+    }
+
+    const dnpData = {
+        // "Developed by": dnp.manifest.author,
+        "Size": dnp && humanFileSize(dnp.manifest.image.size),
+        "Version": dnp && `${dnp.manifest.version}`
+    };
+
+
     return (
         <>
             <ProgressLogs progressLogs={progressLogs} />
             <Card className="installer-header">
-                <Details dnp={dnp} />
+
+                <div className="installer-details">
+                    <img src={dnp.avatar} alt="Avatar" />
+                    <div>
+                        {/* <ReadMore> */}
+
+                        {showedPackage.descriptionmd ?
+                            (<ReactMarkdown>{showedPackage.descriptionmd}</ReactMarkdown>)
+                            :
+                            (<>
+                                <header>About this DNP</header>
+                                <div>{dnp.manifest.description}</div>
+                            </>)
+                        }
+
+                        <div className="data">
+                            {Object.entries(dnpData).map(([key, val]) => (
+                                <div key={key}>
+                                    <header>{key}</header>
+                                    <span>{val}</span>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+
+
+                {/* <Details dnp={dnp} /> */}
                 {availableOptions.map(option => (
                     <Switch
                         checked={options[option]}
@@ -143,7 +204,7 @@ function InstallerInterface({
                 )}
 
             </Card>
-            <Dependencies
+            {/* <Dependencies
                 request={requestResult || {}}
                 resolving={resolving || false}
             />
@@ -158,7 +219,7 @@ function InstallerInterface({
                     <ButtonLight onClick={() => setShowSettings(true)}>
                         Show advanced settings
         </ButtonLight>
-                )}
+                )} */}
         </>
     );
 }
@@ -178,7 +239,7 @@ const mapStateToProps = createStructuredSelector({
     progressLogs: (state, ownProps) =>
         getProgressLogsByDnp(state, s.getQueryIdOrName(state, ownProps)),
     // For the withTitle HOC
-    subtitle: s.getQueryIdOrName,
+    // subtitle: s.getQueryIdOrName,
     packages: s.getInstalled
 });
 

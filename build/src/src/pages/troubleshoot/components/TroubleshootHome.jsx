@@ -34,7 +34,7 @@ function TroubleshootHome({
 
     return (
         <>
-            <Title>{title}</Title>
+            <Title>Support</Title>
 
             {/* Auto diagnose section */}
             <SubTitle>Auto diagnose</SubTitle>

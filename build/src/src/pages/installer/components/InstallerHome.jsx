@@ -272,5 +272,5 @@ export default compose(
         mapStateToProps,
         mapDispatchToProps
     ),
-    withTitle("Installer")
+    withTitle("Dappstore")
 )(InstallerHome);
