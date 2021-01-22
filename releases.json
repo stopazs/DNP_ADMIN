@@ -54,5 +54,47 @@
     "uploadedTo": {
       "http://23.254.227.151:5001": "Sun, 04 Oct 2020 21:41:39 GMT"
     }
+  },
+  "10.0.19": {
+    "hash": "/ipfs/QmYBuFz68HUp9bHYXFp5agcFxnWjjjhmjqkHyEBvvEzGKU",
+    "type": "manifest",
+    "uploadedTo": {
+      "http://80.208.229.228:5001": "Tue, 03 Nov 2020 19:43:08 GMT"
+    }
+  },
+  "10.0.21": {
+    "hash": "/ipfs/QmVRo5kZCvsu1M1WE2VUguMo81uVAsAqHgHdcDqx9ovFb3",
+    "type": "manifest",
+    "uploadedTo": {
+      "http://80.208.229.228:5001": "Tue, 10 Nov 2020 21:00:04 GMT"
+    }
+  },
+  "10.0.22": {
+    "hash": "/ipfs/QmNVL89dUjZJcG4xyqsG9DiN9qKusEbTgJkFZY1bGtX4rr",
+    "type": "manifest",
+    "uploadedTo": {
+      "http://80.208.229.228:5001": "Thu, 12 Nov 2020 16:44:22 GMT"
+    }
+  },
+  "10.0.23": {
+    "hash": "/ipfs/Qmch4HVy79BxzjGdqMz5P98RHXqvDozMdwtoFJUfaZV8QX",
+    "type": "manifest",
+    "uploadedTo": {
+      "http://80.208.229.228:5001": "Thu, 19 Nov 2020 17:08:05 GMT"
+    }
+  },
+  "10.0.24": {
+    "hash": "/ipfs/QmT98KARGe2YzqwnB7zMPuwXDprfWpatn7PKe9nGozRrAo",
+    "type": "manifest",
+    "uploadedTo": {
+      "http://80.208.229.228:5001": "Fri, 20 Nov 2020 16:34:39 GMT"
+    }
+  },
+  "10.0.25": {
+    "hash": "/ipfs/QmY5eN5f4ZH92n8UEzUzF1oFexz6xbBxXEmnBAhwQ2vPs2",
+    "type": "manifest",
+    "uploadedTo": {
+      "http://80.208.229.228:5001": "Mon, 23 Nov 2020 20:53:15 GMT"
+    }
   }
 }

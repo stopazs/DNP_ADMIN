@@ -30,7 +30,7 @@ function TroubleshootHome({
 
     console.log(diagnoses);
 
-    const filteredDiagnoses = diagnoses.filter((d) => { return   ! d.msg.includes("Core DNPs"); });
+    const filteredDiagnoses = diagnoses.filter((d) => { return !d.msg.includes("Core DNPs"); });
 
     return (
         <>
@@ -54,6 +54,15 @@ function TroubleshootHome({
             </Card>
 
             {/* Report section */}
+            <SubTitle>External support</SubTitle>
+
+
+            <Card>
+                <p>Need more help ? We have following resources available for you</p>
+                <p><a target="_blank" href="https://wiki.ava.do">https://wiki.ava.do</a> : The Wiki contains tutorial, getting started guides and information on how to set up specific packages </p>
+                <p><a target="_blank" href="https://t.me/joinchat/F_LlkBLEoDrFioPNviEpsQ">Telegram</a> : the AVADO community gathers in our Telegram channel, and you can always reach out to ask a question.</p>
+                <p>E-mail <a href="mailto:saskia@ava.do">saskia@ava.do</a> : Send an e-mail to our support team</p>
+            </Card>
             {/* <SubTitle>Report</SubTitle>
 
       <Card>

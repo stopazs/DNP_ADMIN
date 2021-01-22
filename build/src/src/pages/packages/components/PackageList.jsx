@@ -87,7 +87,7 @@ const PackagesList = ({
 
     //   const filteredDnps = dnps; //.filter(dnp => xnor(coreDnps, dnp.isCore));
     const filteredDnps = dnps.filter(dnp => xnor(coreDnps, dnp.isCore)).map((p) => {
-        p.title = p.name;
+        p.title = p.manifest && p.manifest.title ? p.manifest.title : p.name;
         if (!storeManifest) return p;
         const manifestPackage = storeManifest.packages.find((mp) => {
             return mp.manifest.name === p.name

@@ -10,3 +10,7 @@ body {
 .card {
     background-color: var(--avado-bg-light-color);
 }
+
+a {
+    text-decoration: underline;
+}

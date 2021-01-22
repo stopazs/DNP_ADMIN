@@ -133,18 +133,24 @@ function InstallerInterface({
     // debugger;
     // Otherwise, show info an allow an install
     if (!showedPackage) {
-        return (<>niks</>);
+        return (<>&nbsp;</>);
     }
 
     const dnpData = {
         // "Developed by": dnp.manifest.author,
         "Size": dnp && humanFileSize(dnp.manifest.image.size),
-        "Version": dnp && `${dnp.manifest.version}`
+        "Based on": dnp && `${dnp.manifest.upstream}`
     };
 
 
     return (
         <>
+
+            <div className="section-title">
+                <span className="pre-title">DappStore -</span> &nbsp;
+                {dnp.manifest.title}
+            </div>
+
             <ProgressLogs progressLogs={progressLogs} />
             <Card className="installer-header">
 
@@ -157,7 +163,7 @@ function InstallerInterface({
                             (<ReactMarkdown>{showedPackage.descriptionmd}</ReactMarkdown>)
                             :
                             (<>
-                                <header>About this DNP</header>
+                                <header>About this Package</header>
                                 <div>{dnp.manifest.description}</div>
                             </>)
                         }
@@ -256,7 +262,7 @@ export default compose(
         mapStateToProps,
         mapDispatchToProps
     ),
-    withTitle("Installer")
+    // withTitle("Installer")
 )(InstallerInterface);
 
 // ##### TODO: - Implement the loading HOC for the specific DNP fetch

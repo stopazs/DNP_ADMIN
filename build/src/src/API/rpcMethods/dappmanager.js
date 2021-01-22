@@ -443,6 +443,9 @@ export default {
   // @param {bool} autoupdate flag to set the autoupdate property of this package
   setAutoUpdate: {
     manadatoryKwargs: ["id","autoUpdate"]
+  },
+  
+  rebootHost: {
+    // manadatoryKwargs: ["id","autoUpdate"]
   }
-
 };
