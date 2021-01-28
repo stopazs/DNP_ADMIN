@@ -1,15 +1,15 @@
 {
   "name": "admin.dnp.dappnode.eth",
-  "version": "10.0.25",
+  "version": "10.0.26",
   "description": "AVADO user interface",
   "avatar": "/ipfs/QmUPkHZgjwudLnb9VJtyZQhboqgqVaAeyrJAWV8cZE7nEt",
   "type": "dncore",
   "autoupdate": true,
   "title": "Admin UI",
   "image": {
-    "path": "admin.dnp.dappnode.eth_10.0.25.tar.xz",
-    "hash": "/ipfs/QmRmJKAUqArLPUn783LUNcXVRbbuZ9XJBERUWSTLejB4kh",
-    "size": 7372856,
+    "path": "",
+    "hash": "",
+    "size": "",
     "volumes": [
       "vpndnpdappnodeeth_shared:/usr/www/openvpn/cred"
     ],
