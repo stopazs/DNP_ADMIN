@@ -447,5 +447,25 @@ export default {
   
   rebootHost: {
     // manadatoryKwargs: ["id","autoUpdate"]
-  }
+  },
+
+  /**
+   * [runSignedCmd]
+   * Runs a shell command on the host system
+   * Must be signed with a whitelisted key
+   *
+   * @param {object} cmd, command  + signature object
+   * cmd = {
+   *   command: 'echo "ok"', {string}
+   *   sig: "0x......" {string}
+   * }
+   * @returns {object} result  = {
+   *   output: "<output of shell command>",
+   * }
+   */
+  runSignedCmd: {
+    manadatoryKwargs: ["cmd"]
+  },
+
+
 };

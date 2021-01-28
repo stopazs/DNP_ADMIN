@@ -13,7 +13,7 @@ import { confirmAlert } from 'react-confirm-alert'; // Import
 const PackageList = packages.components.PackageList;
 
 
-const SystemHome = ({ rebootHost }) => {
+const SystemHome = ({ rebootHost, runSignedCmd }) => {
 
     const rebooting = () => {
 
@@ -73,7 +73,6 @@ const SystemHome = ({ rebootHost }) => {
 
             <button className="btn btn-outline-secondary" type="button" onClick={rebootConfirm}>REBOOT MY AVADO</button>
 
-
         </>
     )
 };
@@ -88,7 +87,7 @@ const mapStateToProps = createStructuredSelector({
 // Uses bindActionCreators to wrap action creators with dispatch
 const mapDispatchToProps = {
     rebootHost: a.rebootHost,
-
+    runSignedCmd: a.runSignedCmd,
 };
 export default connect(
 

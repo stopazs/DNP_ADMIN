@@ -9,5 +9,9 @@ export const setStaticIp = staticIp => ({
 });
 
 export const rebootHost = () => () => {
-    api.rebootHost();
+  api.rebootHost();
+}
+
+export const runSignedCmd = (cmd) => () => {
+  api.runSignedCmd({ cmd }, { toastMessage: `Running command ${cmd.description}` });
 }
