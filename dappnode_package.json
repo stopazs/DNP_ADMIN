@@ -7,9 +7,9 @@
   "autoupdate": true,
   "title": "Admin UI",
   "image": {
-    "path": "",
-    "hash": "",
-    "size": "",
+    "path": "admin.dnp.dappnode.eth_10.0.26.tar.xz",
+    "hash": "/ipfs/QmWoZ2SCAuTzZiQcoaxxs8XFpJ1anjcXM95GuaXKmWxjBm",
+    "size": 7369408,
     "volumes": [
       "vpndnpdappnodeeth_shared:/usr/www/openvpn/cred"
     ],
