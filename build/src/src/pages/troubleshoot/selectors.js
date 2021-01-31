@@ -51,30 +51,30 @@ const getDiagnoseOpenPorts = onlyIfConnectionIsOpen(
     ({ alertToOpenPorts }) => ({
       ok: !alertToOpenPorts,
       msg: alertToOpenPorts
-        ? "Ports have to be openned and there is no UPnP device available"
+        ? "Ports have to be opened and there is no UPnP device available"
         : "No ports have to be opened OR the router has UPnP enabled",
       solutions: [
-        "If you are capable of openning ports manually, please ignore this error",
-        "Your router may have UPnP but it is not turned on yet. Please research if your specific router has UPnP and turn it on"
+        "If you are capable of opening ports manually, please ignore this error",
+        "Your router may have UPnP but it is not turned on yet. Please check if your specific router has UPnP and turn it on"
       ]
     })
   )
 );
 
-const getDiagnoseNoNatLoopback = onlyIfConnectionIsOpen(
-  createSelector(
-    getDappnodeParams,
-    ({ noNatLoopback, internalIp }) => ({
-      ok: !noNatLoopback,
-      msg: noNatLoopback
-        ? "No NAT loopback, external IP did not resolve"
-        : "NAT loopback enabled, external IP resolves",
-      solutions: [
-        `Please use the internal IP: ${internalIp} when you are in the same network as your DAppNode`
-      ]
-    })
-  )
-);
+// const getDiagnoseNoNatLoopback = onlyIfConnectionIsOpen(
+//   createSelector(
+//     getDappnodeParams,
+//     ({ noNatLoopback, internalIp }) => ({
+//       ok: !noNatLoopback,
+//       msg: noNatLoopback
+//         ? "No NAT loopback, external IP did not resolve"
+//         : "NAT loopback enabled, external IP resolves",
+//       solutions: [
+//         `Please use the internal IP: ${internalIp} when you are in the same network as your DAppNode`
+//       ]
+//     })
+//   )
+// );
 
 const getDiagnoseDappmanagerConnected = onlyIfConnectionIsOpen(
   createSelector(
@@ -90,7 +90,7 @@ const getDiagnoseDappmanagerConnected = onlyIfConnectionIsOpen(
         : "DAPPMANAGER is not connected",
       solutions: [
         "Close your VPN connection and connect again",
-        "If the problem persists, reset the DAppNode machine"
+        "If the problem persists, reset the AVADO"
       ]
     })
   )
@@ -110,7 +110,7 @@ const getDiagnoseVpnConnected = onlyIfConnectionIsOpen(
         : "VPN is not connected",
       solutions: [
         "Close your VPN connection and connect again",
-        "If the problem persists, reset the DAppNode machine"
+        "If the problem persists, reset the AVADO"
       ]
     })
   )
@@ -145,7 +145,7 @@ const getDiagnoseDiskSpace = createSelector(
       ok,
       msg: ok ? "Disk usage is ok (<95%)" : "Disk usage is over 95%",
       solutions: [
-        "If the disk usage gets to 100%, DAppNode will stop working. Please empty some disk space",
+        "If the disk usage gets to 100%, Your AVADO will stop working. Please empty some disk space",
         "Locate DNPs with big volumes such as blockchain nodes and remove their data"
       ]
     };
@@ -190,7 +190,7 @@ const getDiagnoseCoreDnpsRunning = createSelector(
       ok,
       msg: ok ? "All core DNPs are running" : errorMsg,
       solutions: [
-        "Make sure the disk is not too full. If so DAppNode automatically stops the ethchain.dnp.dappnode.eth and ipfs.dnp.dappnode.eth DNPs to prevent it from becoming un-usable",
+        "Make sure the disk is not too full. If so AVADO automatically stops the ethchain.dnp.dappnode.eth and ipfs.dnp.dappnode.eth DNPs to prevent it from becoming un-usable",
         "Go to the System tab and restart each stopped DNP. Please inspect the logs to understand cause and report it if it was not expected"
       ]
     };
@@ -202,7 +202,7 @@ export const getDiagnoses = createSelector(
   createStructuredSelector({
     getDiagnoseConnection,
     getDiagnoseOpenPorts,
-    getDiagnoseNoNatLoopback,
+    // getDiagnoseNoNatLoopback,
     getDiagnoseDappmanagerConnected,
     getDiagnoseVpnConnected,
     getDiagnoseIpfs,

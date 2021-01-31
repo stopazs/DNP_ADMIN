@@ -59,9 +59,10 @@ function TroubleshootHome({
 
             <Card>
                 <p>Need more help ? We have following resources available for you</p>
-                <p><a target="_blank" href="https://wiki.ava.do">https://wiki.ava.do</a> : The Wiki contains tutorial, getting started guides and information on how to set up specific packages </p>
-                <p><a target="_blank" href="https://t.me/joinchat/F_LlkBLEoDrFioPNviEpsQ">Telegram</a> : the AVADO community gathers in our Telegram channel, and you can always reach out to ask a question.</p>
-                <p>E-mail <a href="mailto:saskia@ava.do">saskia@ava.do</a> : Send an e-mail to our support team</p>
+                <p><a target="_blank" href="https://wiki.ava.do">Wiki</a> : The Wiki contains tutorial, getting started guides and information on how to set up specific packages.</p>
+                <p><a target="_blank" href="https://www.youtube.com/avadocloud">YouTube</a> : Our YouTube channel also has a number of tutorial video's available. Just follow along and get set up in no time.</p>
+                <p><a target="_blank" href="https://t.me/joinchat/F_LlkBLEoDrFioPNviEpsQ">Telegram</a> : Other AVADO users flock together in our Telegram channel, and you can always reach out to ask a question to a more experienced user.</p>
+                <p><a href="mailto:saskia@ava.do">saskia@ava.do</a> : Send an e-mail to our support team</p>
             </Card>
             {/* <SubTitle>Report</SubTitle>
 
