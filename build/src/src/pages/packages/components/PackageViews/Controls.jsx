@@ -21,9 +21,9 @@ function PackageControls({
 }) {
   function confirmRemovePackageVolumes(id) {
     confirm({
-      title: `Removing ${shortNameCapitalized(id)} data`,
-      text: `This action cannot be undone. If this DNP is a blockchain, it will lose all the chain data and start syncing from scratch.`,
-      label: "Remove volumes",
+      title: `Reset ${shortNameCapitalized(id)}`,
+      text: `This will reload this package to its factory settings \n (only this package - all other installed AVADO packages will remain installed and keep their data). This action cannot be undone.`,
+      label: "Reset package",
       onClick: () => restartPackageVolumes(id)
     });
   }
@@ -48,13 +48,8 @@ function PackageControls({
       type: "secondary"
     },
     {
-      name: "Remove volumes",
-      text: `Deleting package volumes is a permanent action and all data will be lost. 
-          ${
-            dnp.name === "ethchain.dnp.dappnode.eth"
-              ? " WARNING! The mainnet chain will have to resync and may take a few days."
-              : ""
-          }`,
+      name: "Reset",
+      text: `Resets this package to its factory settings (all package data will be lost).`,
       action: () => confirmRemovePackageVolumes(dnp.name),
       availableForCore: true,
       type: "danger"

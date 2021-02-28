@@ -136,12 +136,18 @@ function InstallerInterface({
         return (<>&nbsp;</>);
     }
 
-    const dnpData = {
-        // "Developed by": dnp.manifest.author,
+    let dnpData = {
+        "Latest version": dnp.manifest.version,
         "Size": dnp && humanFileSize(dnp.manifest.image.size),
-        "Based on": dnp && `${dnp.manifest.upstream}`
     };
+    if (dnp && dnp.manifest.upstream) {
+        dnpData["Based on"] = `${dnp.manifest.upstream}`
+    }
 
+    if (dnp && dnp.manifest.builddate) {
+        const date = new Date(dnp.manifest.builddate);
+        dnpData["Released on"] = `${date.toLocaleDateString()}`
+    }
 
     return (
         <>
