@@ -58,7 +58,7 @@ function InstallerHome({
         console.log(`connecting to ${peer}`);
         const apiLink = `http://my.ipfs.dnp.dappnode.eth:5001/api/v0/swarm/connect?arg=${peer}`;
         axios
-            .get(
+            .post(
                 apiLink
             )
             .then(res => {

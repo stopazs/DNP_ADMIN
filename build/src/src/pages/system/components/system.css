@@ -17,3 +17,11 @@
 .system-update-grid .alert {
   margin-bottom: 0 !important;
 }
+
+.list-grid.maintenance {
+  place-items:initial ;
+}
+
+.fullwidth {
+  width: 90%;
+}

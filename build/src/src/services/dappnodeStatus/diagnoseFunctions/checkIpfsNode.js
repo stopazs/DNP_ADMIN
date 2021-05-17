@@ -12,7 +12,7 @@ const url = `${protocol}://${host}:${port}/api/v0/cat?arg=${hash}`;
 // Attempts to cat the readme file and expect it to contain 'Hello and Welcome to IPFS!'
 const checkIpfsConnection = retryable(async () => {
   try {
-    const file = await fetchWithTimeout(url).then(res => res.text());
+    const file = await fetchWithTimeout(url, { method: 'POST' }).then(res => res.text());
     if (!file.includes(expectedString)) throw Error("Error parsing file");
   } catch (e) {
     e.message = `Error verifying IPFS: ${e.message}`;
