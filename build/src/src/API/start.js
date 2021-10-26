@@ -11,7 +11,7 @@ import {
 // const url = 'ws://localhost:8080/ws';
 // const realm = 'realm1';
 // Produccion
-const url = "ws://my.wamp.dnp.dappnode.eth:8080/ws";
+const url = "ws://wamp.my.ava.do:8080/ws";
 const realm = "dappnode_admin";
 
 let sessionCache;
