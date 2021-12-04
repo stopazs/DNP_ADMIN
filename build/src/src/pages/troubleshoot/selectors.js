@@ -6,9 +6,9 @@ import {
   getDappnodeStats,
   getDappnodeDiagnose,
   getDappmanagerVersionData,
-  getVpnVersionData,
+  // getVpnVersionData,
   getDappmanagerPing,
-  getVpnPing,
+  // getVpnPing,
   getIpfsConnectionStatus
 } from "services/dappnodeStatus/selectors";
 import { getDnpInstalled } from "services/dnpInstalled/selectors";
@@ -96,25 +96,25 @@ const getDiagnoseDappmanagerConnected = onlyIfConnectionIsOpen(
   )
 );
 
-const getDiagnoseVpnConnected = onlyIfConnectionIsOpen(
-  createSelector(
-    getVpnPing,
-    getIsLoading.pingDappnodeDnps,
-    (ok, loading) => ({
-      loading,
-      ok,
-      msg: loading
-        ? "Checking if VPN is connected"
-        : ok
-        ? "VPN is connected"
-        : "VPN is not connected",
-      solutions: [
-        "Close your VPN connection and connect again",
-        "If the problem persists, reset the AVADO"
-      ]
-    })
-  )
-);
+// const getDiagnoseVpnConnected = onlyIfConnectionIsOpen(
+//   createSelector(
+//     // getVpnPing,
+//     getIsLoading.pingDappnodeDnps,
+//     (ok, loading) => ({
+//       loading,
+//       ok,
+//       msg: loading
+//         ? "Checking if VPN is connected"
+//         : ok
+//         ? "VPN is connected"
+//         : "VPN is not connected",
+//       solutions: [
+//         "Close your VPN connection and connect again",
+//         "If the problem persists, reset the AVADO"
+//       ]
+//     })
+//   )
+// );
 
 const getDiagnoseIpfs = createSelector(
   getIpfsConnectionStatus,
@@ -204,7 +204,7 @@ export const getDiagnoses = createSelector(
     getDiagnoseOpenPorts,
     // getDiagnoseNoNatLoopback,
     getDiagnoseDappmanagerConnected,
-    getDiagnoseVpnConnected,
+    // getDiagnoseVpnConnected,
     getDiagnoseIpfs,
     getDiagnoseDiskSpace,
     getDiagnoseCoreDnpsRunning
@@ -242,7 +242,7 @@ const getDnpInstalledWithVersionData = createSelector(
   getDnpInstalled,
   createStructuredSelector({
     "dappmanager.dnp.dappnode.eth": getDappmanagerVersionData,
-    "vpn.dnp.dappnode.eth": getVpnVersionData,
+    // "vpn.dnp.dappnode.eth": getVpnVersionData,
     "admin.dnp.dappnode.eth": () => window.versionData
   }),
   (dnps, versionDatas) =>

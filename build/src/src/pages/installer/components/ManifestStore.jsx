@@ -8,11 +8,12 @@ import PropTypes from "prop-types";
 import Card from "components/Card";
 import Button from "components/Button";
 // import { stringIncludes } from "utils/strings";
+import semver from "semver";
 
 function DnpStore({ directory, openDnp }) {
 
     const hashToUrl = (hash) => {
-        return `http://my.ipfs.dnp.dappnode.eth:8080/ipfs/${hash.replace("/ipfs/", "")}`
+        return `http://ipfs.my.ava.do:8080/ipfs/${hash.replace("/ipfs/", "")}`
     };
 // debugger;
     directory = directory.filter((item)=>{
@@ -35,7 +36,7 @@ function DnpStore({ directory, openDnp }) {
                    Cannot change the actual tag because it is used for logic around the installer */
 
                 const tagDisplay = p.installed ? "DETAILS" : "INSTALL";
-                const hasUpdate = p.installed && p.installedVersion && version !== p.installedVersion;
+                const hasUpdate = p.installed && p.installedVersion && semver.gt(version,p.installedVersion);
                 return (
                     <Card
                         key={name + origin}

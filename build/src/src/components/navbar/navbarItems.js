@@ -1,8 +1,3 @@
-// FundedBy icons
-import EfgLogo from "img/logos/efg-logo-only-min.png";
-import AragonLogo from "img/logos/aragon-min.png";
-import GivethLogo from "img/logos/giveth-min.png";
-import EcfLogo from "img/logos/ecf-min.png";
 // Icons
 import Dashboard from "Icons/Dashboard";
 import Activity from "Icons/Activity";
@@ -10,30 +5,6 @@ import Devices from "Icons/Devices";
 import Folder from "Icons/Folder";
 import NewFolder from "Icons/NewFolder";
 import Settings from "Icons/Settings";
-import Build from "Icons/Build";
-
-export const fundedBy = [
-  {
-    logo: EfgLogo,
-    text: "Ethereum Foundation",
-    link:
-      "https://blog.ethereum.org/2018/08/17/ethereum-foundation-grants-update-wave-3/"
-  },
-  {
-    logo: AragonLogo,
-    text: "Aragon Nest",
-    link: "https://blog.aragon.org/aragon-nest-second-round-of-grants/#dappnode"
-  },
-  {
-    logo: GivethLogo,
-    text: "Giveth",
-    link: "https://beta.giveth.io/campaigns/5b44b198647f33526e67c262"
-  },
-  {
-    logo: EcfLogo,
-    text: "Ethereum Community Fund"
-  }
-];
 
 export const sidenavItems = [
   {
@@ -55,7 +26,15 @@ export const sidenavItems = [
   {
     name: "Connect (VPN)",
     href: "/devices",
-    icon: Devices
+    icon: Devices,
+    package: "vpn.dnp.dappnode.eth",
+    hideif: ["remoteconnect.avado.dnp.dappnode.eth"]
+  },
+  {
+    name: "Remote Connect",
+    href: "/Packages/remoteconnect.avado.dnp.dappnode.eth",
+    icon: Devices,
+    package: "remoteconnect.avado.dnp.dappnode.eth",
   },
   {
     name: "Support",

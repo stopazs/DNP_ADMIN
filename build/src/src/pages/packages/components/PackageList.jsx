@@ -50,7 +50,7 @@ const PackagesList = ({
                 const storeHash = storeRes.hash;
                 axios
                     .get(
-                        `http://my.ipfs.dnp.dappnode.eth:8080/ipfs/${storeHash}`
+                        `http://ipfs.my.ava.do:8080/ipfs/${storeHash}`
                     )
                     .then(res => {
                         const storeManifest = res.data;
@@ -102,15 +102,16 @@ const PackagesList = ({
         <Card className="list-grid dnps no-a-style">
             <header className="center">Status</header>
             <header>Name</header>
+            {/* <header>Version</header> */}
             <header>Open</header>
             <header>Manage</header>
             <header>Restart</header>
             <header>Auto-update</header>
-            {filteredDnps.map(({ id, name, title, state, manifest }) => (
+            {filteredDnps.map(({ version, id, name, title, state, manifest }) => (
                 <React.Fragment key={name}>
                     <StateBadge state={state} />
                     <NavLink className="name" to={`/${moduleName}/${name}`}>
-                        {title || name}
+                        {title || name} ({version})
                     </NavLink>
                     <NavLink className="open" to={`/${moduleName}/${name}`}>
                         <MdOpenInNew />

@@ -15,11 +15,11 @@ import { CONNECTION_OPEN } from "services/connectionStatus/actionTypes";
 export function* fetchDevices() {
   try {
     yield put(updateIsLoading(loadingId));
-    const devices = yield call(api.listDevices, {}, { toastOnError: true });
+    const devices = yield call(api.listDevices, {}, { toastOnError: false });
     yield put(a.updateDevices(devices));
     yield put(updateIsLoaded(loadingId));
   } catch (e) {
-    console.error(`Error on fetchDevices: ${e.stack}`);
+    // console.error(`Error on fetchDevices: ${e.stack}`);
   }
 }
 

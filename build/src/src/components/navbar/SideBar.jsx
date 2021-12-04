@@ -1,11 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
 import { NavLink } from "react-router-dom";
-import { sidenavItems, fundedBy } from "./navbarItems";
+import { sidenavItems } from "./navbarItems";
 import logo from "img/avado-logo-v1.1.svg";
 import "./sidebar.css";
+import { getDnpInstalled } from "services/dnpInstalled/selectors";
+import { createSelector, createStructuredSelector } from "reselect";
+import { connect } from "react-redux";
 
 if (!Array.isArray(sidenavItems)) throw Error("sidenavItems must be an array");
-if (!Array.isArray(fundedBy)) throw Error("fundedBy must be an array");
+
 
 // The sidebar is kept exclusively in this component state
 // In order to avoid the App or redux to be aware of the
@@ -16,7 +19,16 @@ export function toggleSideNav() {
   window.dispatchEvent(new Event(toggleSideNavEvent));
 }
 
-export default function SideBar() {
+
+// Package lists
+export const getFilteredPackages = createSelector(
+  getDnpInstalled,
+  _packages => _packages.filter(p => p.name !== "core.dnp.dappnode.eth")
+);
+
+const SideBar = ({
+  dnps = [] }
+) => {
   const [collapsed, setCollapsed] = useState(true);
   const [width, setWidth] = useState(window.innerWidth);
 
@@ -61,6 +73,27 @@ export default function SideBar() {
     };
   }, [collapsed]);
 
+  console.log("DNP", dnps);
+
+  const filteredSidenavItems =
+    sidenavItems.reduce((accum, item) => {
+      if (!item.package) {
+        accum.push(item);
+        return accum;
+      }
+      if (
+        dnps.find((dnp) => { return dnp.name === item.package }) &&
+        (
+          !item.hideif ||
+          !dnps.find((dnp) => { return item.hideif.includes(dnp.name) })
+        )
+      ) {
+        accum.push(item);
+        return accum;
+      }
+      return accum;
+    }, []);
+
   return (
     <div id="sidebar" ref={sidebarEl} className={collapsed ? "collapsed" : ""}>
       <NavLink className="sidenav-item top" to={"/"} onClick={collapseSideNav}>
@@ -72,8 +105,9 @@ export default function SideBar() {
           <div className="subheader">ADMIN UI</div>
         </div> */}
 
-        {sidenavItems.map(item => (
+        {filteredSidenavItems.map(item => (
           <NavLink
+            exact
             key={item.name}
             className="sidenav-item selectable"
             onClick={collapseSideNav}
@@ -87,25 +121,7 @@ export default function SideBar() {
 
       {/* spacer keeps the funded-by section at the bottom (if possible) */}
       <div className="spacer" />
-    <div className="sidenav-item">Version {process.env.REACT_APP_VERSION}</div>
-      {/* <div className="funded-by">
-        <div className="funded-by-text">SUPPORTED BY</div>
-        <div className="funded-by-logos">
-          {fundedBy.map((item, i) => (
-            <a key={i} href={item.link}>
-              <img
-                src={item.logo}
-                className="img-fluid funded-by-logo"
-                alt="logo"
-                data-toggle="tooltip"
-                data-placement="top"
-                title={item.text}
-                data-delay="300"
-              />
-            </a>
-          ))}
-        </div>
-      </div> */}
+      <div className="sidenav-item">Version {process.env.REACT_APP_VERSION}</div>
     </div>
   );
 }
@@ -121,3 +137,16 @@ function getBreakPointPx() {
   );
   return breakPointRem * baseDocumentFontSize;
 }
+
+
+const mapStateToProps = createStructuredSelector({
+  dnps: getFilteredPackages,
+});
+
+const mapDispatchToProps = {
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SideBar);

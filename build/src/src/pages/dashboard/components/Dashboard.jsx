@@ -67,7 +67,7 @@ function Dashboard({
         if (!hash) {
             return null;
         }
-        return `http://my.ipfs.dnp.dappnode.eth:8080/ipfs/${hash.replace("/ipfs/", "")}`
+        return `http://ipfs.my.ava.do:8080/ipfs/${hash.replace("/ipfs/", "")}`
     };
 
     const openDnp = (name) => {

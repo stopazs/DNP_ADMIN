@@ -24,7 +24,7 @@ import Title from "components/Title";
 import SubTitle from "components/SubTitle";
 import Card from "components/Card";
 
-const ipfsGateway = "http://my.ipfs.dnp.dappnode.eth:8080/ipfs/";
+const ipfsGateway = "http://ipfs.my.ava.do:8080/ipfs/";
 
 // Necessary code to refresh the userAddress
 // when user interacts with the metamask extension
