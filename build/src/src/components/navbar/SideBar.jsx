@@ -73,8 +73,6 @@ const SideBar = ({
     };
   }, [collapsed]);
 
-  console.log("DNP", dnps);
-
   const filteredSidenavItems =
     sidenavItems.reduce((accum, item) => {
       if (!item.package) {

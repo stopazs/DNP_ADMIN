@@ -10179,6 +10179,13 @@ react-bootstrap@^1.0.1:
     uncontrollable "^7.0.0"
     warning "^4.0.3"
 
+react-click-to-edit@^1.2.3:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/react-click-to-edit/-/react-click-to-edit-1.2.3.tgz#75fd9466b6da31d3c56dfb81833faef2b1e0cde7"
+  integrity sha512-ZFftAx8KABQkjWfttVz6I+8nrn/ZZO/rlj3rOkG3SR5fRDjU6yA2eVtE5TTkHHa30LWVHqURAFesHllek0licw==
+  dependencies:
+    classnames "^2.2.6"
+
 react-confirm-alert@^2.6.2:
   version "2.6.2"
   resolved "https://registry.yarnpkg.com/react-confirm-alert/-/react-confirm-alert-2.6.2.tgz#775c6e5233cd2c4b06f4ddedd59b8de03e071876"

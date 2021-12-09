@@ -86,12 +86,14 @@ export const chainData = Joi.array()
 export const params = Joi.object({
   ip: Joi.string(),
   name: Joi.string(),
-  staticIp: Joi.string().allow("", null),
+  internalip: Joi.string(),
   domain: Joi.string(),
-  upnpAvailable: Joi.boolean().required(),
-  noNatLoopback: Joi.boolean().required(),
-  alertToOpenPorts: Joi.boolean().required(),
-  internalIp: Joi.string().required()
+  staticIp: Joi.string().allow("", null),
+  nodeid: Joi.string(),
+  upnpAvailable: Joi.boolean(),
+  noNatLoopback: Joi.boolean(),
+  alertToOpenPorts: Joi.boolean(),
+  internalIp: Joi.string()
 }).required();
 
 export const stats = Joi.object({

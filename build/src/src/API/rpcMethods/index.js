@@ -3,12 +3,10 @@ import Toast from "components/toast/Toast";
 // Modules
 import dappmanager from "./dappmanager";
 import vpn from "./vpn";
-import zt from "./zt";
 
 const dnps = {
   dappmanager,
   vpn,
-  // zt
 };
 
 // Converts a RPC description

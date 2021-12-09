@@ -19,13 +19,13 @@ import { assertConnectionOpen } from "utils/redux";
  * Fetches the DAppNode params and statusUpnp from the VPN
  * [Tested]
  */
-// export const fetchDappnodeParams = wrapErrorsAndLoading(
-//   loadingIds.dappnodeParams,
-//   function*() {
-//     const dappnodeParams = yield call(api.getParams);
-//     yield put(a.updateDappnodeParams(dappnodeParams));
-//   }
-// );
+export const fetchDappnodeParams = wrapErrorsAndLoading(
+  loadingIds.dappnodeParams,
+  function*() {
+    const dappnodeParams = yield call(api.getParams);
+    yield put(a.updateDappnodeParams(dappnodeParams));
+  }
+);
 
 /**
  * Calls getStats. The DAPPMANAGER will return the machine stats
@@ -114,7 +114,7 @@ const checkIpfsConnectionStatus = wrapErrorsAndLoading(
 function* fetchAllDappnodeStatus() {
   try {
     yield all([
-      // call(fetchDappnodeParams),
+      call(fetchDappnodeParams),
       call(fetchDappnodeStats),
       call(fetchDappnodeDiagnose),
       call(pingDappnodeDnps),
