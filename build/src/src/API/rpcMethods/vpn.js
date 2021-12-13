@@ -114,7 +114,7 @@ export default {
    *   internalIp: 192.168.0.1,
    * }
    */
-  getParams: {},
+  // getParams: {},
 
   /**
    * [setStaticIp]

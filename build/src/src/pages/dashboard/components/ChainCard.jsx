@@ -29,7 +29,7 @@ function ChainCard({ name, message, progress, error, syncing }) {
 ChainCard.propTypes = {
   name: PropTypes.string.isRequired,
   message: PropTypes.string.isRequired,
-  syncing: PropTypes.bool.isRequired,
+  // syncing: PropTypes.bool.isRequired,
   progress: PropTypes.number
 };
 

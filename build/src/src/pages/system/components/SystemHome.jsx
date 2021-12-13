@@ -104,6 +104,7 @@ const SystemHome = ({ rebootHost, runSignedCmd }) => {
 
             <Card className="list-grid maintenance">
                 <table>
+                    <tbody>
                     <tr>
                         <td>
                             <button className="btn fullwidth btn-outline-secondary" type="button" onClick={rebootConfirm}>REBOOT MY AVADO</button>
@@ -148,9 +149,7 @@ const SystemHome = ({ rebootHost, runSignedCmd }) => {
                             <div>Stop all packages and shut down your AVADO. Press the power button to power on again.</div>
                         </td>
                     </tr>
-
-                   
-
+                    </tbody>
                 </table>
             </Card>
 

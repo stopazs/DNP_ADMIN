@@ -72,7 +72,7 @@ const pingDappnodeDnps = wrapErrorsAndLoading(
         // If the previous call does not throw, the ping was successful
         yield put(a.updatePingReturn(dnp, true));
       } catch (e) {
-        console.error(`Error on pingDappnodeDnps/${dnp}: ${e.stack}`);
+        // console.error(`Error on pingDappnodeDnps/${dnp}: ${e.stack}`);
         yield put(a.updatePingReturn(dnp, false));
       }
     }
@@ -88,7 +88,7 @@ const getDnpsVersionData = wrapErrorsAndLoading(
         const versionData = yield call(api[dnp].getVersionData);
         yield put(a.updateVersionData(dnp, versionData));
       } catch (e) {
-        console.error(`Error on getDnpsVersionData/${dnp}: ${e.stack}`);
+        // console.error(`Error on getDnpsVersionData/${dnp}: ${e.stack}`);
       }
     }
   }
@@ -135,7 +135,7 @@ export default rootWatcher([
   [CONNECTION_OPEN, fetchAllDappnodeStatus],
   [t.FETCH_ALL_DAPPNODE_STATUS, fetchAllDappnodeStatus],
   // Fetch single data
-  [t.FETCH_DAPPNODE_PARAMS, fetchDappnodeParams],
+  // [t.FETCH_DAPPNODE_PARAMS, fetchDappnodeParams],
   [t.FETCH_DAPPNODE_STATS, fetchDappnodeStats],
   [t.FETCH_DAPPNODE_DIAGNOSE, fetchDappnodeDiagnose],
   [t.PING_DAPPNODE_DNPS, pingDappnodeDnps]

@@ -6,7 +6,7 @@ import vpn from "./vpn";
 
 const dnps = {
   dappmanager,
-  vpn
+  vpn,
 };
 
 // Converts a RPC description

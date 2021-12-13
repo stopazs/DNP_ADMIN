@@ -56,7 +56,7 @@ function InstallerHome({
 
     const peerConnect = (peer) => {
         console.log(`connecting to ${peer}`);
-        const apiLink = `http://my.ipfs.dnp.dappnode.eth:5001/api/v0/swarm/connect?arg=${peer}`;
+        const apiLink = `http://ipfs.my.ava.do:5001/api/v0/swarm/connect?arg=${peer}`;
         axios
             .post(
                 apiLink
@@ -108,7 +108,7 @@ function InstallerHome({
                 //  const storeHash = "QmekF1EwLrfSwm4mjRHaBGrHmRafYBLTTz2Ymx5nszdaan";
                 axios
                     .get(
-                        `http://my.ipfs.dnp.dappnode.eth:8080/ipfs/${storeHash}`
+                        `http://ipfs.my.ava.do:8080/ipfs/${storeHash}`
                     )
                     .then(res => {
                         const storeManifest = res.data;

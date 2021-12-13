@@ -25,6 +25,7 @@
     "re-reselect": "^3.4.0",
     "react": "^16.13.1",
     "react-bootstrap": "^1.0.1",
+    "react-click-to-edit": "^1.2.3",
     "react-confirm-alert": "^2.6.2",
     "react-dom": "^16.13.1",
     "react-icons": "^3.10.0",

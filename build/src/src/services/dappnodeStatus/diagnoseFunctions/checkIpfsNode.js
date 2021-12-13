@@ -2,7 +2,7 @@ import { retryable } from "utils/functions";
 
 // This construction prevents ipfs from auto initialize when imported
 // If this happens tests can fail and trigger nasty effects
-const host = "my.ipfs.dnp.dappnode.eth";
+const host = "ipfs.my.ava.do";
 const port = 5001;
 const protocol = "http";
 const hash = "QmPZ9gcCEpqKTo6aq61g2nXGUhM4iCL3ewB6LDXZCtioEB";
