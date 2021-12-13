@@ -20,9 +20,9 @@
 }
 
 .dappnode-name {
-  max-width: 25vw;
-  white-space: nowrap;
-  overflow: hidden;
+  /* max-width: 25vw; */
+  /* white-space: nowrap; */
+  /* overflow: hidden; */
   text-overflow: ellipsis;
 }
 
@@ -48,4 +48,8 @@
 }
 .sidenav-toggler:hover {
   opacity: 1;
+}
+
+#topbar .avado.right {
+  grid-template-columns: none;
 }

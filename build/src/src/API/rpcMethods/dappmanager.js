@@ -444,7 +444,13 @@ export default {
   setAutoUpdate: {
     manadatoryKwargs: ["id","autoUpdate"]
   },
-  
+
+  // Set the name of this AVADO
+  // @param {string} id DNP name
+  setName: {
+    manadatoryKwargs: ["name"]
+  },
+
   rebootHost: {
     // manadatoryKwargs: ["id","autoUpdate"]
   },

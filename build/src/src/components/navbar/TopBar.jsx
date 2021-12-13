@@ -1,6 +1,6 @@
 import React from "react";
 // DropdownMenu components
-import DappnodeIdentity from "./dropdownMenus/DappnodeIdentity";
+import DappnodeIdentity from "./dropdownMenus/DappnodeIdentity/index.jsx";
 import ChainData from "./dropdownMenus/ChainData";
 import Notifications from "./dropdownMenus/Notifications";
 import Report from "./dropdownMenus/Report";
@@ -21,7 +21,7 @@ const TopBar = () => (
       </button>
     </div>
     {/* Right justified items */}
-    <div className="right">
+    <div className="avado right">
       <DappnodeIdentity />
       <div className="topnav-icon-separator" />
       <ChainData />
