@@ -160,11 +160,11 @@
       "http://80.208.229.228:5001": "Sat, 04 Dec 2021 20:16:06 GMT"
     }
   },
-  "10.0.35": {
-    "hash": "/ipfs/QmdaEfxdWooFZKjjpCgpWiBcrHenPQqgUsLK82uF1D5rpR",
+  "10.0.36": {
+    "hash": "/ipfs/QmRmEJpVRY4grCSBPJwLtuhu5FGRF7An1W42nxVAA6QWNe",
     "type": "manifest",
     "uploadedTo": {
-      "http://80.208.229.228:5001": "Tue, 14 Dec 2021 11:13:40 GMT"
+      "http://80.208.229.228:5001": "Mon, 20 Dec 2021 00:50:51 GMT"
     }
   }
 }
