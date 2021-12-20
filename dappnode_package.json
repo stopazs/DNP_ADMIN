@@ -8,8 +8,8 @@
   "title": "Admin UI",
   "image": {
     "path": "admin.dnp.dappnode.eth_10.0.36.tar.xz",
-    "hash": "/ipfs/QmQgDhreMu4WCUWy8LkimJ9rvb6JEdWcZcC34itxR6BweY",
-    "size": 7409004,
+    "hash": "/ipfs/QmSqfnMkppswi5HqGgcUFJH3g56yoNCpfEjZn3E4p2RU7U",
+    "size": 7415504,
     "volumes": [
       "vpndnpdappnodeeth_shared:/usr/www/openvpn/cred"
     ],
@@ -31,5 +31,5 @@
     "ui": "http://my.dappnode/"
   },
   "license": "GPL-3.0",
-  "builddate": "2021-12-20T00:50:51.475Z"
+  "builddate": "2021-12-20T01:23:30.286Z"
 }
