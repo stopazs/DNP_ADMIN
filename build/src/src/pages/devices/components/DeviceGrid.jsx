@@ -16,6 +16,9 @@ import { MdDelete, MdRefresh, MdShare } from "react-icons/md";
 import { FaQrcode, FaDownload } from "react-icons/fa";
 import { GoClippy } from "react-icons/go";
 import "./devices.css";
+import { connect } from "react-redux";
+import { getDappnodeParams } from "services/dappnodeStatus/selectors";
+import { createStructuredSelector } from "reselect";
 
 function DeviceGrid({
     devices,
@@ -23,8 +26,13 @@ function DeviceGrid({
     removeDevice,
     resetDevice,
     toggleAdmin,
-    getDeviceCredentials
+    getDeviceCredentials,
+    dappnodeParams
 }) {
+
+    console.log("params", params)
+    console.log("dappnodeParams", dappnodeParams)
+
     // Activate the copy functionality
     useEffect(() => {
         new ClipboardJS(".copy");
@@ -60,9 +68,6 @@ function DeviceGrid({
         }
     }
 
-
-
-
     // function download(id) {
     //   const device = devices.find(d => d.id === id);
     //   if (device) downloadVpnCredentials(device);
@@ -78,7 +83,9 @@ function DeviceGrid({
             {devices.map(({ id, admin, url }) => {
                 let url2;
                 if (url && params) {
-                    url2 = `${url.replace(params.domain,params.internalIp).replace("?",`?domain=${params.domain}&ip=${params.internalIp}&`)}`;
+                    //                    url2 = `${url.replace(params.domain,params.internalIp).replace("?",`?domain=${params.domain}&ip=${params.internalIp}&`)}`;
+                    // url2 = `http://my.ava.do${url2.split(":")[1]}`;
+                    url2 = `http://my.ava.do:8090/?localip=${params.internalip}&ip=${params.ip}&${url.split("?")[1]}`;
                 }
 
                 return ({ id: id, admin: admin, url: url, url2: url2 })
@@ -102,8 +109,8 @@ function DeviceGrid({
                                 )}
                             </div>
                         ) : (
-                                <MdShare onClick={() => getDeviceCredentials(id)} />
-                            )}
+                            <MdShare onClick={() => getDeviceCredentials(id)} />
+                        )}
                         <Switch checked={admin} onToggle={() => toggleAdmin(id)} />
                         <MdRefresh onClick={() => resetDeviceConfirm(id)} />
                         <MdDelete
@@ -132,4 +139,15 @@ DeviceGrid.propTypes = {
     getDeviceCredentials: PropTypes.func.isRequired
 };
 
-export default DeviceGrid;
+const mapStateToProps = createStructuredSelector({
+    dappnodeParams: getDappnodeParams
+});
+
+const mapDispatchToProps = {
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(DeviceGrid);
+

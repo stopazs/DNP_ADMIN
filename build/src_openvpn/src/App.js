@@ -97,7 +97,7 @@ export default class App extends Component {
         try {
             // 1. Get params from url
             this.setState({ loading: true });
-            const { key, id, name, dev, domain, ip } = getParamsFromUrl();
+            const { key, id, name, dev, domain, ip, localip } = getParamsFromUrl();
             const url = `${baseUrl}/cred/${id}?id=${id}`;
 
             // Dev param to be able to work on the UI
@@ -124,15 +124,17 @@ export default class App extends Component {
                     ).substring(0, 100)}...\n`
                 );
             let file = decrypt(encryptedFile, key);
-            let file_local;
-            if (domain && ip) {
-                file_local = file.replace(domain, ip);
-            }
+            let file_remote = file.replace(/remote .+.dyndns.dappnode.io/,`remote ${ip}`)        
+            let file_local = file.replace(/remote .+.dyndns.dappnode.io/,`remote ${localip}`)        
+
+            // if (ip) {
+            //     file_local = file.replace(domain, ip);
+            // }
 
             // console.log(file);
 
 
-            this.setState({ loading: false, file, file_local, name });
+            this.setState({ loading: false, file_remote, file_local, name });
         } catch (err) {
             this.setState({
                 loading: false,
@@ -143,8 +145,8 @@ export default class App extends Component {
     }
 
     render() {
-        const { file, file_local, name, error, loading } = this.state;
-        const blob = new Blob([file], { type: ovpnType });
+        const { file, file_local, file_remote, name, error, loading } = this.state;
+        const blob = new Blob([file_remote], { type: ovpnType });
         const blob_local = new Blob([file_local], { type: ovpnType });
         const filename = `${getServerName(name)}.${fileExtension}`;
         const filename_local = `${getServerName(name)}_local.${fileExtension}`;
@@ -158,7 +160,7 @@ export default class App extends Component {
             );
         }
 
-        if (file) {
+        if (file_local) {
             return (
                 <React.Fragment>
                     <div className="container  text-center">
@@ -167,8 +169,8 @@ export default class App extends Component {
                             Download the .ovpn file(s)
                             and import it to your VPN client. You can follow the guides below on
                             how to install a VPN client and import an .opvn file.
-            </p>
-            <br/>
+                        </p>
+                        <br />
                         <div className="text-center">
                             {/* <h6 className="main-text mt-4">
                                 <img
@@ -179,31 +181,31 @@ export default class App extends Component {
                                 />
                                 Successfully decrypted .ovpn file
               </h6> */}
-              <button
+                            <button
                                 className="btn btn-primary dappnode-background-color"
                                 onClick={saveAs.bind(this, blob, filename)}
                             >Download for remote use</button>
                             {(file_local) && (
                                 <span>
-                                <span>  </span>
-                            <button
-                                className="btn btn-primary dappnode-background-color"
-                                onClick={saveAs.bind(this, blob_local, filename_local)}
-                            >Download for local (LAN) use</button>
-                            </span>
-                        )}
+                                    <span>  </span>
+                                    <button
+                                        className="btn btn-primary dappnode-background-color"
+                                        onClick={saveAs.bind(this, blob_local, filename_local)}
+                                    >Download for local (LAN) use</button>
+                                </span>
+                            )}
                         </div>
                     </div>
                     {/* <div className="jumbotron-area"> */}
-                    <br/>
+                    {/* <br/>
                         <div className="container text-center">
                             <h2 className="jumbotron-subtitle">
                                 Haven't installed an OpenVPN client already?
               </h2>
                             <p className="jumotron-subtitle">Choose your OS below</p>
-                        </div>
+                        </div> */}
                     {/* </div> */}
-
+                    {/* 
                     <div className="container">
                         <div className="row instructions-row">
                             {options.map((option, i) => (
@@ -220,7 +222,7 @@ export default class App extends Component {
                                 </div>
                             ))}
                         </div>
-                    </div>
+                    </div> */}
                     <HiddenRedirector />
                 </React.Fragment>
             );

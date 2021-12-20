@@ -14,7 +14,7 @@ RUN apt-get update && apt-get --yes install git jq
 ADD .git .git
 ADD dappnode_package.json .
 RUN ./getVersionData.sh
-RUN yarn add react-scripts
+#RUN yarn add react-scripts
 RUN NODE_OPTIONS="--max-old-space-size=4048" yarn run build
 # RUN yarn build
 RUN echo "====================Finished building Admin website===================="
