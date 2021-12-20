@@ -1,4 +1,4 @@
-FROM node:14.15.1 as build-deps-adminui
+FROM node:14.17.0 as build-deps-adminui
 RUN echo "====================Building Admin website===================="
 WORKDIR /usr/src/app
 # ensuring both package.json AND package-lock.json are copied
@@ -19,7 +19,7 @@ RUN NODE_OPTIONS="--max-old-space-size=4048" yarn run build
 # RUN yarn build
 RUN echo "====================Finished building Admin website===================="
 
-FROM node:14.15.1 as build-deps-openvpn
+FROM node:14.17.0 as build-deps-openvpn
 RUN echo "====================Building OpenVPN landing page===================="
 WORKDIR /usr/src/app
 # ensuring both package.json AND package-lock.json are copied
