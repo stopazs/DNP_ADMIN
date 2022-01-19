@@ -84,16 +84,16 @@ export const chainData = Joi.array()
 // Service > dappnodeStatus
 
 export const params = Joi.object({
-  ip: Joi.string(),
+  ip: Joi.string().allow("", null),
   name: Joi.string(),
-  internalip: Joi.string(),
+  internalip: Joi.string().allow("", null),
   domain: Joi.string(),
   staticIp: Joi.string().allow("", null),
   nodeid: Joi.string(),
   upnpAvailable: Joi.boolean(),
   noNatLoopback: Joi.boolean(),
   alertToOpenPorts: Joi.boolean(),
-  internalIp: Joi.string()
+  internalIp: Joi.string().allow("", null)
 }).required();
 
 export const stats = Joi.object({
