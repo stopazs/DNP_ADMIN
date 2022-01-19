@@ -7,6 +7,7 @@ import "./Wizard.css";
 // import newTabProps from "utils/newTabProps";
 
 function Wizard({ dnp }) {
+
     const { manifest = {} } = dnp;
 
     if (!manifest || !manifest.links || !manifest.links.OnboardingWizard) {

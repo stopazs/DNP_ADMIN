@@ -23,8 +23,8 @@ import {
 } from "services/loadingStatus/selectors";
 
 const filler = () => {
-    let r="";
-    for (let c=0;c<1000;c++){
+    let r = "";
+    for (let c = 0; c < 1000; c++) {
         r += ` ${c}`;
     }
     return (<>{r}</>);
@@ -39,10 +39,8 @@ const PackageInterface = ({
     error
 }) => {
 
-    return(
+    return (
         <>
-
-
             {dnp ? (
                 <>
                     {dnp.manifest && dnp.manifest.links && dnp.manifest.links.OnboardingWizard ? (
@@ -51,15 +49,27 @@ const PackageInterface = ({
                                 <Wizard dnp={dnp} />
                             </div>
                         </>
-                    ) : (
+                    ) :
+                        (dnp.name === "remoteconnect.avado.dnp.dappnode.eth" ? (
+
                             <>
-                                <Title title="Package" subtitle={dnp.manifest && dnp.manifest.title ? dnp.manifest.title :  id} />
-                                <Details dnp={dnp} />
-                                <Controls dnp={dnp} />
-                                <Envs dnp={dnp} />
-                                <FileManager dnp={dnp} />
-                                <Logs id={dnp.name} />
+                                <div className="fullheight">
+                                    <Wizard dnp={{ manifest: { links: { OnboardingWizard: "http://remoteconnect.my.ava.do" } } }} />
+                                </div>
                             </>
+
+                        ) :
+
+                            (
+                                <>
+                                    <Title title="Package" subtitle={dnp.manifest && dnp.manifest.title ? dnp.manifest.title : id} />
+                                    <Details dnp={dnp} />
+                                    <Controls dnp={dnp} />
+                                    <Envs dnp={dnp} />
+                                    <FileManager dnp={dnp} />
+                                    <Logs id={dnp.name} />
+                                </>
+                            )
                         )
                     }
                 </>
@@ -71,7 +81,8 @@ const PackageInterface = ({
                 <NoDnpInstalled id={id} moduleName={moduleName} />
             ) : null}
         </>
-    )};
+    )
+};
 
 PackageInterface.propTypes = {
     dnp: PropTypes.object,
