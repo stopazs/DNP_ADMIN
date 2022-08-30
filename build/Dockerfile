@@ -1,4 +1,4 @@
-FROM node:14.17.0 as build-deps-adminui
+FROM --platform=linux/amd64  node:14.17.0 as build-deps-adminui
 RUN echo "====================Building Admin website===================="
 WORKDIR /usr/src/app
 # ensuring both package.json AND package-lock.json are copied
@@ -19,30 +19,31 @@ RUN NODE_OPTIONS="--max-old-space-size=4048" yarn run build
 # RUN yarn build
 RUN echo "====================Finished building Admin website===================="
 
-FROM node:14.17.0 as build-deps-openvpn
-RUN echo "====================Building OpenVPN landing page===================="
-WORKDIR /usr/src/app
-# ensuring both package.json AND package-lock.json are copied
-COPY build/src_openvpn/package*.json ./
-COPY build/src_openvpn/*lock* ./
-RUN yarn add react-scripts
-COPY build/src_openvpn .
-# install dependencies
-RUN yarn build
-#install --production
-# copy the contents of the app
-# build for production
-#RUN NODE_OPTIONS="--max-old-space-size=4096" yarn run build
-# RUN yarn run build
-RUN node injectToHtml
-RUN echo "====================Finished building OpenVPN landing page===================="
+# FROM n--platform=linux/amd64  ode:14.17.0 as build-deps-openvpn
+# RUN echo "====================Building OpenVPN landing page===================="
+# WORKDIR /usr/src/app
+# # ensuring both package.json AND package-lock.json are copied
+# COPY build/src_openvpn/package*.json ./
+# COPY build/src_openvpn/*lock* ./
+# RUN yarn add react-scripts
+# COPY build/src_openvpn .
+# # install dependencies
+# RUN yarn build
+# #install --production
+# # copy the contents of the app
+# # build for production
+# #RUN NODE_OPTIONS="--max-old-space-size=4096" yarn run build
+# # RUN yarn run build
+# RUN node injectToHtml
+# RUN echo "====================Finished building OpenVPN landing page===================="
 
-FROM nginx:1.12-alpine
-RUN mkdir -p /usr/www/adminui && mkdir -p /usr/www/openvpn && mkdir -p /usr/www/openvpn/cred
+FROM --platform=linux/amd64 nginx:1.23.1-alpine
+RUN mkdir -p /usr/www/adminui 
+# && mkdir -p /usr/www/openvpn && mkdir -p /usr/www/openvpn/cred
 COPY --from=build-deps-adminui /usr/src/app/build /usr/www/adminui
-COPY --from=build-deps-openvpn /usr/src/app/build /usr/www/openvpn
+# COPY --from=build-deps-openvpn /usr/src/app/build /usr/www/openvpn
 COPY build/nginx.conf /etc/nginx/nginx.conf
 
 EXPOSE 80
-EXPOSE 8090
+# EXPOSE 8090
 CMD ["nginx", "-c", "/etc/nginx/nginx.conf", "-g", "daemon off;"]
