@@ -20,6 +20,7 @@ const DappnodeIdentity = ({ dappnodeParams = {}, setName }) => {
         // ...dappnodeParams,
         "External IP": dappnodeParams.ip,
         "Internal IP": dappnodeParams.internalip || dappnodeParams.internalIp,
+        "Node ID": dappnodeParams.nodeid,
         // "Name": dappnodeParams.name,
         // "External host name" : dappnodeParams.domain,
         // "NAT Loopback available" : dappnodeParams.noNatLoopback ? "No" : "Yes",
