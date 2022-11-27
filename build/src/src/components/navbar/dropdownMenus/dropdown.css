@@ -45,7 +45,7 @@
   /* Display control */
   display: none;
   /* Sizing */
-  width: 22.5rem;
+  /* width: 22.5rem; */
   max-height: 30rem;
 }
 .tn-dropdown > .menu.show {

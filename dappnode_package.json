@@ -7,14 +7,8 @@
   "autoupdate": true,
   "title": "Admin UI",
   "image": {
-    "path": "admin.dnp.dappnode.eth_10.0.39.tar.xz",
-    "hash": "/ipfs/QmbMNKE3Vxwf3WiY7cqGx612fHFVRcJ49WEQjMVWo6Crms",
-    "size": 7417716,
     "volumes": [
       "vpndnpdappnodeeth_shared:/usr/www/openvpn/cred"
-    ],
-    "ports": [
-      "8090:8090"
     ],
     "restart": "always",
     "subnet": "172.33.0.0/16",
@@ -22,14 +16,5 @@
   },
   "author": "AVADO",
   "contributors": [],
-  "keywords": [
-    "DAppNodeCore",
-    "UI",
-    "Admin"
-  ],
-  "links": {
-    "ui": "http://my.dappnode/"
-  },
-  "license": "GPL-3.0",
-  "builddate": "2022-01-19T19:10:58.848Z"
+  "license": "GPL-3.0"
 }

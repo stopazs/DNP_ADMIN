@@ -107,28 +107,50 @@ const PackagesList = ({
             <header>Manage</header>
             <header>Restart</header>
             <header>Auto-update</header>
-            {filteredDnps.map(({ version, id, name, title, state, manifest }) => (
-                <React.Fragment key={name}>
-                    <StateBadge state={state} />
-                    <NavLink className="name" to={`/${moduleName}/${name}`}>
-                        {title || name} ({version})
-                    </NavLink>
-                    <NavLink className="open" to={`/${moduleName}/${name}`}>
-                        <MdOpenInNew />
-                    </NavLink>
-                    <NavLink className="open" to={`/${moduleName}/${name}/detail`}>
-                        <MdTune />
-                    </NavLink>
-                    <MdRefresh
-                        onClick={() => confirmRestartPackage(name, restartPackage)}
-                    />
-                    <Switch
-                        checked={getAutoUpdateState(manifest)}
-                        onToggle={() => { setAutoUpdateWrapper(name, !getAutoUpdateState(manifest)) }}
-                    />
-                    <hr />
-                </React.Fragment>
-            ))}
+            {filteredDnps.map(({ version, id, name, title, state, manifest }) => {
+                let navLinkTitle, navLinkIcon;
+                // If the manifest file tells the UI to open its wizard in a seperate window, then display an a href
+                // otherwise display a NavLink
+                if (manifest && manifest.ui && manifest.ui.OnboardingWizard && manifest.ui.OnboardingWizard.external) {
+                    navLinkTitle = (<a className="name" href={manifest.ui.OnboardingWizard.url} target="_blank">{title || name} ({version})</a>);
+                    navLinkIcon = (<a className="open" href={manifest.ui.OnboardingWizard.url} target="_blank"><MdOpenInNew /></a>);
+                } else {
+                    navLinkTitle = (
+                        <NavLink className="name" to={`/${moduleName}/${name}`}>
+                            {title || name} ({version})
+                        </NavLink>
+                    );
+                    navLinkIcon = (
+                        <NavLink className="open" to={`/${moduleName}/${name}`}>
+                            <MdOpenInNew />
+                        </NavLink>
+                    );
+                }
+                return (
+                    <React.Fragment key={name}>
+                        <StateBadge state={state} />
+                        {navLinkTitle}
+                        {navLinkIcon}
+                        {/* <NavLink className="name" to={`/${moduleName}/${name}`}>
+                            {title || name} ({version})
+                        </NavLink>
+                        <NavLink className="open" to={`/${moduleName}/${name}`}>
+                            <MdOpenInNew />
+                        </NavLink> */}
+                        <NavLink className="open" to={`/${moduleName}/${name}/detail`}>
+                            <MdTune />
+                        </NavLink>
+                        <MdRefresh
+                            onClick={() => confirmRestartPackage(name, restartPackage)}
+                        />
+                        <Switch
+                            checked={getAutoUpdateState(manifest)}
+                            onToggle={() => { setAutoUpdateWrapper(name, !getAutoUpdateState(manifest)) }}
+                        />
+                        <hr />
+                    </React.Fragment>
+                )
+            })}
         </Card>
     );
 };
