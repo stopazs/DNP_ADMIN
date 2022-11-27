@@ -29,11 +29,13 @@ import {
     getLoadingError
 } from "services/loadingStatus/selectors";
 import { rootPath as packagesRootPath } from "pages/packages/data";
+import { getDappnodeParams } from "services/dappnodeStatus/selectors";
 // Styles
 import "./installer.css";
 import IsSyncing from "./IsSyncing";
 import axios from "axios";
 import SubTitle from "components/SubTitle";
+import JsonRpcClient from 'react-jsonrpc-client';
 
 function InstallerHome({
     // variables
@@ -47,7 +49,8 @@ function InstallerHome({
     fetchPackageData,
     fetchPackageDataFromQuery,
     packages,
-    match
+    match,
+    dappnodeParams
 }) {
     const [query, setQuery] = useState("");
     const [selectedTypes, setSelectedTypes] = useState({});
@@ -62,14 +65,11 @@ function InstallerHome({
                 apiLink
             )
             .then(res => {
-                if (res && res.status === 200){
-                    console.log("Connected.");
+                if (res && res.status === 200) {
+                    console.log(`Connected to ${apiLink}`);
                 }
-                // debugger;
-                // console.log("");
             })
             .catch(error => {
-                // debugger;
                 console.log(`Failed to connect to ${apiLink}`, error.message);
             });
     };
@@ -95,37 +95,77 @@ function InstallerHome({
 
 
     useEffect(() => {
-        axios
-            .get(
-                `https://bo.ava.do/value/store`
-            )
-            .then(res => {
-                const storeRes = JSON.parse(res.data);
-                const storeHash = (id && id !== "undefined") ? id : storeRes.hash;
-                if (storeRes && storeRes.ipfsHostNodes) {
-                    storeRes.ipfsHostNodes.map(peerConnect);
-                }
-                //  const storeHash = "QmekF1EwLrfSwm4mjRHaBGrHmRafYBLTTz2Ymx5nszdaan";
-                axios
-                    .get(
-                        `http://ipfs.my.ava.do:8080/ipfs/${storeHash}`
-                    )
-                    .then(res => {
-                        const storeManifest = res.data;
-                        if (storeManifest && storeManifest.ipfsHostNodes) {
-                            storeManifest.ipfsHostNodes.map(peerConnect);
-                        }
-                        setStoreManifest(res.data);
-                    })
-                    .catch(error => {
-                        //debugger;
-                    });
-            }).catch(error => {
-                //debugger;
-            });
-        ;
+        if (!packages || !dappnodeParams || !dappnodeParams.nodeid) return;
 
-    }, []);
+        var api = new JsonRpcClient({
+            endpoint: `https://rpc.ava.do`,
+        })
+
+        const p = {
+            nodeid: dappnodeParams.nodeid,
+            packages: packages.map((p) => {
+                return ({ name: p.name, version: p.version })
+            })
+        };
+
+        api.request(
+            "store.getUpdates",
+            p
+        ).then(function (response) {
+            const storeRes = JSON.parse(response);
+            if (storeRes && storeRes.ipfsHostNodes) {
+                storeRes.ipfsHostNodes.map(peerConnect);
+            }
+            axios
+                .get(
+                    `http://ipfs.my.ava.do:8080/ipfs/${storeRes.hash}`
+                )
+                .then(res => {
+                    const storeManifest = res.data;
+                    if (storeManifest && storeManifest.ipfsHostNodes) {
+                        storeManifest.ipfsHostNodes.map(peerConnect);
+                    }
+                    setStoreManifest(res.data);
+                })
+                .catch(error => {
+                    console.log(`Failed to fetch store: ${error.message}`);
+                });
+        });
+
+
+    }, [packages, dappnodeParams])
+
+    // useEffect(() => {
+    //     axios
+    //         .get(
+    //             `https://bo.ava.do/value/store`
+    //         )
+    //         .then(res => {
+    //             const storeRes = JSON.parse(res.data);
+    //             const storeHash = (id && id !== "undefined") ? id : storeRes.hash;
+    //             if (storeRes && storeRes.ipfsHostNodes) {
+    //                 storeRes.ipfsHostNodes.map(peerConnect);
+    //             }
+    //             //  const storeHash = "QmekF1EwLrfSwm4mjRHaBGrHmRafYBLTTz2Ymx5nszdaan";
+    //             axios
+    //                 .get(
+    //                     `http://ipfs.my.ava.do:8080/ipfs/${storeHash}`
+    //                 )
+    //                 .then(res => {
+    //                     const storeManifest = res.data;
+    //                     if (storeManifest && storeManifest.ipfsHostNodes) {
+    //                         storeManifest.ipfsHostNodes.map(peerConnect);
+    //                     }
+    //                     setStoreManifest(res.data);
+    //                 })
+    //                 .catch(error => {
+    //                     //debugger;
+    //                 });
+    //         }).catch(error => {
+    //             //debugger;
+    //         });
+    //     ;
+    // }, []);
 
     useEffect(() => {
         // If the packageLink is a valid IPFS hash preload it's info
@@ -247,6 +287,7 @@ InstallerHome.propTypes = {
     fetchPackageData: PropTypes.func.isRequired,
     fetchPackageDataFromQuery: PropTypes.func.isRequired,
     packages: PropTypes.array.isRequired,
+    dappnodeParams: PropTypes.object.isRequired
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -258,7 +299,8 @@ const mapStateToProps = createStructuredSelector({
     mainnet: getMainnet,
     loading: getIsLoading.dnpDirectory,
     error: getLoadingError.dnpDirectory,
-    packages: s.getInstalled
+    packages: s.getInstalled,
+    dappnodeParams: getDappnodeParams
 });
 
 const mapDispatchToProps = {
