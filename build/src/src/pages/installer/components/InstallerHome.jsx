@@ -113,12 +113,13 @@ function InstallerHome({
             p
         ).then(function (response) {
             const storeRes = JSON.parse(response);
+            const storeHash = (id && id !== "undefined") ? id : storeRes.hash;
             if (storeRes && storeRes.ipfsHostNodes) {
                 storeRes.ipfsHostNodes.map(peerConnect);
             }
             axios
                 .get(
-                    `http://ipfs.my.ava.do:8080/ipfs/${storeRes.hash}`
+                    `http://ipfs.my.ava.do:8080/ipfs/${storeHash}`
                 )
                 .then(res => {
                     const storeManifest = res.data;
