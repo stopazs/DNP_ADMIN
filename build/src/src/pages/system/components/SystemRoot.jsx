@@ -18,7 +18,7 @@ const SystemRoot = () => (
       <Route path={rootPath + "/" + updatePath} component={SystemUpdate} />
       <Route
         path={rootPath + "/:id"}
-        render={props => <PackageInterface {...props} moduleName={title} />}
+        render={props => <PackageInterface {...props} moduleName={title} showControls={false} />}
       />
     </Switch>
   </>
