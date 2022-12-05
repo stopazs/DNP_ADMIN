@@ -61,7 +61,7 @@ const PackageInterface = ({
 
                             (
                                 <>
-                                    <Title title="Package" subtitle={dnp.manifest && dnp.manifest.title ? dnp.manifest.title : id} />
+                                    <Title title="Dapp - " subtitle={dnp.manifest && dnp.manifest.title ? dnp.manifest.title : id} />
                                     <Details dnp={dnp} />
                                     <Controls dnp={dnp} />
                                     <Envs dnp={dnp} />

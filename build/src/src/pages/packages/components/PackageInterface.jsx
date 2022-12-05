@@ -19,6 +19,7 @@ import {
     getIsLoading,
     getLoadingError
 } from "services/loadingStatus/selectors";
+import DnpStore from "pages/installer/components/ManifestStore";
 
 const PackageInterface = ({
     dnp,
@@ -35,7 +36,7 @@ const PackageInterface = ({
         <>
             {dnp ? (
                 <>
-                    <Title title={`${moduleName}`} subtitle={id} />
+                    <Title title={`${moduleName} - `} subtitle={`${dnp.title || dnp.id}`} />
                     {showControls && (
                         <Controls
                             dnp={dnp}

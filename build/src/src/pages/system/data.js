@@ -2,7 +2,7 @@
 
 export const mountPoint = "page-system";
 export const rootPath = "/system";
-export const title = "System";
+export const title = "AVADO System";
 
 // Aditional data
 export const updatePath = "update";
