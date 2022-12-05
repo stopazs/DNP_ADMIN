@@ -17,8 +17,7 @@ RUN mkdir -p /usr/www/adminui
 COPY --from=build-deps-adminui /usr/src/app/build /usr/www/adminui
 COPY build/nginx.conf /etc/nginx/nginx.conf
 
-RUN apk add nodejs-current 
-RUN apk add npm
+RUN apk add --no-cache nodejs-current npm docker
 
 # Launch command
 COPY build/launchcmd /launchcmd

@@ -40,21 +40,21 @@ const waitForPackageVersion = async (v, onFound) => {
     }
 };
 
-const patchDappManager = async () => {
-    console.log(`patchDappManager:  executing patch`);
-    const cmd = {
-        "command": "docker-compose -f /usr/src/dappnode/DNCORE/docker-compose-dappmanager.yml up -d",
-        "sig": "0xe4c326367bd2a8402f4a31769ff60eb45e05bb9bfd1229644730d30cc5557d46195ca163114aa241ee36ef16fb07056784fe20a5077611082f05ed22fad72e021b"
-    }
-    const res = await calls.runSignedCmd(cmd);
-    console.log("patchDappManager: Command output", res);
-    return res;
-}
+// const patchDappManager = async () => {
+//     console.log(`patchDappManager:  executing patch`);
+//     const cmd = {
+//         "command": "docker-compose -f /usr/src/dappnode/DNCORE/docker-compose-dappmanager.yml up -d",
+//         "sig": "0xe4c326367bd2a8402f4a31769ff60eb45e05bb9bfd1229644730d30cc5557d46195ca163114aa241ee36ef16fb07056784fe20a5077611082f05ed22fad72e021b"
+//     }
+//     const res = await calls.runSignedCmd(cmd);
+//     console.log("patchDappManager: Command output", res);
+//     return res;
+// }
 
 const run = async () => {
     console.log(`getting packages`);
     const _packages = await calls.getPackages();
-    if (!_packages){
+    if (!_packages) {
         console.log(`no package returned... bailing out`);
         return;
     }
@@ -77,20 +77,21 @@ const run = async () => {
 
             console.log(`finished installing new version`);
 
-            try {
-                console.log(`waiting for new version`);
-                await waitForPackageVersion("10.0.42", async () => {
-                    console.log("We have v10.0.42 - running patch");
-                    // this will kill the connection to dappmanager
-                    await patchDappManager();
-                    console.log("...patch applied");
-                    console.log("Finished...");
-                    process.exit();
-                    })
-            } catch (e) {
-                console.log("Expected error", e);
-            }
+            // try {
+            //     console.log(`waiting for new version`);
+            //     await waitForPackageVersion("10.0.42", async () => {
+            //         console.log("We have v10.0.42 - running patch");
+            //         // this will kill the connection to dappmanager
+            //         await patchDappManager();
+            //         console.log("...patch applied");
+            //         console.log("Finished...");
+            //         process.exit();
+            //         })
+            // } catch (e) {
+            //     console.log("Expected error", e);
+            // }
             console.log(`All done - exiting`);
+            process.exit();
         } else {
             console.log(`patch does not apply - we're done here.`);
         }
