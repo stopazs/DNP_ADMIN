@@ -17,7 +17,7 @@ services:
     restart: always
     dns: 172.33.1.2
     volumes:
-      - 'vpndnpdappnodeeth_shared:/usr/www/openvpn/cred'
+      - '/var/run/docker.sock:/var/run/docker.sock'
     networks:
       network:
         ipv4_address: 172.33.1.9
