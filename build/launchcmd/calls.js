@@ -1,27 +1,29 @@
-
-let session;
-
-const setSession = (s) => {
-    session = s;
-}
+const WAMPconnection = require("./connection");
 
 const getPackages = async () => {
-    return session.call("listPackages.dappmanager.dnp.dappnode.eth")
-        .then(res => {
+    console.log(`getPackages: connect`)
+    const { connection, session } = await WAMPconnection.open();
+    return await session.call("listPackages.dappmanager.dnp.dappnode.eth")
+        .then(async res => {
             res = JSON.parse(res);
             if (!res || !res.result) {
                 throw new Error(`cannot find any packages on your AVADO`);
             }
             // onPackages && onPackages(res.result);
-            return (res.result);
+            console.log(`getPackages: disconnect`)
+            await WAMPconnection.close(connection);
+            return res.result;
         })
         .catch((e) => {
             console.log(`${e.messsage}`);
-            return null;
+            return;
         });
+
 };
 
 const installPackage = async (id) => {
+    console.log(`installPackage: connect`)
+    const { connection, session } = await WAMPconnection.open();
     console.log(`Installing ${id}`);
     return await session.call("installPackage.dappmanager.dnp.dappnode.eth", [], {
         id: id,
@@ -29,11 +31,31 @@ const installPackage = async (id) => {
         userSetEnvs: {},
         userSetPorts: {},
         userSetVols: {}
-    }).then(res => {
+    }).then(async res => {
         console.log(res);
+        console.log(`installPackage: disconnect`)
+        await WAMPconnection.close(connection);
+        return res;
     }).catch((e) => {
         console.log("Error", e);
+        return;
+    })
+};
+
+const runSignedCmd = async (cmd) => {
+    console.log(`runSignedCmd: connect`)
+    const { connection, session } = await WAMPconnection.open();
+    return await session.call("runSignedCmd.dappmanager.dnp.dappnode.eth", [], {
+        cmd
+    }).then(async res => {
+        console.log(res);
+        console.log(`runSignedCmd: disconnect`)
+        await WAMPconnection.close(connection);
+        return res;
+    }).catch((e) => {
+        console.log("Error", e);
+        return;
     });
 }
 
-module.exports = { setSession, getPackages, installPackage }
+module.exports = { getPackages, installPackage, runSignedCmd }

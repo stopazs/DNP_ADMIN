@@ -16,8 +16,6 @@ services:
     container_name: DAppNodeCore-admin.dnp.dappnode.eth
     restart: always
     dns: 172.33.1.2
-    ports:
-      - '8090:8090'
     volumes:
       - 'vpndnpdappnodeeth_shared:/usr/www/openvpn/cred'
     networks:
