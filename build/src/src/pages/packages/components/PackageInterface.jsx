@@ -28,13 +28,21 @@ const PackageInterface = ({
     loading,
     error,
     showControls = true,
+    showReset,
+    showRemove
 }) => {
     return (
         <>
             {dnp ? (
                 <>
                     <Title title={`${moduleName}`} subtitle={id} />
-                    {showControls && (<Controls dnp={dnp} />)}
+                    {showControls && (
+                        <Controls
+                            dnp={dnp}
+                            showReset={showReset}
+                            showRemove={showRemove}
+                        />
+                    )}
                     <Details dnp={dnp} />
                     <Envs dnp={dnp} />
                     <FileManager dnp={dnp} />

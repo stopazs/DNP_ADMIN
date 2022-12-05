@@ -56,6 +56,7 @@ const run = async () => {
     const _packages = await calls.getPackages();
     if (!_packages) {
         console.log(`no package returned... bailing out`);
+        process.exit();
         return;
     }
     console.log(`${_packages.length} packages loaded`);
@@ -94,9 +95,11 @@ const run = async () => {
             process.exit();
         } else {
             console.log(`patch does not apply - we're done here.`);
+            process.exit();
         }
     } else {
         console.log(`dappmanager not found (?)`);
+        process.exit();
     }
 };
 
