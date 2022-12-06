@@ -96,7 +96,12 @@ const SystemHome = ({ rebootHost, runSignedCmd }) => {
             {/* <StaticIp /> */}
 
             <div className="section-subtitle">Packages</div>
-            <PackageList moduleName={title} coreDnps={true} />
+            <PackageList
+                moduleName={title}
+                coreDnps={true}
+                showRestart={false}
+                showOpen={false}
+            />
 
             <Title title="Maintenance" />
 
@@ -105,50 +110,50 @@ const SystemHome = ({ rebootHost, runSignedCmd }) => {
             <Card className="list-grid maintenance">
                 <table>
                     <tbody>
-                    <tr>
-                        <td>
-                            <button className="btn fullwidth btn-outline-secondary" type="button" onClick={rebootConfirm}>REBOOT MY AVADO</button>
-                        </td>
-                        <td>
-                            <div>Reboot your AVADO. Useful if a package is misbehaving or CPU is at 100%</div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <button className="btn fullwidth btn-outline-secondary" type="button" onClick={() => {
-                                confirmSignedCmd(
-                                    {
-                                        "command": "docker image prune -a -f",
-                                        "sig": "0x1d12a4062ccf7d95d2dc82776bd56558d195993b4a3ebc0f0b89476134e393cc1ac5fa627139dddb97568a7ac5feab3225ad0ceba27872501fa1baa8a5ec618d1b"
-                                    }   
-                                    , {
-                                        title: "Clean up disk",
-                                        text: "Are you sure you want to perform a disk cleanup ?"
-                                    })
-                            }}>DISK CLEANUP</button>
-                        </td>
-                        <td>
-                            <div>Clean your SSD from left-over package data. (This will not remove any package data that is in use.)</div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <button className="btn fullwidth btn-outline-secondary" type="button" onClick={() => {
-                                confirmSignedCmd(
-                                    {
-                                        "command": "shutdown",
-                                        "sig": "0x8d40739e777533e8c85eed161640dc3307277a0c4a827abe13139cf2b777b52006af67e7c65bd4273fd2b2c5a60d907b38f5420c4eaff5f4eccc0c05cb6918e41b"
-                                      }   
-                                    , {
-                                        title: "Shut down your AVADO",
-                                        text: "Are you sure you want to shut down your AVADO ?"
-                                    })
-                            }}>SHUTDOWN</button>
-                        </td>
-                        <td>
-                            <div>Stop all packages and shut down your AVADO. Press the power button to power on again.</div>
-                        </td>
-                    </tr>
+                        <tr>
+                            <td>
+                                <button className="btn fullwidth btn-outline-secondary" type="button" onClick={rebootConfirm}>REBOOT MY AVADO</button>
+                            </td>
+                            <td>
+                                <div>Reboot your AVADO. Useful if a package is misbehaving or CPU is at 100%</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <button className="btn fullwidth btn-outline-secondary" type="button" onClick={() => {
+                                    confirmSignedCmd(
+                                        {
+                                            "command": "docker image prune -a -f",
+                                            "sig": "0x1d12a4062ccf7d95d2dc82776bd56558d195993b4a3ebc0f0b89476134e393cc1ac5fa627139dddb97568a7ac5feab3225ad0ceba27872501fa1baa8a5ec618d1b"
+                                        }
+                                        , {
+                                            title: "Clean up disk",
+                                            text: "Are you sure you want to perform a disk cleanup ?"
+                                        })
+                                }}>DISK CLEANUP</button>
+                            </td>
+                            <td>
+                                <div>Clean your SSD from left-over package data. (This will not remove any package data that is in use.)</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <button className="btn fullwidth btn-outline-secondary" type="button" onClick={() => {
+                                    confirmSignedCmd(
+                                        {
+                                            "command": "shutdown",
+                                            "sig": "0x8d40739e777533e8c85eed161640dc3307277a0c4a827abe13139cf2b777b52006af67e7c65bd4273fd2b2c5a60d907b38f5420c4eaff5f4eccc0c05cb6918e41b"
+                                        }
+                                        , {
+                                            title: "Shut down your AVADO",
+                                            text: "Are you sure you want to shut down your AVADO ?"
+                                        })
+                                }}>SHUTDOWN</button>
+                            </td>
+                            <td>
+                                <div>Stop all packages and shut down your AVADO. Press the power button to power on again.</div>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </Card>

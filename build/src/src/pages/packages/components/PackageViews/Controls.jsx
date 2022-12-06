@@ -17,7 +17,11 @@ function PackageControls({
   togglePackage,
   restartPackage,
   restartPackageVolumes,
-  removePackage
+  removePackage,
+  showToggle = true,
+  showRestart = true,
+  showReset = true,
+  showRemove = true,
 }) {
   function confirmRemovePackageVolumes(id) {
     confirm({
@@ -30,7 +34,8 @@ function PackageControls({
 
   const state = toLowercase(dnp.state); // toLowercase always returns a string
 
-  const actions = [
+  let actions = [];
+  showToggle && actions.push(
     {
       name:
         state === "running" ? "Pause" : state === "exited" ? "Start" : "Toggle",
@@ -38,7 +43,8 @@ function PackageControls({
       action: () => togglePackage(dnp.name),
       availableForCore: false,
       type: "secondary"
-    },
+    });
+  showRestart && actions.push(
     {
       name: "Restart",
       text:
@@ -46,22 +52,23 @@ function PackageControls({
       action: () => confirmRestartPackage(dnp.name, restartPackage),
       availableForCore: true,
       type: "secondary"
-    },
+    });
+  showReset && actions.push(
     {
       name: "Reset",
       text: `Resets this package to its factory settings (all package data will be lost).`,
       action: () => confirmRemovePackageVolumes(dnp.name),
       availableForCore: true,
       type: "danger"
-    },
+    });
+  showRemove && actions.push(
     {
       name: "Remove ",
       text: "Deletes a package permanently.",
       action: () => confirmRemovePackage(dnp.name, removePackage),
       availableForCore: false,
       type: "danger"
-    }
-  ];
+    });
 
   // Table style -> Removes the space below the table, only for tables in cards
   return (
@@ -69,7 +76,7 @@ function PackageControls({
       <SubTitle>Controls</SubTitle>
       <CardList>
         {actions
-        //   .filter(action => action.availableForCore || !dnp.isCore)
+          //   .filter(action => action.availableForCore || !dnp.isCore)
           .map(({ name, text, type, action }) => (
             <div key={name} className="control-item">
               <div>

@@ -35,6 +35,8 @@ const PackagesList = ({
     error,
     restartPackage,
     setAutoUpdate,
+    showRestart = true,
+    showOpen = true,
 }) => {
 
     const [storeManifest, setStoreManifest] = useState();
@@ -103,9 +105,9 @@ const PackagesList = ({
             <header className="center">Status</header>
             <header>Name</header>
             {/* <header>Version</header> */}
-            <header>Open</header>
+            {showOpen ? (<header>Open</header>) : (<header />)}
             <header>Manage</header>
-            <header>Restart</header>
+            {showRestart ? (<header>Restart</header>) : (<header />)}
             <header>Auto-update</header>
             {filteredDnps.map(({ version, id, name, title, state, manifest }) => {
                 let navLinkTitle, navLinkIcon;
@@ -130,19 +132,21 @@ const PackagesList = ({
                     <React.Fragment key={name}>
                         <StateBadge state={state} />
                         {navLinkTitle}
-                        {navLinkIcon}
+                        {showOpen ? (<>{ navLinkIcon }</>): (<div></div>)}
                         {/* <NavLink className="name" to={`/${moduleName}/${name}`}>
                             {title || name} ({version})
                         </NavLink>
                         <NavLink className="open" to={`/${moduleName}/${name}`}>
                             <MdOpenInNew />
                         </NavLink> */}
+
                         <NavLink className="open" to={`/${moduleName}/${name}/detail`}>
                             <MdTune />
                         </NavLink>
-                        <MdRefresh
-                            onClick={() => confirmRestartPackage(name, restartPackage)}
-                        />
+                        {showRestart ? (
+                            <MdRefresh
+                                onClick={() => confirmRestartPackage(name, restartPackage)}
+                            />) : (<div></div>)}
                         <Switch
                             checked={getAutoUpdateState(manifest)}
                             onToggle={() => { setAutoUpdateWrapper(name, !getAutoUpdateState(manifest)) }}

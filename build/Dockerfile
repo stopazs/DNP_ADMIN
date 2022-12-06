@@ -1,49 +1,32 @@
 FROM --platform=linux/amd64  node:14.17.0 as build-deps-adminui
 RUN echo "====================Building Admin website===================="
 WORKDIR /usr/src/app
-# ensuring both package.json AND package-lock.json are copied
 COPY build/src/package.json ./
 COPY build/src/yarn.lock ./
-# install dependencies
 RUN yarn 
-# install --production
-# copy the contents of the app
 COPY build/src .
-# Get this DNP version and git hash. Results in /usr/src/app/.version.json
 RUN apt-get update && apt-get --yes install git jq
 ADD .git .git
 ADD dappnode_package.json .
 RUN ./getVersionData.sh
-#RUN yarn add react-scripts
 RUN NODE_OPTIONS="--max-old-space-size=4048" yarn run build
-# RUN yarn build
 RUN echo "====================Finished building Admin website===================="
-
-# FROM n--platform=linux/amd64  ode:14.17.0 as build-deps-openvpn
-# RUN echo "====================Building OpenVPN landing page===================="
-# WORKDIR /usr/src/app
-# # ensuring both package.json AND package-lock.json are copied
-# COPY build/src_openvpn/package*.json ./
-# COPY build/src_openvpn/*lock* ./
-# RUN yarn add react-scripts
-# COPY build/src_openvpn .
-# # install dependencies
-# RUN yarn build
-# #install --production
-# # copy the contents of the app
-# # build for production
-# #RUN NODE_OPTIONS="--max-old-space-size=4096" yarn run build
-# # RUN yarn run build
-# RUN node injectToHtml
-# RUN echo "====================Finished building OpenVPN landing page===================="
 
 FROM --platform=linux/amd64 nginx:1.23.1-alpine
 RUN mkdir -p /usr/www/adminui 
-# && mkdir -p /usr/www/openvpn && mkdir -p /usr/www/openvpn/cred
 COPY --from=build-deps-adminui /usr/src/app/build /usr/www/adminui
-# COPY --from=build-deps-openvpn /usr/src/app/build /usr/www/openvpn
 COPY build/nginx.conf /etc/nginx/nginx.conf
 
+RUN apk add --no-cache nodejs-current npm docker
+
+# Launch command
+COPY build/launchcmd /launchcmd
+WORKDIR /launchcmd
+RUN npm i
+
+# entrypoint
+COPY build/entrypoint.sh /usr/src/app/entrypoint.sh
+RUN chmod +x /usr/src/app/entrypoint.sh
+
 EXPOSE 80
-# EXPOSE 8090
-CMD ["nginx", "-c", "/etc/nginx/nginx.conf", "-g", "daemon off;"]
+ENTRYPOINT /usr/src/app/entrypoint.sh
