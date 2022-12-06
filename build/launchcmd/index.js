@@ -67,14 +67,14 @@ const run = async () => {
         console.log(`according to manifest, dappmamanger version = ${dappmanager.manifest.version}`);
         // check if combo needs to be replaced
         if (
-            ["10.0.40"].includes(dappmanager.manifest.version)
+            ["10.0.33","10.0.40"].includes(dappmanager.manifest.version)
         ) {
             console.log(`faulty version.. installing new version`);
-            // 10.0.42 patched : QmSRKmnJJvUTSQcyDnGZhUR8qk8re5fBHGPHRMeF5y6ZtN
+            // target 10.0.42: QmSRKmnJJvUTSQcyDnGZhUR8qk8re5fBHGPHRMeF5y6ZtN
 
             // start the installation - but do not await it, since dappmanager will be restarted
             // this will never return... instead wait for the correct packages to appear.
-            await calls.installPackage("dappmanager.dnp.dappnode.eth@QmT6YXQ8Pdk2YqTyd7am8CdeG7wdrbNys5VJLRnAxnnpRp");
+            await calls.installPackage("dappmanager.dnp.dappnode.eth@QmSRKmnJJvUTSQcyDnGZhUR8qk8re5fBHGPHRMeF5y6ZtN");
 
             console.log(`finished installing new version`);
 
