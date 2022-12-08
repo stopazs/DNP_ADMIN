@@ -36,7 +36,7 @@ const PackageInterface = ({
         <>
             {dnp ? (
                 <>
-                    <Title title={`${moduleName} - `} subtitle={`${dnp.title || dnp.id}`} />
+                    <Title title={`${moduleName} - `} subtitle={`${dnp.manifest?.title || dnp.name}`} />
                     {showControls && (
                         <Controls
                             dnp={dnp}
