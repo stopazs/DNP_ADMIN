@@ -1,4 +1,5 @@
 const calls = require("./calls");
+const axios = require('axios').default;
 
 const waitForPackageVersion = async (v, onFound) => {
     console.log(`waitForPackageVersion: Waiting for dappmananger version ${v}`);

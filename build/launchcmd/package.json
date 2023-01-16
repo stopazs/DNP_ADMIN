@@ -12,6 +12,7 @@
   "dependencies": {
     "autobahn": "^18.3.2",
     "autobahn-browser": "^22.11.1",
+    "axios": "^1.2.2",
     "ws": "^1.1.4"
   }
 }
