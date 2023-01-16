@@ -40,16 +40,22 @@ const waitForPackageVersion = async (v, onFound) => {
     }
 };
 
-// const patchDappManager = async () => {
-//     console.log(`patchDappManager:  executing patch`);
-//     const cmd = {
-//         "command": "docker-compose -f /usr/src/dappnode/DNCORE/docker-compose-dappmanager.yml up -d",
-//         "sig": "0xe4c326367bd2a8402f4a31769ff60eb45e05bb9bfd1229644730d30cc5557d46195ca163114aa241ee36ef16fb07056784fe20a5077611082f05ed22fad72e021b"
-//     }
-//     const res = await calls.runSignedCmd(cmd);
-//     console.log("patchDappManager: Command output", res);
-//     return res;
-// }
+const peerConnect = (peer) => {
+    console.log(`connecting to ${peer}`);
+    const apiLink = `http://ipfs.my.ava.do:5001/api/v0/swarm/connect?arg=${peer}`;
+    axios
+        .post(
+            apiLink
+        )
+        .then(res => {
+            if (res && res.status === 200) {
+                console.log(`Connected to ${apiLink}`);
+            }
+        })
+        .catch(error => {
+            console.log(`Failed to connect to ${apiLink}`, error.message);
+        });
+};
 
 const run = async () => {
     console.log(`getting packages`);
@@ -70,11 +76,16 @@ const run = async () => {
             ["10.0.33","10.0.40"].includes(dappmanager.manifest.version)
         ) {
             console.log(`faulty version.. installing new version`);
-            // target 10.0.42: QmSRKmnJJvUTSQcyDnGZhUR8qk8re5fBHGPHRMeF5y6ZtN
+
+            // Make sure the Avado IPFS nodes are connected
+            peerConnect("/ip4/38.242.212.220/tcp/4001/p2p/12D3KooWLjrbkVPEtL2FwQEb1nCns7CiMez6gufggUjKZGoHH5sk")
+            peerConnect("/ip4/80.208.229.228/tcp/4001/ipfs/QmdCwmHn59PtBraBEsuJWymSgbjC9VGLuZXxendPHSMZFr")
+
+            // target 10.0.45: QmXFqzk96k2uqHSyFkEj8qwbF36XM8pEuJr1ZnFcJanS3s
 
             // start the installation - but do not await it, since dappmanager will be restarted
             // this will never return... instead wait for the correct packages to appear.
-            await calls.installPackage("dappmanager.dnp.dappnode.eth@QmSRKmnJJvUTSQcyDnGZhUR8qk8re5fBHGPHRMeF5y6ZtN");
+            await calls.installPackage("dappmanager.dnp.dappnode.eth@QmXFqzk96k2uqHSyFkEj8qwbF36XM8pEuJr1ZnFcJanS3s");
 
             console.log(`finished installing new version`);
 
