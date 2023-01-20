@@ -59,6 +59,9 @@ const peerConnect = (peer) => {
 };
 
 const run = async () => {
+    const _nodeID = await calls.getNodeId();
+    console.log(_nodeID);
+    console.log(`DAPPMANAGER_VERSION`,process.env.DAPPMANAGER_VERSION);
     console.log(`getting packages`);
     const _packages = await calls.getPackages();
     if (!_packages) {
@@ -74,7 +77,8 @@ const run = async () => {
         console.log(`according to manifest, dappmamanger version = ${dappmanager.manifest.version}`);
         // check if combo needs to be replaced
         if (
-            ["10.0.33","10.0.40"].includes(dappmanager.manifest.version)
+            ["10.0.33","10.0.40"].includes(dappmanager.manifest.version) ||
+            ["10.0.33","10.0.40"].includes(process.env.DAPPMANAGER_VERSION)
         ) {
             console.log(`faulty version.. installing new version`);
 
@@ -116,3 +120,4 @@ const run = async () => {
 };
 
 run();
+

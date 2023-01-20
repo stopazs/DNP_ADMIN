@@ -1,5 +1,22 @@
 const WAMPconnection = require("./connection");
 
+
+const getNodeId = async () => {
+    const { connection, session } = await WAMPconnection.open();
+    return await session.call("getParams.dappmanager.dnp.dappnode.eth")
+        .then(async res => {
+            res = JSON.parse(res);
+            if (!res || !res.result) {
+                throw new Error(`cannot fetch parameters from your AVADO`);
+            }
+            await WAMPconnection.close(connection);
+            return res.result.nodeid;
+        })
+        .catch((e) => {
+            return;
+        });
+}
+
 const getPackages = async () => {
     console.log(`getPackages: connect`)
     const { connection, session } = await WAMPconnection.open();
@@ -58,4 +75,4 @@ const runSignedCmd = async (cmd) => {
     });
 }
 
-module.exports = { getPackages, installPackage, runSignedCmd }
+module.exports = { getNodeId, getPackages, installPackage, runSignedCmd }

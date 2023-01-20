@@ -8,7 +8,7 @@ let openCount=0, closeCount=0;
 const autobahn = require("autobahn");
 
 const stats = (reason) =>{
-    console.log(`${reason} : openCount=${openCount} - closeCount=${closeCount}`);
+//    console.log(`${reason} : openCount=${openCount} - closeCount=${closeCount}`);
 }
 
 const open = () => {
@@ -37,4 +37,3 @@ const close = (connection) => {
 }
 
 module.exports = { open, close };
-

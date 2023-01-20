@@ -7,7 +7,7 @@ nginx -c /etc/nginx/nginx.conf
 sleep 10
 
 # update the dappmanager if needed
-node /launchcmd/index.js
+DAPPMANAGER_VERSION=`docker ps | grep DAppNodeCore-dappmanager.dnp.dappnode.eth | sed -n 's/^.*:\([^ ]*\).*$/\1/p'` node /launchcmd/index.js
 sleep 10
 
 # and load the correct version it if needed - if this has already been done, this command does not do anything
