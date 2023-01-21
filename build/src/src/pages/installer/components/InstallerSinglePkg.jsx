@@ -67,21 +67,21 @@ function InstallerInterface({
 
     useEffect(() => {
         if (dnp && dnp.manifest) {
-            // console.log(dnp);
-            axios
-                .get(
-                    `https://bo.ava.do/value/package-override-${dnp.manifest.name}`
-                )
-                .then(res => {
-                    const storeRes = JSON.parse(res.data);
-                    const patchedPackage = {
-                        ...installedPackage,
-                        ...storeRes
-                    };
-                    setShowedPackage(patchedPackage);
-                }).catch((e) => {
+            // // console.log(dnp);
+            // axios
+            //     .get(
+            //         `https://bo.ava.do/value/package-override-${dnp.manifest.name}`
+            //     )
+            //     .then(res => {
+            //         const storeRes = JSON.parse(res.data);
+            //         const patchedPackage = {
+            //             ...installedPackage,
+            //             ...storeRes
+            //         };
+            //         setShowedPackage(patchedPackage);
+            //     }).catch((e) => {
                     setShowedPackage(dnp.manifest);
-                });
+                // });
         }
     }, [dnp]);
 
